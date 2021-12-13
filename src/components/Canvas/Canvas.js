@@ -1,13 +1,12 @@
 import React from "react";
-import Markup from "../../containers/Markup/Markup";
+
+import image from "../../assets/image.png";
 
 const Canvas = props => {
 
     return (
         <div>
-            <Markup>
-
-            </Markup>
+            <img src={image} alt="For markup" />
         </div>
     );
 };

@@ -10,7 +10,6 @@ const App = () => {
   return (
     <div className="App">
       <Layout>
-          <SidePanel />
           <Markup />
       </Layout>
     </div>

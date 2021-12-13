@@ -1,6 +1,7 @@
 import React, { Fragment } from "react";
 
 import classes from './Layout.module.scss';
+import SidePanel from "../../components/SidePanel/SidePanel";
 
 const Layout = props => {
 
@@ -10,9 +11,12 @@ const Layout = props => {
                 <h3>СПО "Разметка"</h3>
                 <button className={classes.exitButton}>Выход</button>
             </header>
-            <main>
-                {props.children}
-            </main>
+            <div className={classes.content}>
+                <SidePanel />
+                <main>
+                    {props.children}
+                </main>
+            </div>
             <footer className={classes.footer}>
                 <p>ГосНИИАС, Лаборатория 3070, 2021</p>
             </footer>
