@@ -1,0 +1,24 @@
+.ClassList {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  & p {
+    padding: 0;
+    margin: 0;
+    width: 80%;
+  }
+
+  & ul {
+    margin: 0;
+    padding: 5px;
+    list-style: none;
+    width: 100%;
+
+    & li {
+      padding: 5px 20px;
+      margin-top: 10px;
+    }
+  }
+}
