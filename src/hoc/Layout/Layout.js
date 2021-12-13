@@ -11,8 +11,7 @@ const Layout = props => {
                 <button className={classes.exitButton}>Выход</button>
             </header>
             <main>
-                 SidePanel
-                 Workspace
+                {props.children}
             </main>
             <footer className={classes.footer}>
                 <p>ГосНИИАС, Лаборатория 3070, 2021</p>
