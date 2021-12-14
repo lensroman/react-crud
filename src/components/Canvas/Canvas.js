@@ -7,11 +7,11 @@ const Canvas = props => {
     let stageHeight = 0;
 
     if (props.image) {
-        stageWidth = props.image.width
-        stageHeight = props.image.height
+        stageWidth = props.image.width;
+        stageHeight = props.image.height;
     }
 
-    let linesMarkup = null
+    let linesMarkup = null;
 
     if (props.linesMarkup && props.linesMarkup.length >= 4) {
         linesMarkup = (
@@ -20,7 +20,7 @@ const Canvas = props => {
                 stroke='yellow'
                 closed={true}
             />
-        )
+        );
     }
 
     return (

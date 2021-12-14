@@ -7,9 +7,9 @@ import useImage from "use-image";
 
 const Markup = props => {
 
-    const [linesClick, setLinesClick] = useState([])
+    const [linesClick, setLinesClick] = useState([]);
 
-    const [imgDOM] = useImage(image)
+    const [imgDOM] = useImage(image);
 
     const getRelativePointerPosition = (node) => {
         const transform = node.getAbsoluteTransform().copy();
@@ -19,17 +19,17 @@ const Markup = props => {
         const pos = node.getStage().getPointerPosition();
 
         return transform.point(pos);
-    }
+    };
 
     const canvasClickHandler = (event) => {
-        let newLines = [...linesClick]
+        let newLines = [...linesClick];
 
         const point = getRelativePointerPosition(event.target.getStage());
 
-        newLines.push(point.x, point.y)
+        newLines.push(point.x, point.y);
 
-        setLinesClick(newLines)
-    }
+        setLinesClick(newLines);
+    };
 
 
     return (
