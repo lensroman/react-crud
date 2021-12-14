@@ -26,8 +26,7 @@ const Markup = props => {
 
         const point = getRelativePointerPosition(event.target.getStage());
 
-        newLines.push(point.x)
-        newLines.push(point.y)
+        newLines.push(point.x, point.y)
 
         setLinesClick(newLines)
     }
