@@ -11,16 +11,33 @@ const Canvas = props => {
         stageHeight = props.image.height;
     }
 
-    let pointsMarkup = null;
+    let pointsMarkup = null
+    let regions = null
 
     if (props.pointsMarkup && props.pointsMarkup.length >= 4) {
         pointsMarkup = (
             <Line
                 points={ props.pointsMarkup }
-                stroke='yellow'
-                closed={true}
+                stroke={ props.color }
+                fill={ props.color }
+                closed={ true }
+                opacity={0.5}
             />
-        );
+        )
+    }
+
+    if (props.regions.length > 0) {
+        regions = props.regions.map(region => {
+            return (
+                <Line
+                    points={ region.segmentation }
+                    stroke={ region.color }
+                    fill={ region.color }
+                    closed={ true }
+                    opacity={0.5}
+                />
+            )
+        })
     }
 
     return (
@@ -37,6 +54,7 @@ const Canvas = props => {
                         onMouseMove={ props.startDraw ? props.mouseMove : null}
                         onMouseUp={ props.mouseUp }
                     />
+                    { regions ? regions.map(region => {return region}) : null }
                     { pointsMarkup }
                 </Layer>
             </Stage>
