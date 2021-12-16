@@ -1,0 +1,17 @@
+.MarkupHeader {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  border-bottom: 1px solid #ccc;
+  margin-bottom: 15px;
+}
+
+.Button {
+  user-select: none;
+  padding: 5px 10px;
+
+  &:last-child {
+    margin-left: 20px;
+  }
+}

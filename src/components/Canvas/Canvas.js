@@ -21,7 +21,8 @@ const Canvas = props => {
                 stroke={ props.color }
                 fill={ props.color }
                 closed={ true }
-                opacity={0.5}
+                opacity={ 0.5 }
+                listening={ false }
             />
         )
     }
@@ -30,11 +31,13 @@ const Canvas = props => {
         regions = props.regions.map(region => {
             return (
                 <Line
+                    key={ region.id }
                     points={ region.segmentation }
                     stroke={ region.color }
                     fill={ region.color }
                     closed={ true }
-                    opacity={0.5}
+                    opacity={ 0.5 }
+                    listening={ false }
                 />
             )
         })
@@ -45,7 +48,7 @@ const Canvas = props => {
             <Stage
                 width={ stageWidth }
                 height={ stageHeight }
-                style={{ border: '2px solid grey' }}
+                style={{ border: '1px solid grey', padding: '10px' }}
             >
                 <Layer>
                     <Image

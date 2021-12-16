@@ -5,6 +5,7 @@ import NavigationItems from "./Navigation/NavigationItems/NavigationItems";
 import ClassList from "./ClassList/ClassList";
 
 const SidePanel = (props) => {
+
     return (
         <div className={classes.SidePanel}>
             <NavigationItems />
