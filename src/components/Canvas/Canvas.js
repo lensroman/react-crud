@@ -37,7 +37,6 @@ const Canvas = props => {
                     fill={ region.color }
                     closed={ true }
                     opacity={ 0.5 }
-                    listening={ false }
                 />
             )
         })

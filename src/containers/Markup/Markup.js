@@ -45,7 +45,7 @@ const Markup = props => {
         setColor(color)
         newRegion.push({
             id: getUniqueId(),
-            category: category,
+            category_id: category,
             color: color,
             segmentation: points
         })
@@ -116,49 +116,55 @@ const Markup = props => {
     }
 
     const canvasMouseDownHandler = (event) => {
-        event.evt.preventDefault()
-        if (firstLine) {
-            const color = getRandomColor()
-            let newPoints = []
-            const point = getRelativePointerPosition(event.target.getStage())
-            newPoints.push(point.x, point.y)
-            setPoints(newPoints)
-            setColor(color)
-            setStartDraw(true)
-            setMarkupMode(true)
+        if (rectMode || polygonMode) {
+            event.evt.preventDefault()
+            if (firstLine) {
+                const color = getRandomColor()
+                let newPoints = []
+                const point = getRelativePointerPosition(event.target.getStage())
+                newPoints.push(point.x, point.y)
+                setPoints(newPoints)
+                setColor(color)
+                setStartDraw(true)
+                setMarkupMode(true)
+            }
         }
     }
 
     const canvasMouseMoveHandler = (event) => {
-        event.evt.preventDefault()
-        if (startDraw && polygonMode) {
-            const point = getRelativePointerPosition(event.target.getStage())
-            const newPoints = [points[0], points[1], point.x, point.y]
-            setPoints(newPoints)
-        }
-        if (startDraw && rectMode) {
-            const point = getRelativePointerPosition(event.target.getStage())
-            const newPoints = [points[0], points[1], points[0], point.y, point.x, point.y, point.x, points[1]]
-            setPoints(newPoints)
+        if (rectMode || polygonMode) {
+            event.evt.preventDefault()
+            if (startDraw && polygonMode) {
+                const point = getRelativePointerPosition(event.target.getStage())
+                const newPoints = [points[0], points[1], point.x, point.y]
+                setPoints(newPoints)
+            }
+            if (startDraw && rectMode) {
+                const point = getRelativePointerPosition(event.target.getStage())
+                const newPoints = [points[0], points[1], points[0], point.y, point.x, point.y, point.x, points[1]]
+                setPoints(newPoints)
+            }
         }
     }
 
     const canvasMouseUpHandler = event => {
-        event.evt.preventDefault()
-        if (markupMode && polygonMode) {
-            setStartDraw(false)
-            let newPoints = [...points]
-            const point = getRelativePointerPosition(event.target.getStage())
-            newPoints.push(point.x, point.y)
-            setPoints(newPoints)
-            setFirstLine(false)
-        }
-        if (markupMode && rectMode) {
-            setStartDraw(false)
-            const point = getRelativePointerPosition(event.target.getStage())
-            const newPoints = [points[0], points[1], points[0], point.y, point.x, point.y, point.x, points[1]]
-            setPoints(newPoints)
-            setFirstLine(true)
+        if (rectMode || polygonMode) {
+            event.evt.preventDefault()
+            if (markupMode && polygonMode) {
+                setStartDraw(false)
+                let newPoints = [...points]
+                const point = getRelativePointerPosition(event.target.getStage())
+                newPoints.push(point.x, point.y)
+                setPoints(newPoints)
+                setFirstLine(false)
+            }
+            if (markupMode && rectMode) {
+                setStartDraw(false)
+                const point = getRelativePointerPosition(event.target.getStage())
+                const newPoints = [points[0], points[1], points[0], point.y, point.x, point.y, point.x, points[1]]
+                setPoints(newPoints)
+                setFirstLine(true)
+            }
         }
     }
 
@@ -168,6 +174,7 @@ const Markup = props => {
         dict.img.pathName = json.img
         dict.img.regions = regions
         const dictJSON = JSON.stringify(dict)
+        console.log(dict)
         console.log(dictJSON)
     }
 
