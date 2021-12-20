@@ -190,7 +190,7 @@ const Markup = props => {
     }
 
     return (
-        <div>
+        <div style={{ flexGrow: '1' }}>
             <MarkupHeader
                 save={ saveImageHandler }
                 rectMode={ rectModeHandler }

@@ -12,8 +12,8 @@ const Layout = props => {
                 <button className={classes.exitButton}>Выход</button>
             </header>
             <div className={classes.content}>
-                <SidePanel />
                 <main>
+                    <SidePanel />
                     {props.children}
                 </main>
             </div>
