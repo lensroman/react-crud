@@ -1,6 +1,6 @@
-import React from "react";
+import React, {Fragment} from "react";
 
-import Input from "../../components/UI/Input/Input";
+import Form from '../../components/Form/Form';
 
 const Auth = props => {
     // state for organization data for request
@@ -13,10 +13,9 @@ const Auth = props => {
         // email validation, hide password with dots
 
     return (
-        <div>
-            <Input placeholder="email"/>
-            <Input placeholder="password" />
-        </div>
+        <Fragment>
+            <Form />
+        </Fragment>
     )
 }
 

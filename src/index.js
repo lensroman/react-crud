@@ -9,12 +9,14 @@ import {createStore, compose, combineReducers, applyMiddleware} from "redux";
 import {Provider} from "react-redux";
 
 import reportWebVitals from './reportWebVitals';
+import authReducer from "./Store/reducers/authReducer";
 
 const devTools = process.env.NODE_ENV === 'development' ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ : null
 const composeEnhancers = devTools || compose;
 
 const rootReducer = combineReducers({
-    markup: markupReducer
+    markup: markupReducer,
+    auth: authReducer
 })
 
 const store = createStore(rootReducer, composeEnhancers(applyMiddleware()))

@@ -1,17 +1,31 @@
 import React from "react";
+import { connect } from "react-redux";
 
 import classes from './SidePanel.module.scss';
 import NavigationItems from "./Navigation/NavigationItems/NavigationItems";
 import ClassList from "./ClassList/ClassList";
 
+
 const SidePanel = (props) => {
 
+    let attachedClasses = [classes.SidePanel, classes.Auth]
+
+    if (!props.isAuthenticated) {
+        attachedClasses = [classes.SidePanel, classes.notAuth]
+    }
+
     return (
-        <div className={classes.SidePanel}>
+        <div className={attachedClasses.join(' ')}>
             <NavigationItems />
             <ClassList />
         </div>
     )
 };
 
-export default SidePanel;
+const mapStateToProps = state => {
+    return {
+        isAuthenticated: state.auth.isAuthenticated
+    }
+}
+
+export default connect(mapStateToProps)(SidePanel);
