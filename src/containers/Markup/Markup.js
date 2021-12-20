@@ -9,34 +9,37 @@ import useImage from "use-image";
 
 const Markup = props => {
 
+    const {onRegionAdd} = props
+    const {onMarkupCancel} = props
+
     const [imgDOM] = useImage(json.img)
 
     const stopMarkupHandler = useCallback((event) => {
         event.preventDefault()
         switch (event.code) {
             case 'Space': {
-                props.onRegionAdd('non-category')
+                onRegionAdd('non-category')
                 break
             }
             case 'KeyQ': {
-                props.onMarkupCancel()
+                onMarkupCancel()
                 break
             }
             case 'Digit1': {
-                props.onRegionAdd('building')
+                onRegionAdd('building')
                 break
             }
             case 'Digit2': {
-                props.onRegionAdd('water')
+                onRegionAdd('water')
                 break
             }
             case 'Digit3': {
-                props.onRegionAdd('ground')
+                onRegionAdd('ground')
                 break
             }
             default: return
         }
-    }, [props.onRegionAdd, props.onMarkupCancel])
+    }, [onRegionAdd, onMarkupCancel])
 
     const canvasMouseDownHandler = (event) => {
         if (props.rectMode || props.polygonMode) {
