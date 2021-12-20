@@ -1,4 +1,6 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect } from "react";
+import { connect } from "react-redux";
+import * as actions from '../../Store/actions/rootAction';
 
 import json from '../../assets/json.json';
 import MarkupHeader from "../../components/markupHeader/MarkupHeader";
@@ -7,187 +9,89 @@ import useImage from "use-image";
 
 const Markup = props => {
 
-    const [regions, setRegions] = useState([])
-    const [points, setPoints] = useState([])
-    const [color, setColor] = useState(null)
-    const [firstLine, setFirstLine] = useState(true)
-    const [startDraw, setStartDraw] = useState(false)
-    const [markupMode, setMarkupMode] = useState(false)
-    const [polygonMode, setPolygonMode] = useState(false)
-    const [rectMode, setRectMode] = useState(false)
-
     const [imgDOM] = useImage(json.img)
 
-    const newRegion = useCallback((category) => {
-        setMarkupMode(false)
-        setFirstLine(true)
-        let newRegion = [...regions]
-        let color = null
-        switch (category) {
-            case 'building': {
-                color = '#b8baba'
-                break
-            }
-            case 'water': {
-                color = '#4899d5'
-                break
-            }
-            case 'ground': {
-                color = '#996d3f'
-                break
-            }
-            case 'non-category': {
-                color = '#c53a3a'
-                break
-            }
-            default: return
-        }
-        setColor(color)
-        newRegion.push({
-            id: getUniqueId(),
-            category_id: category,
-            color: color,
-            segmentation: points
-        })
-        setRegions(newRegion)
-    }, [setMarkupMode, setFirstLine, setRegions, color, points, regions])
-
-    const cancelMarkup = useCallback(() => {
-        setMarkupMode(false)
-        setStartDraw(false)
-        setFirstLine(true)
-        setPoints([])
-    }, [setMarkupMode, setFirstLine, setPoints])
-
-    const stopMarkup = useCallback((event) => {
+    const stopMarkupHandler = useCallback((event) => {
         event.preventDefault()
         switch (event.code) {
             case 'Space': {
-                newRegion('non-category')
+                props.onRegionAdd('non-category')
                 break
             }
             case 'KeyQ': {
-                cancelMarkup()
+                props.onMarkupCancel()
                 break
             }
             case 'Digit1': {
-                newRegion('building')
+                props.onRegionAdd('building')
                 break
             }
             case 'Digit2': {
-                newRegion('water')
+                props.onRegionAdd('water')
                 break
             }
             case 'Digit3': {
-                newRegion('ground')
+                props.onRegionAdd('ground')
                 break
             }
             default: return
         }
-    }, [newRegion, cancelMarkup])
-
-    const getRandomColor = () => {
-        const letters = '0123456789abcdef';
-        let color = '#';
-        for (let i = 0; i < 6; i++) {
-            color += letters[Math.floor(Math.random() * 16)];
-        }
-        return color;
-    }
-    const getUniqueId = () => {
-        return '_' + Math.random().toString(36).substr(2, 9);
-    }
-
-    useEffect(() => {
-        if (markupMode) {
-            window.addEventListener('keypress', stopMarkup)
-        } else {
-            window.removeEventListener('keypress', stopMarkup)
-        }
-
-        return () => window.removeEventListener('keypress', stopMarkup)
-    }, [markupMode, stopMarkup])
-
-    const getRelativePointerPosition = (node) => {
-        const transform = node.getAbsoluteTransform().copy()
-        transform.invert()
-        const pos = node.getStage().getPointerPosition()
-        return transform.point(pos)
-    }
+    }, [props.onRegionAdd, props.onMarkupCancel])
 
     const canvasMouseDownHandler = (event) => {
-        if (rectMode || polygonMode) {
+        if (props.rectMode || props.polygonMode) {
             event.evt.preventDefault()
-            if (firstLine) {
-                const color = getRandomColor()
-                let newPoints = []
-                const point = getRelativePointerPosition(event.target.getStage())
-                newPoints.push(point.x, point.y)
-                setPoints(newPoints)
-                setColor(color)
-                setStartDraw(true)
-                setMarkupMode(true)
+            if (props.firstLine) {
+                props.onMouseDown(event)
             }
         }
     }
 
     const canvasMouseMoveHandler = (event) => {
-        if (rectMode || polygonMode) {
+        if (props.rectMode || props.polygonMode) {
             event.evt.preventDefault()
-            if (startDraw && polygonMode) {
-                const point = getRelativePointerPosition(event.target.getStage())
-                const newPoints = [points[0], points[1], point.x, point.y]
-                setPoints(newPoints)
+            if (props.startDraw && props.polygonMode) {
+                props.onMouseMovePolygon(event)
             }
-            if (startDraw && rectMode) {
-                const point = getRelativePointerPosition(event.target.getStage())
-                const newPoints = [points[0], points[1], points[0], point.y, point.x, point.y, point.x, points[1]]
-                setPoints(newPoints)
+            if (props.startDraw && props.rectMode) {
+                props.onMouseMoveRect(event)
             }
         }
     }
 
     const canvasMouseUpHandler = event => {
-        if (rectMode || polygonMode) {
+        if (props.rectMode || props.polygonMode) {
             event.evt.preventDefault()
-            if (markupMode && polygonMode) {
-                setStartDraw(false)
-                let newPoints = [...points]
-                const point = getRelativePointerPosition(event.target.getStage())
-                newPoints.push(point.x, point.y)
-                setPoints(newPoints)
-                setFirstLine(false)
+            if (props.markupMode && props.polygonMode) {
+                props.onMouseUpPolygon(event)
             }
-            if (markupMode && rectMode) {
-                setStartDraw(false)
-                const point = getRelativePointerPosition(event.target.getStage())
-                const newPoints = [points[0], points[1], points[0], point.y, point.x, point.y, point.x, points[1]]
-                setPoints(newPoints)
-                setFirstLine(true)
+            if (props.markupMode && props.rectMode) {
+                props.onMouseUpRect(event)
             }
         }
     }
 
     const saveImageHandler = () => {
-        let dict = {}
-        dict.img = {}
-        dict.img.pathName = json.img
-        dict.img.regions = regions
-        const dictJSON = JSON.stringify(dict)
-        console.log(dict)
-        console.log(dictJSON)
+        props.onImageSaveAsJSON()
     }
 
     const rectModeHandler = () => {
-        setPoints([])
-        setRectMode(true)
-        setPolygonMode(false)
+        props.onRectMode()
+
     }
     const polygonModeHandler = () => {
-        setPoints([])
-        setRectMode(false)
-        setPolygonMode(true)
+        props.onPolygonMode()
     }
+
+    useEffect(() => {
+        if (props.markupMode) {
+            window.addEventListener('keypress', stopMarkupHandler)
+        } else {
+            window.removeEventListener('keypress', stopMarkupHandler)
+        }
+
+        return () => window.removeEventListener('keypress', stopMarkupHandler)
+    }, [props.markupMode, stopMarkupHandler])
 
     return (
         <div style={{ flexGrow: '1' }}>
@@ -195,21 +99,49 @@ const Markup = props => {
                 save={ saveImageHandler }
                 rectMode={ rectModeHandler }
                 polygonMode={ polygonModeHandler }
-                rect={ rectMode }
-                polygon={ polygonMode }
+                rect={ props.rectMode }
+                polygon={ props.polygonMode }
             />
             <Canvas
                 image={ imgDOM }
                 mouseDown={ (event) => canvasMouseDownHandler(event) }
                 mouseMove={ (event) => canvasMouseMoveHandler(event) }
                 mouseUp={ (event) => canvasMouseUpHandler(event) }
-                pointsMarkup={ points }
-                color={ color }
-                startDraw={ startDraw }
-                regions={ regions }
+                pointsMarkup={ props.points }
+                color={ props.color }
+                startDraw={ props.startDraw }
+                regions={ props.regions }
             />
         </div>
     )
 }
 
-export default Markup
+const mapStateToProps = state => {
+    return {
+        regions: state.markup.regions,
+        points: state.markup.points,
+        color: state.markup.color,
+        firstLine: state.markup.firstLine,
+        startDraw: state.markup.startDraw,
+        markupMode: state.markup.markupMode,
+        polygonMode: state.markup.polygonMode,
+        rectMode: state.markup.rectMode
+    }
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+        onRegionAdd: category => dispatch(actions.addNewRegion(category)),
+        onMarkupCancel: () => dispatch(actions.cancelMarkup()),
+        onMouseDown: (event) => dispatch(actions.mouseDown(event)),
+        onMouseMoveRect: event => dispatch(actions.mouseMoveRect(event)),
+        onMouseMovePolygon: event => dispatch(actions.mouseMovePolygon(event)),
+        onMouseUpPolygon: event => dispatch(actions.mouseUpPolygon(event)),
+        onMouseUpRect: event => dispatch(actions.mouseUpRect(event)),
+        onRectMode: () => dispatch(actions.rectModeOn()),
+        onPolygonMode: () => dispatch(actions.polygonModeOn()),
+        onImageSaveAsJSON: () => dispatch(actions.imageSaveAsJSON())
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Markup);
