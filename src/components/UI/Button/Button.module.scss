@@ -1,0 +1,23 @@
+.Button {
+  background-color: transparent;
+  border: 1px solid #0288d1;
+  color: #0288d1;
+  outline: none;
+  cursor: pointer;
+  font: inherit;
+  padding: 10px;
+  margin: 10px;
+  border-radius: 5px;
+  transition: all .3s ;
+  box-shadow: 0 4px 5px rgba(0, 0, 0, 0.4);
+  
+  &:hover {
+    color: #fff;
+    background-color: #0288d1;
+  }
+
+  &:disabled,
+  &:active {
+    box-shadow: none;
+  }
+}
