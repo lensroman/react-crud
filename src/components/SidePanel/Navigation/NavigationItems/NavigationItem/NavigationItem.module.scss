@@ -1,21 +1,25 @@
 .NavigationItem {
-  margin: 10px 0;
   box-sizing: border-box;
-  display: block;
+  display: flex;
   width: 100%;
+  align-items: center;
+
 
   & a {
+    font-size: 18px;
     color: #000;
     text-decoration: none;
     width: 100%;
     box-sizing: border-box;
     display: block;
     transition: all .2s;
+    padding: 20px 10px;
 
     &:hover,
     &:active,
     &.active {
       color: #4052c8;
+      background-color: #c5c5c5;
     }
   }
 }
