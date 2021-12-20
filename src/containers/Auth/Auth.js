@@ -4,7 +4,7 @@ import Input from "../../components/UI/Input/Input";
 
 const Auth = props => {
     // state for organization data for request
-        // object with tight structure like backend has
+        // object with right structure like backend has
 
     // re-used input component
         // placeholders, onChange methods, right types
@@ -14,7 +14,8 @@ const Auth = props => {
 
     return (
         <div>
-            <Input />
+            <Input placeholder="email"/>
+            <Input placeholder="password" />
         </div>
     )
 }
