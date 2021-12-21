@@ -10,3 +10,6 @@ export {
     polygonModeOn,
     imageSaveAsJSON
 } from './markupAction'
+export {
+    auth
+} from './authAction'

@@ -8,3 +8,5 @@ export const MOUSE_UP_RECT = 'MOUSE_UP_RECT'
 export const POLYGON_MODE_ON = 'POLYGON_MODE_ON'
 export const RECT_MODE_ON = 'RECT_MODE_ON'
 export const IMAGE_SAVE_JSON = 'IMAGE_SAVE_JSON'
+
+export const AUTH_USER = 'AUTH_USER'
