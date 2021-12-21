@@ -2,10 +2,10 @@ import * as actionTypes from '../actions/actionTypes';
 
 const initialState = {
     loading: false,
-    isAuthenticated: false,
+    isAuthenticated: true,
     email: null,
     password: null,
-    userType: null,
+    userType: 'admin',
 }
 
 const reducer = (state = initialState, action) => {
