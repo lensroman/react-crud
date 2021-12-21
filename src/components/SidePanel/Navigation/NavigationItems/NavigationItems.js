@@ -20,8 +20,8 @@ const NavigationItems = props => {
     if (props.userType === 'admin') {
         navigation = (
             <ul className={classes.NavigationItems}>
-                <NavigationItem>Выборки</NavigationItem>
-                <NavigationItem>Задачи</NavigationItem>
+                <NavigationItem path={'/samples'}>Выборки</NavigationItem>
+                <NavigationItem path={'/tasks'}>Задачи</NavigationItem>
             </ul>
         )
     }
