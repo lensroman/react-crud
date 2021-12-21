@@ -11,9 +11,8 @@
 }
 
 .footer {
-  position: fixed;
-  top: 95%;
-  width: 100%;
+  position: sticky;
+  top: 100%;
 }
 
 .exitButton {

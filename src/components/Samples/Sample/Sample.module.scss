@@ -2,8 +2,9 @@
   display: flex;
   flex-direction: column;
   width: 400px;
-  border: 1px solid #ccc;
   margin: 10px;
+  box-shadow: 0 4px 7px rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
 
   & .Header {
     width: 100%;
@@ -12,6 +13,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
   }
 
   & .Description {

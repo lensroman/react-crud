@@ -8,7 +8,7 @@ const Sample = props => {
     return (
         <div className={classes.Sample}>
             <div className={classes.Header}>
-                Выборка 1
+                <h1>Выборка 1</h1>
             </div>
             <div className={classes.Description}>
                 <p>
