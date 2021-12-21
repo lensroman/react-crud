@@ -1,18 +1,31 @@
 import React from "react";
 
-import Layout from "./hoc/Layout/Layout";
+import {connect} from "react-redux";
 
+import {Route, Routes} from "react-router-dom";
+
+import Layout from "./hoc/Layout/Layout";
 import Markup from "./containers/Markup/Markup";
 import Auth from "./containers/Auth/Auth";
 
-const App = () => {
-  return (
-    <div className="App">
-      <Layout>
-          <Auth />
-      </Layout>
-    </div>
-  );
+const App = (props) => {
+
+    return (
+        <div className="App">
+            <Routes>
+                <Route element={<Layout />}>
+                    <Route index path='/' element={<Auth />} />
+                </Route>
+            </Routes>
+        </div>
+    );
 }
 
-export default App;
+const mapStateToProps = state => {
+    return {
+        isAuth: state.auth.isAuthenticated,
+        userType: state.auth.userType
+    }
+}
+
+export default connect(mapStateToProps)(App);

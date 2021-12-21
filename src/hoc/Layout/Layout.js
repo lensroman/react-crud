@@ -1,4 +1,5 @@
 import React, { Fragment } from "react";
+import { Outlet } from 'react-router-dom'
 
 import classes from './Layout.module.scss';
 import SidePanel from "../../components/SidePanel/SidePanel";
@@ -20,6 +21,7 @@ const Layout = props => {
             <footer className={classes.footer}>
                 <p>ГосНИИАС, Лаборатория 3070, 2021</p>
             </footer>
+            <Outlet />
         </Fragment>
     )
 };
