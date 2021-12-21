@@ -1,10 +1,16 @@
 .Input {
-  width: 30%;
-  padding: 10px;
+  padding: 10px 30px;
   box-sizing: border-box;
   outline: none;
-  border: 1px solid #ccc;
+  border: 1px solid #a9a9a9;
   background-color: white;
   font: inherit;
+  display: block;
+  margin-top: 20px;
+  border-radius: 5px;
+}
+
+.Label {
+  font-weight: bold;
   display: block;
 }
