@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 
 import classes from './SidePanel.module.scss';
 import NavigationItems from "./Navigation/NavigationItems/NavigationItems";
-import ClassList from "./ClassList/ClassList";
 
 
 const SidePanel = (props) => {
@@ -16,15 +15,15 @@ const SidePanel = (props) => {
 
     return (
         <div className={attachedClasses.join(' ')}>
-            <NavigationItems />
-            <ClassList />
+            <NavigationItems userType={props.userType} />
         </div>
     )
 };
 
 const mapStateToProps = state => {
     return {
-        isAuthenticated: state.auth.isAuthenticated
+        isAuthenticated: state.auth.isAuthenticated,
+        userType: state.auth.userType
     }
 }
 
