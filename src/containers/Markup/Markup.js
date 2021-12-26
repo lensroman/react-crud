@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import * as actions from '../../Store/actions/rootAction';
 
 import json from '../../assets/json.json';
-import MarkupHeader from "../../components/markupHeader/MarkupHeader";
+import MarkupHeader from "../../components/MarkupHeader/MarkupHeader";
 import Canvas from "../../components/Canvas/Canvas";
 import useImage from "use-image";
 

@@ -3,7 +3,7 @@ import React from "react";
 import classes from './AdminTasks.module.scss';
 import Task from './Task/Task';
 
-const AdminTasks = props => {
+const AdminTasks = () => {
 
     return (
         <div className={classes.AdminTasks}>
@@ -14,7 +14,6 @@ const AdminTasks = props => {
             <Task />
             <Task />
             <Task />
-
         </div>
     )
 }

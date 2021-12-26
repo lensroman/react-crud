@@ -1,7 +1,7 @@
 import React from "react";
 
 import classes from './MarkupHeader.module.scss';
-import Button from '../UI/Button/Button';
+import {Button} from '@mui/material';
 
 const MarkupHeader = props => {
 
@@ -12,22 +12,24 @@ const MarkupHeader = props => {
             </div>
             <div>
                 <Button
-                    clicked={props.rectMode}
+                    variant={"outlined"}
+                    onClick={props.rectMode}
                     disabled={props.rect}
                 >
                     Прямоугольник
                 </Button>
                 <Button
-                    clicked={props.polygonMode}
+                    variant={"outlined"}
+                    onClick={props.polygonMode}
                     disabled={props.polygon}
                 >
                     Полигон
                 </Button>
             </div>
             <div>
-                <Button>Предыдущее изображения</Button>
-                <Button>Следующее изображения</Button>
-                <Button clicked={props.save}>Сохранить</Button>
+                <Button variant={"outlined"}>Предыдущее изображения</Button>
+                <Button variant={"outlined"}>Следующее изображения</Button>
+                <Button clicked={props.save} variant={"outlined"}>Сохранить</Button>
             </div>
         </div>
     )

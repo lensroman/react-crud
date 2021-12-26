@@ -1,10 +1,9 @@
-.header,
 .footer {
   margin: 0;
   padding: 1rem;
   height: 1.3rem;
   color: #fff;
-  background-color: #1d1c1cff;
+  background-color: #242429;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -13,26 +12,4 @@
 .footer {
   position: sticky;
   top: 100%;
-}
-
-.exitButton {
-  padding: 0;
-  border: 0;
-  background: none;
-  color: #ccc;
-  transition: all .3s;
-
-  &:hover {
-    color: #9c1616;
-    cursor: pointer;
-  }
-}
-
-.content {
-  display: flex;
-}
-
-main {
-  display: flex;
-  flex-grow: 1;
 }
