@@ -6,16 +6,14 @@ import Layout from "./hoc/Layout/Layout";
 import Markup from "./containers/Markup/Markup";
 import Auth from "./containers/Auth/Auth";
 import AdminPanel from "./containers/AdminPanel/AdminPanel";
-import SidePanel from "./components/SidePanel/SidePanel";
 
 
 const App = props => {
 
-
     return (
         <div className="App">
             <Layout>
-                <AdminPanel />
+                <Auth />
             </Layout>
         </div>
     );
