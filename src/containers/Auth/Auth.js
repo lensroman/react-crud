@@ -2,9 +2,8 @@ import React, {Fragment, useState} from "react";
 import * as actions from '../../Store/actions/rootAction';
 
 import classes from './Auth.module.scss';
-import Input from "../../components/UI/Input/Input";
-import Button from "../../components/UI/Button/Button";
 import {connect} from "react-redux";
+import {Box, TextField, Button, Card, Typography} from "@mui/material";
 
 const Auth = props => {
     const [controls, setControls] = useState({
@@ -12,7 +11,7 @@ const Auth = props => {
             elementType: 'input',
             elementConfig: {
                 type: 'email',
-                placeholder: 'E-mail'
+                label: 'E-mail'
             },
             value: '',
         },
@@ -20,7 +19,7 @@ const Auth = props => {
             elementType: 'input',
             elementConfig: {
                 type: 'password',
-                placeholder: 'Пароль'
+                label: 'Password'
             },
             value: '',
         }
@@ -30,6 +29,7 @@ const Auth = props => {
 
     for (let key in controls) {
         formElementsArray.push({id: key, config: controls[key]})
+        console.log(formElementsArray)
     }
 
     const inputChangeHandler = (event, controlName) => {
@@ -52,24 +52,28 @@ const Auth = props => {
     let form = (
         <form onSubmit={submitHandler} className={classes.form}>
             {formElementsArray.map(formElement => {
-                return(
-                    <Input
+                return (
+                    <TextField
                         key={formElement.id}
                         elementType={formElement.config.elementType}
                         elementConfig={formElement.config.elementConfig}
                         value={formElement.config.value}
-                        changed={(event) => inputChangeHandler(event, formElement.id)}
+                        onChange={(event) => inputChangeHandler(event, formElement.id)}
+                        label={formElement.config.elementConfig.label}
+                        margin={"dense"}
                     />
                 )
             })}
-            <Button>Войти</Button>
+            <Button onClick={submitHandler} variant={"contained"} size={"large"} sx={{mt: 3}}>Войти</Button>
         </form>
     )
 
     return (
-        <Fragment>
-            {form}
-        </Fragment>
+        <div className={classes.form}>
+            <Card sx={{ maxWidth: 500 }} variant={"outlined"}>
+                {form}
+            </Card>
+        </div>
     )
 }
 

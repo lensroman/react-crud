@@ -1,6 +1,7 @@
 import React from "react";
 
 import { Stage, Layer, Image, Line } from "react-konva";
+import MarkupHeader from "../MarkupHeader/MarkupHeader";
 
 const Canvas = props => {
     let stageWidth = 0;
@@ -44,6 +45,15 @@ const Canvas = props => {
 
     return (
         <div>
+            <div>
+                <MarkupHeader
+                    save={ props.save }
+                    rectMode={ props.rectMode }
+                    polygonMode={ props.polygonMode }
+                    rect={ props.rect }
+                    polygon={ props.polygon }
+                />
+            </div>
             <Stage
                 width={ stageWidth }
                 height={ stageHeight }

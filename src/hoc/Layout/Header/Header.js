@@ -22,74 +22,101 @@ import {connect} from "react-redux";
 
 function Header(props) {
     const [anchorEl, setAnchorEl] = useState(null)
+
     const open = Boolean(anchorEl)
+
     const menuClickHandler = (event) => {
-        console.log('menu')
-        console.log(event.currentTarget)
         setAnchorEl(event.currentTarget);
     };
+
     const menuCloseHandler = () => {
         setAnchorEl(null);
     };
 
-    let menuItems = null
+    let menuItems = []
 
-    if (props.userType === 'admin') {
-        menuItems = (
-            <Fragment>
-                <MenuItem onClick={menuCloseHandler}>
-                    <Link to="/samples" className={classes.menuItems}>Выборки</Link>
-                </MenuItem>
-                <MenuItem onClick={menuCloseHandler}>
-                    <Link to="/tasks" className={classes.menuItems}>Задачи</Link>
-                </MenuItem>
-            </Fragment>
+    let menuButton = null
+
+    let exitButton = null
+
+    if (props.isAuthenticated) {
+        let links = {}
+
+        menuButton = (
+            <IconButton
+                color={"inherit"}
+                id="basic-button"
+                aria-controls="basic-menu"
+                aria-haspopup="true"
+                aria-expanded={open ? 'true' : undefined}
+                onClick={menuClickHandler}
+                size={"large"}
+            >
+                <MenuIcon />
+            </IconButton>
         )
+
+        exitButton = (
+            <Button
+                variant={"outlined"}
+                endIcon={<Logout />}
+                color={"inherit"}
+                size={"medium"}
+                hidden={!props.isAuthenticated}
+            >
+                Выход
+            </Button>
+        )
+
+        if (props.userType === 'admin') {
+            links = {
+                '/samples': 'Выборки',
+                '/tasks': 'Задачи',
+            }
+        }
+
+        if (props.userType === 'markup') {
+            links = {
+                '/markup': 'Разметка',
+                '/tasks': 'Задачи',
+            }
+        }
+
+        for (let key in links) {
+            menuItems.push(
+                <MenuItem onClick={menuCloseHandler}>
+                    <Link to={key} className={classes.menuItems}>{links[key]}</Link>
+                </MenuItem>)
+        }
     }
 
     return (
         <ThemeProvider theme={theme}>
             <AppBar position={"static"} color={"primary"}>
                 <Toolbar>
-                    <IconButton
-                        color={"inherit"}
-                        id="basic-button"
-                        aria-controls="basic-menu"
-                        aria-haspopup="true"
-                        aria-expanded={open ? 'true' : undefined}
-                        onClick={menuClickHandler}
+                    {menuButton}
+                    <Menu
+                        id="basic-menu"
+                        anchorEl={anchorEl}
+                        open={open}
+                        onClose={menuCloseHandler}
+                        MenuListProps={{
+                            'aria-labelledby': 'basic-button',
+                        }}
                     >
-                        <MenuIcon />
-                    </IconButton>
-                    <Hidden>
-                        <Menu
-                            id="basic-menu"
-                            anchorEl={anchorEl}
-                            open={open}
-                            onClose={menuCloseHandler}
-                            MenuListProps={{
-                                'aria-labelledby': 'basic-button',
-                            }}
-                        >
-                            {menuItems}
-                        </Menu>
-                    </Hidden>
+                        {menuItems.map(menuItem => {
+                            return menuItem
+                        })}
+                    </Menu>
                     <Typography
-                        variant={"h6"}
+                        variant={"h5"}
                         component={"span"}
                         sx={{ flexGrow: "1"}}
                         ml={"10px"}
                     >
                         СПО "Разметка"
                     </Typography>
-                    <Button
-                        variant={"outlined"}
-                        endIcon={<Logout />}
-                        color={"inherit"}
-                        size={"medium"}
-                    >
-                        Выход
-                    </Button>
+                    {exitButton}
                 </Toolbar>
             </AppBar>
         </ThemeProvider>
@@ -98,7 +125,8 @@ function Header(props) {
 
 const mapStateToProps = state => {
     return {
-        userType: state.auth.userType
+        userType: state.auth.userType,
+        isAuthenticated: state.auth.isAuthenticated
     }
 }
 
