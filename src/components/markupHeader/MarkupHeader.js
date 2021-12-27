@@ -1,35 +1,54 @@
 import React from "react";
 
 import classes from './MarkupHeader.module.scss';
-import {Button} from '@mui/material';
+import {Button, Typography} from '@mui/material';
+import {ArrowBack, ArrowForward, ChangeHistory, Crop169, Save} from "@mui/icons-material";
 
 const MarkupHeader = props => {
 
     return (
         <div className={classes.MarkupHeader}>
             <div>
-                <h1>Окно разметки</h1>
+                <Typography variant={"h4"} fontWeight={"bold"}>Окно разметки</Typography>
             </div>
             <div>
                 <Button
-                    variant={"outlined"}
+                    variant={"contained"}
                     onClick={props.rectMode}
                     disabled={props.rect}
+                    startIcon={<Crop169 />}
                 >
                     Прямоугольник
                 </Button>
                 <Button
-                    variant={"outlined"}
+                    variant={"contained"}
                     onClick={props.polygonMode}
                     disabled={props.polygon}
+                    sx={{ ml: 1, mr: 15 }}
+                    startIcon={<ChangeHistory />}
                 >
                     Полигон
                 </Button>
-            </div>
-            <div>
-                <Button variant={"outlined"}>Предыдущее изображения</Button>
-                <Button variant={"outlined"}>Следующее изображения</Button>
-                <Button clicked={props.save} variant={"outlined"}>Сохранить</Button>
+                <Button
+                    variant={"contained"}
+                    startIcon={<ArrowBack />}
+                >
+                    Предыдущее изображения
+                </Button>
+                <Button
+                    variant={"contained"}
+                    sx={{ ml: 1, mr: 15 }}
+                    endIcon={<ArrowForward />}
+                >
+                    Следующее изображения
+                </Button>
+                <Button
+                    onClick={props.save}
+                    variant={"contained"}
+                    endIcon={<Save />}
+                >
+                    Сохранить
+                </Button>
             </div>
         </div>
     )

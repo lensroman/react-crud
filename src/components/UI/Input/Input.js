@@ -1,6 +1,6 @@
 import React from "react";
 
-import classes from './Input.module.scss';
+import {TextField} from "@mui/material";
 
 const Input = props => {
 
@@ -8,28 +8,32 @@ const Input = props => {
 
     switch (props.elementType) {
         case ('input'): {
-            inputElement = <input
-                className={classes.Input}
+            inputElement = <TextField
                 {...props.elementConfig}
                 value={props.value}
                 onChange={props.changed}
+                label={props.label}
+                variant={"filled"}
+                size={"large"}
+                sx={{ mt: 5 }}
             />
             break
         }
         default: {
-            inputElement = <input
-                className={classes.Input}
+            inputElement = <TextField
                 {...props.elementConfig}
                 value={props.value}
                 onChange={props.changed}
+                label={props.label}
+                variant={"filled"}
+                sx={{ mt: 5 }}
             />
         }
     }
 
 
     return (
-        <div className={classes.Input}>
-            <label className={classes.Label}>{props.label}</label>
+        <div>
             {inputElement}
         </div>
     )

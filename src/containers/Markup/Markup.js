@@ -1,6 +1,9 @@
 import React, { useCallback, useEffect } from "react";
+
 import { connect } from "react-redux";
 import * as actions from '../../Store/actions/rootAction';
+
+import {Routes, Route} from 'react-router-dom';
 
 import json from '../../assets/json.json';
 import MarkupHeader from "../../components/MarkupHeader/MarkupHeader";
@@ -97,24 +100,26 @@ const Markup = props => {
     }, [props.markupMode, stopMarkupHandler])
 
     return (
-        <div style={{ flexGrow: '1' }}>
-            <MarkupHeader
-                save={ saveImageHandler }
-                rectMode={ rectModeHandler }
-                polygonMode={ polygonModeHandler }
-                rect={ props.rectMode }
-                polygon={ props.polygonMode }
-            />
-            <Canvas
-                image={ imgDOM }
-                mouseDown={ (event) => canvasMouseDownHandler(event) }
-                mouseMove={ (event) => canvasMouseMoveHandler(event) }
-                mouseUp={ (event) => canvasMouseUpHandler(event) }
-                pointsMarkup={ props.points }
-                color={ props.color }
-                startDraw={ props.startDraw }
-                regions={ props.regions }
-            />
+        <div>
+            <Routes>
+                <Route path={"/markup"} element={
+                    <Canvas
+                        save={ saveImageHandler }
+                        rectMode={ rectModeHandler }
+                        polygonMode={ polygonModeHandler }
+                        rect={ props.rectMode }
+                        polygon={ props.polygonMode }
+                        image={ imgDOM }
+                        mouseDown={ (event) => canvasMouseDownHandler(event) }
+                        mouseMove={ (event) => canvasMouseMoveHandler(event) }
+                        mouseUp={ (event) => canvasMouseUpHandler(event) }
+                        pointsMarkup={ props.points }
+                        color={ props.color }
+                        startDraw={ props.startDraw }
+                        regions={ props.regions }
+                    />}
+                />
+            </Routes>
         </div>
     )
 }
