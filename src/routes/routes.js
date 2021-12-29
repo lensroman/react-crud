@@ -5,7 +5,7 @@ import {Navigate} from "react-router-dom";
 import Auth from "../containers/Auth/Auth";
 import Markup from "../containers/Markup/Markup";
 import Dashboard from "../components/Dashboard/Dashboard";
-import Samples from "../containers/AdminContainers/Samples/Samples";
+import DataSets from "../containers/AdminContainers/DataSets/DataSets";
 import AdminTasks from "../containers/AdminContainers/AdminTasks/AdminTasks";
 
 const routes = (isAuthenticated, userType) => [
@@ -27,7 +27,7 @@ const routes = (isAuthenticated, userType) => [
     },
     {
         path: '/samples',
-        element: (isAuthenticated && userType === 'admin') ? <Samples /> : <Navigate to="/auth" />
+        element: (isAuthenticated && userType === 'admin') ? <DataSets /> : <Navigate to="/auth" />
     },
     {
         path: '/admin-tasks',

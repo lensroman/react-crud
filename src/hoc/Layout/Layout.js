@@ -21,7 +21,16 @@ const Layout = props => {
     return (
         <Fragment>
             <Header />
-            <Container  maxWidth={"1440px"} sx={{ paddingBottom: 5, display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: 'calc(100vh - 64px)'}}>
+            <Container
+                maxWidth={"1440px"}
+                sx={{
+                    paddingBottom: 5,
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    minHeight: 'calc(100vh - 64px)'
+                }}
+            >
                 {props.children}
             </Container>
             {footer}

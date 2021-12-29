@@ -3,7 +3,7 @@ import React from "react";
 import {theme} from "../../../../UI/Theme/Theme";
 import {Box, Card, CardActions, CardContent, ThemeProvider, Typography, Button} from "@mui/material";
 
-const Sample = props => {
+const DataSet = props => {
 
     return (
         <ThemeProvider theme={theme}>
@@ -30,10 +30,32 @@ const Sample = props => {
                     </Typography>
                     <Box sx={{ mb: 3 }}>
                         <Typography variant={"h5"} gutterBottom>Иван Иванов</Typography>
-                        <Typography>Данная выборка представляет из себя ZIP архив который состоит из папок TV, JSON и LABEL</Typography>
+                        <Typography>
+                            Данная выборка представляет из себя ZIP архив
+                            который состоит из папок TV, JSON и LABEL
+                        </Typography>
                     </Box>
                     <CardActions>
-                        <Button color={"secondary"} size={"small"} variant={"outlined"}>Подробнее</Button>
+                        <Box
+                            display={"flex"}
+                            justifyContent={"space-between"}
+                            width={"100%"}
+                        >
+                            <Button
+                                color={"secondary"}
+                                size={"small"}
+                                variant={"outlined"}
+                            >
+                                Подробнее
+                            </Button>
+                            <Button
+                                color={"error"}
+                                size={"small"}
+                                variant={"outlined"}
+                            >
+                                Удалить
+                            </Button>
+                        </Box>
                     </CardActions>
                 </CardContent>
             </Card>
@@ -41,4 +63,4 @@ const Sample = props => {
     )
 }
 
-export default Sample
+export default DataSet
