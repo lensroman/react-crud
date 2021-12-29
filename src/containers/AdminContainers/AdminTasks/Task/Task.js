@@ -1,7 +1,7 @@
 import React from "react";
 
 import {Box, Button, Card, CardActions, CardContent, ThemeProvider, Typography} from "@mui/material";
-import {theme} from "../../../UI/Theme/Theme";
+import {theme} from "../../../../UI/Theme/Theme";
 
 const Task = props => {
 

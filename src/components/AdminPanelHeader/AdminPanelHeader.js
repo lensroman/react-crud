@@ -3,7 +3,7 @@ import React from 'react';
 import {Routes, Route} from 'react-router-dom';
 
 import classes from './AdminPanelHeader.module.scss';
-import {Box, Button, Typography} from "@mui/material";
+import {Button, Typography} from "@mui/material";
 import {Add} from "@mui/icons-material";
 
 const AdminPanelHeader = props => {
@@ -33,7 +33,7 @@ const AdminPanelHeader = props => {
     return (
         <Routes>
             <Route path={"/samples"} element={samples} />
-            <Route path={"/tasks"} element={tasks} />
+            <Route path={"/admin-tasks"} element={tasks} />
         </Routes>
     )
 }

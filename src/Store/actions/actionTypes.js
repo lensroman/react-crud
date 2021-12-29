@@ -10,3 +10,4 @@ export const RECT_MODE_ON = 'RECT_MODE_ON'
 export const IMAGE_SAVE_JSON = 'IMAGE_SAVE_JSON'
 
 export const AUTH_USER = 'AUTH_USER'
+export const LOGOUT_USER = 'LOGOUT_USER'

@@ -1,6 +1,6 @@
 import React from "react";
 
-import {theme} from "../../../UI/Theme/Theme";
+import {theme} from "../../../../UI/Theme/Theme";
 import {Box, Card, CardActions, CardContent, ThemeProvider, Typography, Button} from "@mui/material";
 
 const Sample = props => {

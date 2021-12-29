@@ -1,9 +1,10 @@
-import React, {Fragment, useState} from "react";
+import React, {useState} from "react";
+
 import * as actions from '../../Store/actions/rootAction';
+import {connect} from "react-redux";
 
 import classes from './Auth.module.scss';
-import {connect} from "react-redux";
-import {Box, TextField, Button, Card, Typography} from "@mui/material";
+import {TextField, Button, Card} from "@mui/material";
 
 const Auth = props => {
     const [controls, setControls] = useState({
@@ -29,7 +30,6 @@ const Auth = props => {
 
     for (let key in controls) {
         formElementsArray.push({id: key, config: controls[key]})
-        console.log(formElementsArray)
     }
 
     const inputChangeHandler = (event, controlName) => {
@@ -55,8 +55,6 @@ const Auth = props => {
                 return (
                     <TextField
                         key={formElement.id}
-                        elementType={formElement.config.elementType}
-                        elementConfig={formElement.config.elementConfig}
                         value={formElement.config.value}
                         onChange={(event) => inputChangeHandler(event, formElement.id)}
                         label={formElement.config.elementConfig.label}

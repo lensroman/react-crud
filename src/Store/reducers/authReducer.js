@@ -18,8 +18,17 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 email: email,
                 password: password,
-                userType: 'markup',
+                userType: 'admin',
                 isAuthenticated: true
+            }
+        }
+        case actionTypes.LOGOUT_USER: {
+            return {
+                ...state,
+                email: null,
+                password: null,
+                isAuthenticated: false,
+                userType: null
             }
         }
         default: {

@@ -1,11 +1,13 @@
-import React, {Fragment, useState} from 'react';
+import React, {useState} from 'react';
+
+import {Navigate, Link} from "react-router-dom";
+import {connect} from "react-redux";
+import * as actions from '../../../Store/actions/rootAction';
 
 import classes from './Header.module.scss';
-
 import {
     AppBar,
     Button,
-    Hidden,
     IconButton,
     MenuItem,
     ThemeProvider,
@@ -16,9 +18,6 @@ import {
 import MenuIcon from '@mui/icons-material/Menu';
 import {Logout} from "@mui/icons-material";
 import {theme} from "../../../UI/Theme/Theme";
-
-import {Link} from "react-router-dom";
-import {connect} from "react-redux";
 
 function Header(props) {
     const [anchorEl, setAnchorEl] = useState(null)
@@ -32,6 +31,11 @@ function Header(props) {
     const menuCloseHandler = () => {
         setAnchorEl(null);
     };
+
+    const logoutHandler = () => {
+        props.onLogout()
+        return <Navigate to="/" />
+    }
 
     let menuItems = []
 
@@ -63,6 +67,7 @@ function Header(props) {
                 color={"inherit"}
                 size={"medium"}
                 hidden={!props.isAuthenticated}
+                onClick={logoutHandler}
             >
                 Выход
             </Button>
@@ -71,20 +76,20 @@ function Header(props) {
         if (props.userType === 'admin') {
             links = {
                 '/samples': 'Выборки',
-                '/tasks': 'Задачи',
+                '/admin-tasks': 'Задачи',
             }
         }
 
         if (props.userType === 'markup') {
             links = {
                 '/markup': 'Разметка',
-                '/tasks': 'Задачи',
+                '/markup-tasks': 'Задачи',
             }
         }
 
         for (let key in links) {
             menuItems.push(
-                <MenuItem onClick={menuCloseHandler}>
+                <MenuItem onClick={menuCloseHandler} key={key} sx={{ padding: 0 }}>
                     <Link to={key} className={classes.menuItems}>{links[key]}</Link>
                 </MenuItem>)
         }
@@ -130,4 +135,10 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps)(Header);
+const mapDispatchToProps = dispatch => {
+    return {
+        onLogout: () => dispatch(actions.logout())
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

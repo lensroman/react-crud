@@ -1,12 +1,9 @@
-import React, { useCallback, useEffect } from "react";
+import React, {useCallback, useEffect} from "react";
 
-import { connect } from "react-redux";
+import {connect} from "react-redux";
 import * as actions from '../../Store/actions/rootAction';
 
-import {Routes, Route} from 'react-router-dom';
-
 import json from '../../assets/json.json';
-import MarkupHeader from "../../components/MarkupHeader/MarkupHeader";
 import Canvas from "../../components/Canvas/Canvas";
 import useImage from "use-image";
 
@@ -40,11 +37,12 @@ const Markup = props => {
                 onRegionAdd('ground')
                 break
             }
-            default: return
+            default:
+                return
         }
     }, [onRegionAdd, onMarkupCancel])
 
-    const canvasMouseDownHandler = (event) => {
+    const canvasMouseDownHandler = event => {
         if (props.rectMode || props.polygonMode) {
             event.evt.preventDefault()
             if (props.firstLine) {
@@ -53,7 +51,7 @@ const Markup = props => {
         }
     }
 
-    const canvasMouseMoveHandler = (event) => {
+    const canvasMouseMoveHandler = event => {
         if (props.rectMode || props.polygonMode) {
             event.evt.preventDefault()
             if (props.startDraw && props.polygonMode) {
@@ -101,25 +99,21 @@ const Markup = props => {
 
     return (
         <div>
-            <Routes>
-                <Route path={"/markup"} element={
-                    <Canvas
-                        save={ saveImageHandler }
-                        rectMode={ rectModeHandler }
-                        polygonMode={ polygonModeHandler }
-                        rect={ props.rectMode }
-                        polygon={ props.polygonMode }
-                        image={ imgDOM }
-                        mouseDown={ (event) => canvasMouseDownHandler(event) }
-                        mouseMove={ (event) => canvasMouseMoveHandler(event) }
-                        mouseUp={ (event) => canvasMouseUpHandler(event) }
-                        pointsMarkup={ props.points }
-                        color={ props.color }
-                        startDraw={ props.startDraw }
-                        regions={ props.regions }
-                    />}
-                />
-            </Routes>
+            <Canvas
+                save={saveImageHandler}
+                rectMode={rectModeHandler}
+                polygonMode={polygonModeHandler}
+                rect={props.rectMode}
+                polygon={props.polygonMode}
+                image={imgDOM}
+                mouseDown={(event) => canvasMouseDownHandler(event)}
+                mouseMove={(event) => canvasMouseMoveHandler(event)}
+                mouseUp={(event) => canvasMouseUpHandler(event)}
+                pointsMarkup={props.points}
+                color={props.color}
+                startDraw={props.startDraw}
+                regions={props.regions}
+            />
         </div>
     )
 }
