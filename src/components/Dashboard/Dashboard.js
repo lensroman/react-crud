@@ -7,11 +7,11 @@ const Dashboard = (props) => {
 
     let link = null
 
-    if (props.userType === 'admin') {
+    if (props.isStaff) {
         link = '/samples'
     }
 
-    if (props.userType === 'markup') {
+    if (!props.isStaff) {
         link = '/markup'
     }
 
@@ -22,7 +22,7 @@ const Dashboard = (props) => {
 
 const mapStateToProps = state => {
     return {
-        userType: state.auth.userType
+        isStaff: state.auth.isStaff
     }
 }
 

@@ -9,7 +9,7 @@ import Layout from "./hoc/Layout/Layout";
 
 const App = props => {
 
-    const routing = useRoutes(routes(props.isAuthenticated, props.userType))
+    const routing = useRoutes(routes(props.isAuthenticated, props.isStaff))
 
     return (
         <div className="App">
@@ -23,7 +23,7 @@ const App = props => {
 const mapStateToProps = state => {
     return {
         isAuthenticated: state.auth.isAuthenticated,
-        userType: state.auth.userType
+        isStaff: state.auth.isStaff
     }
 }
 

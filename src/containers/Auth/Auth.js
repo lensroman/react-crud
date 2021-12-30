@@ -46,7 +46,8 @@ const Auth = props => {
 
     const submitHandler = (event) => {
         event.preventDefault();
-        props.onAuth(controls.email.value, controls.password.value)
+        props.onAuthUserStart(controls.email.value, controls.password.value)
+        props.onGetDataSets()
     }
 
     let form = (
@@ -83,7 +84,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        onAuth: (email, password) => dispatch(actions.auth(email, password))
+        onAuthUserStart: (userName, password) => dispatch(actions.authUserStart(userName, password)),
+        onGetDataSets: () => dispatch(actions.getDataSets())
     }
 }
 

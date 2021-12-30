@@ -8,7 +8,7 @@ import Dashboard from "../components/Dashboard/Dashboard";
 import DataSets from "../containers/AdminContainers/DataSets/DataSets";
 import AdminTasks from "../containers/AdminContainers/AdminTasks/AdminTasks";
 
-const routes = (isAuthenticated, userType) => [
+const routes = (isAuthenticated, isStaff) => [
     {
       path: "*",
       element: !isAuthenticated ? <Auth /> : <Navigate to="/" />
@@ -19,19 +19,19 @@ const routes = (isAuthenticated, userType) => [
     },
     {
         path: '/markup',
-        element: (isAuthenticated && userType === 'markup') ? <Markup /> : <Navigate to="/auth" />
+        element: (isAuthenticated && !isStaff) ? <Markup /> : <Navigate to="/auth" />
     },
     {
         path: '/markup-tasks',
-        element: (isAuthenticated && userType === 'markup') ? <Markup /> : <Navigate to="/auth" />
+        element: (isAuthenticated && !isStaff) ? <Markup /> : <Navigate to="/auth" />
     },
     {
         path: '/samples',
-        element: (isAuthenticated && userType === 'admin') ? <DataSets /> : <Navigate to="/auth" />
+        element: (isAuthenticated && isStaff) ? <DataSets /> : <Navigate to="/auth" />
     },
     {
         path: '/admin-tasks',
-        element: (isAuthenticated && userType === 'admin') ? <AdminTasks /> : <Navigate to="/auth" />
+        element: (isAuthenticated && isStaff) ? <AdminTasks /> : <Navigate to="/auth" />
     },
     {
         path: "/auth",
