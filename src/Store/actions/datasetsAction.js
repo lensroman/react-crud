@@ -6,6 +6,12 @@ export const fetchDatasets = () => {
     }
 }
 
+export const fetchDatasetsStart = () => {
+    return {
+        type: actionTypes.FETCH_DATASETS_START
+    }
+}
+
 export const fetchDatasetsSuccess = (datasets) => {
     return {
         type: actionTypes.FETCH_DATASETS_SUCCESS,

@@ -8,7 +8,7 @@ const initialState = {
 
 const reducer = (state = initialState, action) => {
     switch (action.type) {
-        case actionTypes.FETCH_DATASETS: {
+        case actionTypes.FETCH_DATASETS_START: {
             return {
                 ...state,
                 loading: true
@@ -28,5 +28,12 @@ const reducer = (state = initialState, action) => {
                 error: action.error
             }
         }
+        default: {
+            return {
+                ...state
+            }
+        }
     }
 }
+
+export default reducer;

@@ -4,6 +4,7 @@ import * as actions from '../actions/rootAction';
 import axios from '../../axios-instance';
 
 export function* fetchDatasetsSaga() {
+    yield put(actions.fetchDatasetsStart())
     try {
         const response = yield axios.get('/datasets/')
         yield put(actions.fetchDatasetsSuccess(response))

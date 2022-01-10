@@ -15,6 +15,7 @@ import {watchAuthSaga, watchDatasetsSaga} from "./Store/sagas/rootSaga";
 
 import markupReducer from './Store/reducers/markupReducer';
 import authReducer from "./Store/reducers/authReducer";
+import datasetsReducer from './Store/reducers/datasetsReducer';
 
 const devTools = process.env.NODE_ENV === 'development' ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ : null
 const composeEnhancers = devTools || compose;
@@ -23,7 +24,8 @@ const sagaMiddleWare = createSagaMiddleware()
 
 const rootReducer = combineReducers({
     markup: markupReducer,
-    auth: authReducer
+    auth: authReducer,
+    datasets: datasetsReducer
 })
 
 const store = createStore(rootReducer, composeEnhancers(applyMiddleware(sagaMiddleWare)))

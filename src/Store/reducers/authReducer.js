@@ -6,7 +6,7 @@ const initialState = {
     isAuthenticated: false,
     userId: null,
     userName: null,
-    isStaff: null,
+    isStaff: null
 }
 
 const reducer = (state = initialState, action) => {
@@ -25,7 +25,7 @@ const reducer = (state = initialState, action) => {
                 isAuthenticated: true,
                 userId: action.userId,
                 userName: action.userName,
-                isStaff: action.isStaff,
+                isStaff: action.isStaff
             }
         }
         case actionTypes.AUTH_FAIL: {
@@ -38,10 +38,12 @@ const reducer = (state = initialState, action) => {
         case actionTypes.LOGOUT_USER: {
             return {
                 ...state,
-                email: null,
-                password: null,
+                loading: false,
+                error: null,
                 isAuthenticated: false,
-                userType: null
+                userId: null,
+                userName: null,
+                isStaff: null
             }
         }
         default: {

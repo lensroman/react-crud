@@ -4,15 +4,15 @@ import * as actions from '../../Store/actions/rootAction';
 import {connect} from "react-redux";
 
 import classes from './Auth.module.scss';
-import {TextField, Button, Card} from "@mui/material";
+import {TextField, Button, Card, CircularProgress} from "@mui/material";
 
 const Auth = props => {
     const [controls, setControls] = useState({
         email: {
             elementType: 'input',
             elementConfig: {
-                type: 'email',
-                label: 'E-mail'
+                type: 'username',
+                label: 'Username'
             },
             value: '',
         },
@@ -66,11 +66,19 @@ const Auth = props => {
         </form>
     )
 
+    let content = (
+        <Card sx={{ maxWidth: 500 }} variant={"outlined"}>
+            {form}
+        </Card>
+    )
+
+    if(props.loading) {
+        content = (<CircularProgress />)
+    }
+
     return (
         <div className={classes.form}>
-            <Card sx={{ maxWidth: 500 }} variant={"outlined"}>
-                {form}
-            </Card>
+            {content}
         </div>
     )
 }
