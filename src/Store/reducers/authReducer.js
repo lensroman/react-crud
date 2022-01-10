@@ -22,9 +22,10 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 loading: false,
+                isAuthenticated: true,
                 userId: action.userId,
                 userName: action.userName,
-                isStaff: action.isStaff
+                isStaff: action.isStaff,
             }
         }
         case actionTypes.AUTH_FAIL: {

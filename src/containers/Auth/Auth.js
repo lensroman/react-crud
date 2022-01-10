@@ -1,11 +1,10 @@
-import React, {useEffect, useState} from "react";
+import React, { useState } from 'react';
 
 import * as actions from '../../Store/actions/rootAction';
 import {connect} from "react-redux";
 
 import classes from './Auth.module.scss';
 import {TextField, Button, Card} from "@mui/material";
-import axios from "axios";
 
 const Auth = props => {
     const [controls, setControls] = useState({

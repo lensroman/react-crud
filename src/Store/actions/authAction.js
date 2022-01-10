@@ -35,9 +35,3 @@ export const logout = () => {
         type: actionTypes.LOGOUT_USER
     }
 }
-
-export const getDataSets = () => {
-    return {
-        type: actionTypes.GET_DATASETS
-    }
-}

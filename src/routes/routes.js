@@ -18,20 +18,20 @@ const routes = (isAuthenticated, isStaff) => [
         element: isAuthenticated ? <Dashboard /> : <Navigate to="/auth" />
     },
     {
-        path: '/markup',
-        element: (isAuthenticated && !isStaff) ? <Markup /> : <Navigate to="/auth" />
-    },
-    {
-        path: '/markup-tasks',
-        element: (isAuthenticated && !isStaff) ? <Markup /> : <Navigate to="/auth" />
-    },
-    {
         path: '/samples',
         element: (isAuthenticated && isStaff) ? <DataSets /> : <Navigate to="/auth" />
     },
     {
         path: '/admin-tasks',
         element: (isAuthenticated && isStaff) ? <AdminTasks /> : <Navigate to="/auth" />
+    },
+    {
+        path: '/markup',
+        element: (isAuthenticated && !isStaff) ? <Markup /> : <Navigate to="/auth" />
+    },
+    {
+        path: '/markup-tasks',
+        element: (isAuthenticated && !isStaff) ? <Markup /> : <Navigate to="/auth" />
     },
     {
         path: "/auth",

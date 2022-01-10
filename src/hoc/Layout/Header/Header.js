@@ -73,14 +73,14 @@ function Header(props) {
             </Button>
         )
 
-        if (props.userType === 'admin') {
+        if (props.isStaff) {
             links = {
                 '/samples': 'Выборки',
                 '/admin-tasks': 'Задачи',
             }
         }
 
-        if (props.userType === 'markup') {
+        if (!props.isStaff) {
             links = {
                 '/markup': 'Разметка',
                 '/markup-tasks': 'Задачи',
@@ -131,7 +131,8 @@ function Header(props) {
 const mapStateToProps = state => {
     return {
         userType: state.auth.userType,
-        isAuthenticated: state.auth.isAuthenticated
+        isAuthenticated: state.auth.isAuthenticated,
+        isStaff: state.auth.isStaff
     }
 }
 

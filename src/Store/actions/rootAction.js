@@ -17,3 +17,8 @@ export {
     authFail,
     logout,
 } from './authAction'
+export {
+    fetchDatasets,
+    fetchDatasetsSuccess,
+    fetchDatasetsFail
+} from './datasetsAction'
