@@ -1,10 +1,11 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 
 import * as actions from '../../Store/actions/rootAction';
 import {connect} from "react-redux";
 
 import classes from './Auth.module.scss';
 import {TextField, Button, Card} from "@mui/material";
+import axios from "axios";
 
 const Auth = props => {
     const [controls, setControls] = useState({
@@ -46,8 +47,7 @@ const Auth = props => {
 
     const submitHandler = (event) => {
         event.preventDefault();
-        props.onAuthUserStart(controls.email.value, controls.password.value)
-        props.onGetDataSets()
+        props.onAuth(controls.email.value, controls.password.value)
     }
 
     let form = (
@@ -84,8 +84,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        onAuthUserStart: (userName, password) => dispatch(actions.authUserStart(userName, password)),
-        onGetDataSets: () => dispatch(actions.getDataSets())
+        onAuth: (userName, password) => dispatch(actions.authAction(userName, password))
     }
 }
 

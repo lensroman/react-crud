@@ -11,8 +11,9 @@ export {
     imageSaveAsJSON
 } from './markupAction'
 export {
-    authUserStart,
-    authUserSuccess,
+    authAction,
+    authStart,
+    authSuccess,
+    authFail,
     logout,
-    getDataSets
 } from './authAction'

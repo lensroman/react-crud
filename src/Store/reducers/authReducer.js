@@ -1,47 +1,37 @@
 import * as actionTypes from '../actions/actionTypes';
 
-import axios from '../../axios-auth';
-
 const initialState = {
     loading: false,
+    error: null,
     isAuthenticated: false,
+    userId: null,
     userName: null,
-    password: null,
     isStaff: null,
 }
 
 const reducer = (state = initialState, action) => {
     switch (action.type) {
-        case actionTypes.AUTH_USER_START: {
-            axios({
-                method: 'post',
-                url: '/login/',
-                data: {
-                    "username": action.userName,
-                    "password": action.password
-                }
-            }).then((response) => {
-                console.log('login', response)
-                console.log(response.headers['date'])
-            }).catch((error) => {
-                console.log(error)
-            })
-            return {
-                ...state
-            }
-        }
-        case actionTypes.GET_DATASETS: {
-            return {
-                ...state
-            }
-        }
-        case actionTypes.AUTH_USER_SUCCESS: {
+        case actionTypes.AUTH_START: {
             return {
                 ...state,
+                error: null,
+                loading: true
+            }
+        }
+        case actionTypes.AUTH_SUCCESS: {
+            return {
+                ...state,
+                loading: false,
+                userId: action.userId,
                 userName: action.userName,
-                password: action.password,
-                isStaff: action.isStaff,
-                isAuthenticated: true
+                isStaff: action.isStaff
+            }
+        }
+        case actionTypes.AUTH_FAIL: {
+            return {
+                ...state,
+                loading: false,
+                error: action.error
             }
         }
         case actionTypes.LOGOUT_USER: {
