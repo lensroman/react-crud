@@ -1,7 +1,7 @@
-import React from "react";
+import React from 'react';
 
-import { Stage, Layer, Image, Line } from "react-konva";
-import MarkupHeader from "../MarkupHeader/MarkupHeader";
+import { Stage, Layer, Image, Line } from 'react-konva';
+import MarkupHeader from '../MarkupHeader/MarkupHeader';
 
 const Canvas = props => {
     let stageWidth = 0;
