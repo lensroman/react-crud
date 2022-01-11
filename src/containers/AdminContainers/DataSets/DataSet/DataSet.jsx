@@ -52,6 +52,7 @@ const DataSet = props => {
                                 color={"error"}
                                 size={"small"}
                                 variant={"outlined"}
+                                onClick={props.deleteDataset}
                             >
                                 Удалить
                             </Button>

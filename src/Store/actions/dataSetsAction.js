@@ -1,25 +1,25 @@
 import * as actionTypes from './actionTypes'
 
-export const fetchDatasets = () => {
+export const fetchDataSets = () => {
     return {
         type: actionTypes.FETCH_DATASETS
     }
 }
 
-export const fetchDatasetsStart = () => {
+export const fetchDataSetsStart = () => {
     return {
         type: actionTypes.FETCH_DATASETS_START
     }
 }
 
-export const fetchDatasetsSuccess = (datasets) => {
+export const fetchDataSetsSuccess = (dataSets) => {
     return {
         type: actionTypes.FETCH_DATASETS_SUCCESS,
-        datasets: datasets
+        dataSets: dataSets
     }
 }
 
-export const fetchDatasetsFail = (error) => {
+export const fetchDataSetsFail = (error) => {
     return {
         type: actionTypes.FETCH_DATASETS_FAIL,
         error: error

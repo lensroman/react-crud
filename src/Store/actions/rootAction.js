@@ -18,8 +18,8 @@ export {
     logout,
 } from './authAction'
 export {
-    fetchDatasets,
-    fetchDatasetsStart,
-    fetchDatasetsSuccess,
-    fetchDatasetsFail
-} from './datasetsAction'
+    fetchDataSets,
+    fetchDataSetsStart,
+    fetchDataSetsSuccess,
+    fetchDataSetsFail
+} from './dataSetsAction'
