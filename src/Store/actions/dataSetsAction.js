@@ -25,3 +25,18 @@ export const fetchDataSetsFail = (error) => {
         error: error
     }
 }
+
+export const addDataSet = (name, file) => {
+    return {
+        type: actionTypes.ADD_DATASET,
+        name: name,
+        file: file
+    }
+}
+
+export const deleteDataSet = (id) => {
+    return {
+        type: actionTypes.DELETE_DATASET,
+        id: id
+    }
+}

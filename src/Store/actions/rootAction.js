@@ -21,5 +21,7 @@ export {
     fetchDataSets,
     fetchDataSetsStart,
     fetchDataSetsSuccess,
-    fetchDataSetsFail
+    fetchDataSetsFail,
+    addDataSet,
+    deleteDataSet
 } from './dataSetsAction'

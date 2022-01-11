@@ -26,7 +26,7 @@ const DataSet = props => {
                             alignItems: "center"
                         }}
                     >
-                        Выборка 1
+                        Выборка {props.name}
                     </Typography>
                     <Box sx={{ mb: 3 }}>
                         <Typography variant={"h5"} gutterBottom>Иван Иванов</Typography>
@@ -52,7 +52,7 @@ const DataSet = props => {
                                 color={"error"}
                                 size={"small"}
                                 variant={"outlined"}
-                                onClick={props.deleteDataset}
+                                onClick={props.delete}
                             >
                                 Удалить
                             </Button>

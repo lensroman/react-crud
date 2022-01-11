@@ -11,7 +11,6 @@ export function* authActionSaga(action) {
     }
     try {
         const response = yield axios.post('/login/', authData)
-        console.log(response)
         const userName = yield response.data.username
         const userId = yield response.data.id
         const isStaff = yield response.data.is_staff
