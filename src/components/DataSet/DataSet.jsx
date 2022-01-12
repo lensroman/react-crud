@@ -1,6 +1,6 @@
 import React from "react";
 
-import {theme} from "../../../../UI/Theme/Theme";
+import {theme} from "../../UI/Theme/Theme";
 import {Box, Card, CardActions, CardContent, ThemeProvider, Typography, Button} from "@mui/material";
 
 const DataSet = props => {
@@ -13,7 +13,8 @@ const DataSet = props => {
                     m: 3,
                     bgcolor: 'rgba(241,241,241,0.95)',
                 }}
-                variant={"outlined"}>
+                variant={"outlined"}
+            >
                 <CardContent sx={{ textAlign: "center" }}>
                     <Typography
                         variant={"h4"}

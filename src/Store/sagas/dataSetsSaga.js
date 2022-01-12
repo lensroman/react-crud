@@ -19,7 +19,7 @@ export function* addDataSetSaga(action) {
     yield formData.append('name', action.name)
     yield formData.append('dataset_to', action.file)
     try {
-        const response = yield axios.post('/datasets/', formData, {
+        yield axios.post('/datasets/', formData, {
             headers: {
                 'content-type': 'multipart/form-data'
             }
@@ -34,7 +34,7 @@ export function* addDataSetSaga(action) {
 export function* deleteDataSetSaga(action) {
     console.log(typeof action.id)
     try {
-        const response = yield axios.delete(`/datasets/${action.id}/`)
+        yield axios.delete(`/datasets/${action.id}/`)
         yield put(actions.fetchDataSets())
     }
     catch(error) {

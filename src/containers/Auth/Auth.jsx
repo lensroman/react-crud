@@ -54,6 +54,7 @@ const Auth = props => {
             {formElementsArray.map(formElement => {
                 return (
                     <TextField
+                        autoComplete={'off'}
                         key={formElement.id}
                         value={formElement.config.value}
                         onChange={(event) => inputChangeHandler(event, formElement.id)}

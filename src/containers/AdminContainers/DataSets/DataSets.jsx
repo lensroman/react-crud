@@ -4,8 +4,8 @@ import {connect} from 'react-redux';
 import * as actions from '../../../Store/actions/rootAction';
 
 import classes from './DataSets.module.scss';
-import DataSet from './DataSet/DataSet';
-import {Box, Button, Modal, TextField, Typography} from "@mui/material";
+import DataSet from '../../../components/DataSet/DataSet';
+import {Box, Button, FormControl, Modal, TextField, Typography} from "@mui/material";
 import {Add} from "@mui/icons-material";
 
 const DataSets = props => {
@@ -55,15 +55,16 @@ const DataSets = props => {
             aria-labelledby="modal-title"
             aria-describedby="modal-description"
         >
-            <Box className={classes.DataSetsModal}>
+            <FormControl fullWidth={true} className={classes.DataSetsModal}>
                 <TextField
                     label="Название выборки"
                     size={'small'}
+                    autoComplete={'off'}
                     onChange={(event) => inputChangeHandler(event)}
                 />
                 <input type="file" onInput={fileAddHandler}/>
                 <Button onClick={addDataSetHandler}>Добавить</Button>
-            </Box>
+            </FormControl>
         </Modal>
     )
 

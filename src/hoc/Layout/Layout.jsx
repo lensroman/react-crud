@@ -27,7 +27,7 @@ const Layout = props => {
                     paddingBottom: 5,
                     display: 'flex',
                     justifyContent: 'center',
-                    alignItems: 'center',
+                    alignItems: 'flex-start',
                     minHeight: 'calc(100vh - 64px)'
                 }}
             >
