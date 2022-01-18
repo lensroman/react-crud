@@ -3,12 +3,13 @@ import React from "react";
 import {theme} from "../../UI/Theme/Theme";
 import {Box, Card, CardActions, CardContent, ThemeProvider, Typography, Button} from "@mui/material";
 
-const DataSet = props => {
+const Dataset = props => {
 
     return (
         <ThemeProvider theme={theme}>
             <Card
                 sx={{
+                    minWidth: 345,
                     maxWidth: 345,
                     m: 3,
                     bgcolor: 'rgba(241,241,241,0.95)',
@@ -27,10 +28,10 @@ const DataSet = props => {
                             alignItems: "center"
                         }}
                     >
-                        Выборка {props.name}
+                        {props.name}
                     </Typography>
                     <Box sx={{ mb: 3 }}>
-                        <Typography variant={"h5"} gutterBottom>Иван Иванов</Typography>
+                        <Typography variant={"h5"} gutterBottom>User</Typography>
                         <Typography>
                             Данная выборка представляет из себя ZIP архив
                             который состоит из папок TV, JSON и LABEL
@@ -65,4 +66,4 @@ const DataSet = props => {
     )
 }
 
-export default DataSet
+export default Dataset

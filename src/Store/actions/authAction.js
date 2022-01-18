@@ -35,3 +35,23 @@ export const logout = () => {
         type: actionTypes.LOGOUT_USER
     }
 }
+
+export const getUsers = () => {
+    return {
+        type: actionTypes.GET_USERS
+    }
+}
+
+export const getMarkupUsers = (users) => {
+    return {
+        type: actionTypes.GET_MARKUP_USERS,
+        users: users
+    }
+}
+
+export const getUsersFail = (error) => {
+    return {
+        type: actionTypes.GET_USERS_FAIL,
+        error: error
+    }
+}

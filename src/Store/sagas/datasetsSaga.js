@@ -4,13 +4,13 @@ import * as actions from '../actions/rootAction';
 import axios from '../../axios-instance';
 
 export function* fetchDataSetsSaga() {
-    yield put(actions.fetchDataSetsStart())
+    yield put(actions.fetchDatasetsStart())
     try {
         const response = yield axios.get('/datasets/')
-        yield put(actions.fetchDataSetsSuccess(response.data.results))
+        yield put(actions.fetchDatasetsSuccess(response.data.results))
     }
     catch(error) {
-        yield put(actions.fetchDataSetsFail(error))
+        yield put(actions.fetchDatasetsFail(error))
     }
 }
 
@@ -24,7 +24,7 @@ export function* addDataSetSaga(action) {
                 'content-type': 'multipart/form-data'
             }
         })
-        yield put(actions.fetchDataSets())
+        yield put(actions.fetchDatasets())
     }
     catch(error) {
         console.log(error)
@@ -32,10 +32,9 @@ export function* addDataSetSaga(action) {
 }
 
 export function* deleteDataSetSaga(action) {
-    console.log(typeof action.id)
     try {
         yield axios.delete(`/datasets/${action.id}/`)
-        yield put(actions.fetchDataSets())
+        yield put(actions.fetchDatasets())
     }
     catch(error) {
         console.log(error)

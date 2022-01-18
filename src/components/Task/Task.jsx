@@ -9,6 +9,7 @@ const Task = props => {
         <ThemeProvider theme={theme}>
             <Card
                 sx={{
+                    minWidth: 345,
                     maxWidth: 345,
                     m: 3,
                     bgcolor: 'rgba(241,241,241,0.95)',
@@ -26,11 +27,11 @@ const Task = props => {
                             alignItems: "center"
                         }}
                     >
-                        Задача №1
+                        {props.title}
                     </Typography>
                     <Box sx={{ mb: 3 }}>
-                        <Typography variant={"h5"} gutterBottom>Иван Иванов</Typography>
-                        <Typography>Разметить выборку 1, начиная с изображения 1 и заканчивая изображением 50</Typography>
+                        <Typography variant={"h5"} gutterBottom>{props.marker}</Typography>
+                        <Typography>{props.description}</Typography>
                     </Box>
                     <CardActions>
                         <Button color={"secondary"} size={"small"} variant={"outlined"}>Подробнее</Button>

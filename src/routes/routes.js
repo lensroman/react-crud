@@ -5,7 +5,7 @@ import {Navigate} from "react-router-dom";
 import Auth from "../containers/Auth/Auth";
 import Markup from "../containers/Markup/Markup";
 import Dashboard from "../components/Dashboard/Dashboard";
-import DataSets from "../containers/AdminContainers/DataSets/DataSets";
+import DataSets from "../containers/AdminContainers/Datasets/Datasets";
 import AdminTasks from "../containers/AdminContainers/AdminTasks/AdminTasks";
 
 const routes = (isAuthenticated, isStaff) => [

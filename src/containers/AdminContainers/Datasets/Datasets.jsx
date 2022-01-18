@@ -3,22 +3,23 @@ import React, {useEffect, useState} from 'react';
 import {connect} from 'react-redux';
 import * as actions from '../../../Store/actions/rootAction';
 
-import classes from './DataSets.module.scss';
-import DataSet from '../../../components/DataSet/DataSet';
-import {Box, Button, FormControl, Modal, TextField, Typography} from "@mui/material";
+import classes from './Datasets.module.scss';
+import Dataset from '../../../components/Dataset/Dataset';
+import {Box, Button, Modal, TextField, Typography} from "@mui/material";
 import {Add} from "@mui/icons-material";
 
-const DataSets = props => {
+const Datasets = props => {
 
     const [modalOpen, setModalOpen] = useState(false)
     const [dataSetName, setDataSetName] = useState('')
     const [dataSetFile, setDataSetFile] = useState(null)
 
-    const {onFetchDataSets} = props
+    const {onFetchDatasets, onFetchAdminTasks} = props
 
     useEffect(() => {
-        onFetchDataSets()
-    }, [onFetchDataSets])
+        onFetchDatasets()
+        onFetchAdminTasks()
+    }, [onFetchDatasets, onFetchAdminTasks])
 
     let cards = null
 
@@ -41,11 +42,11 @@ const DataSets = props => {
 
     const addDataSetHandler = () => {
         modalCloseHandler()
-        props.onAddDataSet(dataSetName, dataSetFile)
+        props.onAddDataset(dataSetName, dataSetFile)
     }
 
     const deleteDataSetHandler = (id) => {
-        props.onDeleteDataSet(id)
+        props.onDeleteDataset(id)
     }
 
     let modal = (
@@ -55,28 +56,30 @@ const DataSets = props => {
             aria-labelledby="modal-title"
             aria-describedby="modal-description"
         >
-            <FormControl fullWidth={true} className={classes.DataSetsModal}>
-                <TextField
-                    label="Название выборки"
-                    size={'small'}
-                    autoComplete={'off'}
-                    onChange={(event) => inputChangeHandler(event)}
-                />
-                <input type="file" onInput={fileAddHandler}/>
+            <Box fullWidth={true} className={classes.DataSetsModal}>
+                <Typography variant={"h6"}>Добавьте новую выборку</Typography>
+                <Box className={classes.ModalInputs}>
+                    <TextField
+                        label="Название выборки"
+                        autoComplete={'off'}
+                        onChange={(event) => inputChangeHandler(event)}
+                    />
+                    <input type="file" onInput={fileAddHandler}/>
+                </Box>
                 <Button onClick={addDataSetHandler}>Добавить</Button>
-            </FormControl>
+            </Box>
         </Modal>
     )
 
-    if (props.dataSets) {
+    if (props.datasets) {
         cards = (
-            props.dataSets.map(dataSet => {
+            props.datasets.map(dataset => {
                 return (
-                    <DataSet
-                        key={dataSet.id}
-                        id={dataSet.id}
-                        name={dataSet.name}
-                        delete={() => deleteDataSetHandler(dataSet.id)}
+                    <Dataset
+                        key={dataset.id}
+                        id={dataset.id}
+                        name={dataset.name}
+                        delete={() => deleteDataSetHandler(dataset.id)}
                     />
                 )
             })
@@ -107,16 +110,19 @@ const DataSets = props => {
 
 const mapStateToProps = state => {
     return {
-        dataSets: state.dataSets.dataSets
+        datasets: state.datasets.datasets,
+        tasks: state.tasks.adminTasks,
+        markupUsers: state.auth.markupUsers
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        onFetchDataSets: () => dispatch(actions.fetchDataSets()),
-        onAddDataSet: (name, file) => dispatch(actions.addDataSet(name, file)),
-        onDeleteDataSet: (id) => dispatch(actions.deleteDataSet(id))
+        onFetchDatasets: () => dispatch(actions.fetchDatasets()),
+        onAddDataset: (name, file) => dispatch(actions.addDataset(name, file)),
+        onDeleteDataset: (id) => dispatch(actions.deleteDataset(id)),
+        onFetchAdminTasks: () => dispatch(actions.fetchAdminTasks())
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(DataSets);
+export default connect(mapStateToProps, mapDispatchToProps)(Datasets);

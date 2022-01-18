@@ -21,3 +21,14 @@ export function* authActionSaga(action) {
         yield put(actions.authFail(error))
     }
 }
+
+export function* getUsersSaga() {
+    try {
+        const response = yield axios.get('/users/')
+        yield put(actions.getMarkupUsers(response.data.results))
+    }
+    catch(error) {
+        console.log(error)
+        yield put(actions.getUsersFail())
+    }
+}

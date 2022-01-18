@@ -16,12 +16,21 @@ export {
     authSuccess,
     authFail,
     logout,
+    getUsers,
+    getMarkupUsers,
+    getUsersFail
 } from './authAction'
 export {
-    fetchDataSets,
-    fetchDataSetsStart,
-    fetchDataSetsSuccess,
-    fetchDataSetsFail,
-    addDataSet,
-    deleteDataSet
-} from './dataSetsAction'
+    fetchDatasets,
+    fetchDatasetsStart,
+    fetchDatasetsSuccess,
+    fetchDatasetsFail,
+    addDataset,
+    deleteDataset
+} from './datasetsAction'
+export {
+    fetchAdminTasks,
+    fetchAdminTasksSuccess,
+    fetchAdminTasksFail,
+    addAdminTask
+} from './tasksAction'

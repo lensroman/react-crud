@@ -1,11 +1,30 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import classes from './AdminTasks.module.scss';
 import Task from '../../../components/Task/Task';
-import {Box, Button, FormControl, InputLabel, MenuItem, Modal, Select, TextField, Typography} from '@mui/material';
+import {Button, Typography} from '@mui/material';
 import {Add} from '@mui/icons-material';
 
-const AdminTasks = () => {
+import * as actions from '../../../Store/actions/rootAction';
+import {connect} from 'react-redux';
+import ModalAdminTasks from "../../../components/ModalAdminTasks/ModalAdminTasks";
+
+const AdminTasks = (props) => {
+
+    const {onFetchAdminTasks, onGetUsers} = props
+
+    useEffect( () => {
+        onFetchAdminTasks()
+    }, [onFetchAdminTasks, onGetUsers])
+
+    const {datasets} = props
+
+    const [newTask, setNewTask] = useState({
+        dataset: {},
+        marker: {},
+        title: null,
+        description: null
+    })
 
     const [modalOpen, setModalOpen] = useState(false)
 
@@ -16,22 +35,60 @@ const AdminTasks = () => {
         setModalOpen(false)
     }
 
-    let modal = (
-        <Modal
-            open={modalOpen}
-            onClose={modalCloseHandler}
-            aria-labelledby="modal-title"
-            aria-describedby="modal-description"
-        >
-            <FormControl fullWidth={true} className={classes.AdminTasksModal}>
-                <div>
-                    <Select label={'label'} sx={{ width: 200 }}>
+    const datasetSelectHandler = (event) => {
+        const updatedNewTask = {
+            ...newTask,
+            dataset: event.target.value
+        }
+        setNewTask(updatedNewTask)
+    }
 
-                    </Select>
-                </div>
-            </FormControl>
-        </Modal>
-    )
+    const markupSelectHandler = (event) => {
+        const updatedNewTask = {
+            ...newTask,
+            marker: event.target.value
+        }
+        setNewTask(updatedNewTask)
+    }
+
+    const titleChangeHandler = (event) => {
+        const updatedNewTask = {
+            ...newTask,
+            title: event.target.value
+        }
+        setNewTask(updatedNewTask)
+    }
+
+    const descriptionChangeHandler = (event) => {
+        const updatedNewTask = {
+            ...newTask,
+            description: event.target.value
+        }
+        setNewTask(updatedNewTask)
+    }
+
+    const submitNewTaskHandler = () => {
+        modalCloseHandler()
+        props.onAddAdminTask(newTask)
+    }
+
+    let cards = null
+
+    if (props.tasks && props.markupUsers.length > 0) {
+        cards = (
+            props.tasks.map(task => {
+                const marker = props.markupUsers.filter(user => user.id === task.marker)[0].username
+                return (
+                    <Task
+                        key={task.id}
+                        title={task.title}
+                        description={task.description}
+                        marker={marker}
+                    />
+                )
+            })
+        )
+    }
 
     return (
         <div className={classes.AdminTasks}>
@@ -42,16 +99,41 @@ const AdminTasks = () => {
                 <div>
                     <Button
                         variant={"contained"}
-                        startIcon={<Add />}
+                        startIcon={<Add/>}
                         onClick={modalOpenHandler}
                     >
                         Создать задачу
                     </Button>
                 </div>
-                {modal}
             </div>
+            {cards}
+            <ModalAdminTasks
+                modalOpen={modalOpen}
+                modalClose={modalCloseHandler}
+                datasetSelect={datasetSelectHandler}
+                datasets={datasets}
+                markerSelect={markupSelectHandler}
+                titleChange={titleChangeHandler}
+                descriptionChange={descriptionChangeHandler}
+                submitNewTask={submitNewTaskHandler}
+            />
         </div>
     )
 }
 
-export default AdminTasks;
+const mapStateToProps = state => {
+    return {
+        tasks: state.tasks.adminTasks,
+        markupUsers: state.auth.markupUsers
+    }
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+        onFetchAdminTasks: () => dispatch(actions.fetchAdminTasks()),
+        onAddAdminTask: (task) => dispatch(actions.addAdminTask(task)),
+        onGetUsers: () => dispatch(actions.getUsers())
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(AdminTasks);
