@@ -1,23 +1,25 @@
 import React, {useEffect, useState} from 'react';
 
 import classes from './AdminTasks.module.scss';
-import Task from '../../../components/Task/Task';
 import {Button, Typography} from '@mui/material';
 import {Add} from '@mui/icons-material';
 
-import * as actions from '../../../Store/actions/rootAction';
+import * as actions from '../../Store/actions/rootAction';
 import {connect} from 'react-redux';
-import ModalAdminTasks from "../../../components/ModalAdminTasks/ModalAdminTasks";
+
+import ModalAddAdminTasks from "../../components/ModaAddlAdminTasks/ModalAddAdminTasks";
+import TaskCard from '../../components/TaskCard/TaskCard';
+import { useNavigate, Outlet } from "react-router-dom";
 
 const AdminTasks = (props) => {
 
-    const {onFetchAdminTasks, onGetUsers} = props
+    const {onFetchAdminTasks} = props
+
+    const {datasets} = props
 
     useEffect( () => {
         onFetchAdminTasks()
-    }, [onFetchAdminTasks, onGetUsers])
-
-    const {datasets} = props
+    }, [onFetchAdminTasks])
 
     const [newTask, setNewTask] = useState({
         dataset: {},
@@ -26,13 +28,15 @@ const AdminTasks = (props) => {
         description: null
     })
 
-    const [modalOpen, setModalOpen] = useState(false)
+    const [modalAddOpen, setModalAddOpen] = useState(false)
 
-    const modalOpenHandler = () => {
-        setModalOpen(true)
+    const navigate = useNavigate()
+
+    const modalAddOpenHandler = () => {
+        setModalAddOpen(true)
     }
-    const modalCloseHandler = () => {
-        setModalOpen(false)
+    const modalAddCloseHandler = () => {
+        setModalAddOpen(false)
     }
 
     const datasetSelectHandler = (event) => {
@@ -68,8 +72,17 @@ const AdminTasks = (props) => {
     }
 
     const submitNewTaskHandler = () => {
-        modalCloseHandler()
+        modalAddCloseHandler()
         props.onAddAdminTask(newTask)
+    }
+
+    const taskDeleteHandler = (id) => {
+        props.onDeleteAdminTask(id)
+    }
+
+    const changeRouteHandler = (id) => {
+        let path = `/admin-tasks/${id}/`
+        navigate(path)
     }
 
     let cards = null
@@ -79,11 +92,12 @@ const AdminTasks = (props) => {
             props.tasks.map(task => {
                 const marker = props.markupUsers.filter(user => user.id === task.marker)[0].username
                 return (
-                    <Task
+                    <TaskCard
                         key={task.id}
                         title={task.title}
-                        description={task.description}
                         marker={marker}
+                        delete={() => taskDeleteHandler(task.id)}
+                        openTask={() => changeRouteHandler(task.id)}
                     />
                 )
             })
@@ -100,16 +114,16 @@ const AdminTasks = (props) => {
                     <Button
                         variant={"contained"}
                         startIcon={<Add/>}
-                        onClick={modalOpenHandler}
+                        onClick={modalAddOpenHandler}
                     >
                         Создать задачу
                     </Button>
                 </div>
             </div>
             {cards}
-            <ModalAdminTasks
-                modalOpen={modalOpen}
-                modalClose={modalCloseHandler}
+            <ModalAddAdminTasks
+                modalOpen={modalAddOpen}
+                modalClose={modalAddCloseHandler}
                 datasetSelect={datasetSelectHandler}
                 datasets={datasets}
                 markerSelect={markupSelectHandler}
@@ -117,6 +131,7 @@ const AdminTasks = (props) => {
                 descriptionChange={descriptionChangeHandler}
                 submitNewTask={submitNewTaskHandler}
             />
+            <Outlet />
         </div>
     )
 }
@@ -132,6 +147,7 @@ const mapDispatchToProps = dispatch => {
     return {
         onFetchAdminTasks: () => dispatch(actions.fetchAdminTasks()),
         onAddAdminTask: (task) => dispatch(actions.addAdminTask(task)),
+        onDeleteAdminTask: (id) => dispatch(actions.deleteAdminTask(id)),
         onGetUsers: () => dispatch(actions.getUsers())
     }
 }

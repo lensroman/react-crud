@@ -32,5 +32,8 @@ export {
     fetchAdminTasks,
     fetchAdminTasksSuccess,
     fetchAdminTasksFail,
-    addAdminTask
+    addAdminTask,
+    deleteAdminTask,
+    getTaskInfo,
+    setCurrentTask,
 } from './tasksAction'

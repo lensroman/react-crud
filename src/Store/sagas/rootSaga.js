@@ -4,7 +4,7 @@ import * as actionTypes from '../actions/actionTypes';
 
 import {authActionSaga, getUsersSaga} from './authSaga';
 import {addDataSetSaga, deleteDataSetSaga, fetchDataSetsSaga} from './datasetsSaga';
-import {addAdminTaskSaga, fetchAdminTasksSaga} from './tasksSaga'
+import {addAdminTaskSaga, deleteAdminTaskSaga, fetchAdminTasksSaga, getTaskInfoSaga} from './tasksSaga'
 
 export function* watchAuthSaga() {
     yield takeEvery(actionTypes.AUTH_USER, authActionSaga)
@@ -20,4 +20,6 @@ export function* watchDataSetsSaga() {
 export function* watchAdminTasksSaga() {
     yield takeEvery(actionTypes.FETCH_ADMIN_TASKS, fetchAdminTasksSaga)
     yield takeEvery(actionTypes.ADD_ADMIN_TASK, addAdminTaskSaga)
+    yield takeEvery(actionTypes.DELETE_ADMIN_TASK, deleteAdminTaskSaga)
+    yield takeEvery(actionTypes.GET_TASK_INFO, getTaskInfoSaga)
 }

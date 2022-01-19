@@ -1,12 +1,12 @@
 import React, {useEffect} from 'react';
 
 import {Box, Button, MenuItem, Modal, TextField, Typography} from "@mui/material";
-import classes from "../../containers/AdminContainers/AdminTasks/AdminTasks.module.scss";
+import classes from "../../containers/AdminTasks/AdminTasks.module.scss";
 
 import {connect} from "react-redux";
 import * as actions from "../../Store/actions/rootAction";
 
-const ModalAdminTasks = (props) => {
+const ModalAddAdminTasks = (props) => {
 
     const {onFetchDataSets} = props
     const {onGetUsers} = props
@@ -102,4 +102,4 @@ const mapDispatchToProps = dispatch => {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ModalAdminTasks);
+export default connect(mapStateToProps, mapDispatchToProps)(ModalAddAdminTasks);

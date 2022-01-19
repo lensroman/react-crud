@@ -3,7 +3,8 @@ import * as actionTypes from '../actions/actionTypes';
 const initialState = {
     loading: false,
     error: null,
-    adminTasks: []
+    adminTasks: [],
+    currentTask: null
 }
 
 const reducer = (state = initialState, action) => {
@@ -26,6 +27,12 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 loading: false,
                 error: action.error
+            }
+        }
+        case actionTypes.SET_CURRENT_TASK: {
+            return {
+                ...state,
+                currentTask: action.data
             }
         }
         default: {

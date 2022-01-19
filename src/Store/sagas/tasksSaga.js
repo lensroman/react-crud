@@ -24,6 +24,26 @@ export function* addAdminTaskSaga(action) {
         yield put(actions.fetchAdminTasks())
     }
     catch(error) {
+        console.log(error)
+    }
+}
 
+export function* deleteAdminTaskSaga(action) {
+    try {
+        yield axios.delete(`/tasks/${action.id}`)
+        yield put(actions.fetchAdminTasks())
+    }
+    catch(error) {
+        console.log(error)
+    }
+}
+
+export function* getTaskInfoSaga(action) {
+    try {
+        const response = yield axios.get(`/tasks/${action.id}`)
+        yield put(actions.setCurrentTask(response.data))
+    }
+    catch(error) {
+        console.log(error)
     }
 }

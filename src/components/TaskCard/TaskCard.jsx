@@ -3,7 +3,7 @@ import React from "react";
 import {Box, Button, Card, CardActions, CardContent, ThemeProvider, Typography} from "@mui/material";
 import {theme} from "../../UI/Theme/Theme";
 
-const Task = props => {
+const TaskCard = props => {
 
     return (
         <ThemeProvider theme={theme}>
@@ -31,10 +31,30 @@ const Task = props => {
                     </Typography>
                     <Box sx={{ mb: 3 }}>
                         <Typography variant={"h5"} gutterBottom>{props.marker}</Typography>
-                        <Typography>{props.description}</Typography>
                     </Box>
                     <CardActions>
-                        <Button color={"secondary"} size={"small"} variant={"outlined"}>Подробнее</Button>
+                        <Box sx={{
+                            display: 'flex',
+                            justifyContent: 'space-between',
+                            width: '100%'
+                        }}>
+                            <Button
+                                color={"secondary"}
+                                size={"small"}
+                                variant={"outlined"}
+                                onClick={props.openTask}
+                            >
+                                Подробнее
+                            </Button>
+                            <Button
+                                color={"error"}
+                                size={"small"}
+                                variant={"outlined"}
+                                onClick={props.delete}
+                            >
+                                Удалить
+                            </Button>
+                        </Box>
                     </CardActions>
                 </CardContent>
             </Card>
@@ -42,4 +62,4 @@ const Task = props => {
     )
 }
 
-export default Task;
+export default TaskCard;

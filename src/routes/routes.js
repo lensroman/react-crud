@@ -5,8 +5,9 @@ import {Navigate} from "react-router-dom";
 import Auth from "../containers/Auth/Auth";
 import Markup from "../containers/Markup/Markup";
 import Dashboard from "../components/Dashboard/Dashboard";
-import DataSets from "../containers/AdminContainers/Datasets/Datasets";
-import AdminTasks from "../containers/AdminContainers/AdminTasks/AdminTasks";
+import DataSets from "../containers/Datasets/Datasets";
+import AdminTasks from "../containers/AdminTasks/AdminTasks";
+import TaskPage from '../components/TaskPage/TaskPage';
 
 const routes = (isAuthenticated, isStaff) => [
     {
@@ -23,7 +24,11 @@ const routes = (isAuthenticated, isStaff) => [
     },
     {
         path: '/admin-tasks',
-        element: (isAuthenticated && isStaff) ? <AdminTasks /> : <Navigate to="/auth" />
+        element: (isAuthenticated && isStaff) ? <AdminTasks /> : <Navigate to="/auth" />,
+    },
+    {
+        path: '/admin-tasks/*',
+        element: (isAuthenticated && isStaff) ? <TaskPage /> : <Navigate to="/auth" />,
     },
     {
         path: '/markup',

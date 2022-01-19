@@ -26,3 +26,24 @@ export const addAdminTask = (task) => {
         task: task
     }
 }
+
+export const deleteAdminTask = (id) => {
+    return {
+        type: actionTypes.DELETE_ADMIN_TASK,
+        id: id
+    }
+}
+
+export const getTaskInfo = (id) => {
+    return {
+        type: actionTypes.GET_TASK_INFO,
+        id: id
+    }
+}
+
+export const setCurrentTask = (data) => {
+    return {
+        type: actionTypes.SET_CURRENT_TASK,
+        data: data
+    }
+}

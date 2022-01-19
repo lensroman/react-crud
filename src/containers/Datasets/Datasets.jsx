@@ -1,10 +1,10 @@
 import React, {useEffect, useState} from 'react';
 
 import {connect} from 'react-redux';
-import * as actions from '../../../Store/actions/rootAction';
+import * as actions from '../../Store/actions/rootAction';
 
 import classes from './Datasets.module.scss';
-import Dataset from '../../../components/Dataset/Dataset';
+import Dataset from '../../components/Dataset/Dataset';
 import {Box, Button, Modal, TextField, Typography} from "@mui/material";
 import {Add} from "@mui/icons-material";
 
@@ -14,12 +14,11 @@ const Datasets = props => {
     const [dataSetName, setDataSetName] = useState('')
     const [dataSetFile, setDataSetFile] = useState(null)
 
-    const {onFetchDatasets, onFetchAdminTasks} = props
+    const {onFetchDatasets} = props
 
     useEffect(() => {
         onFetchDatasets()
-        onFetchAdminTasks()
-    }, [onFetchDatasets, onFetchAdminTasks])
+    }, [onFetchDatasets])
 
     let cards = null
 
@@ -121,7 +120,6 @@ const mapDispatchToProps = dispatch => {
         onFetchDatasets: () => dispatch(actions.fetchDatasets()),
         onAddDataset: (name, file) => dispatch(actions.addDataset(name, file)),
         onDeleteDataset: (id) => dispatch(actions.deleteDataset(id)),
-        onFetchAdminTasks: () => dispatch(actions.fetchAdminTasks())
     }
 }
 
