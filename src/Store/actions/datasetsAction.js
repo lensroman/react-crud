@@ -55,9 +55,10 @@ export const setCurrentDataset = (data) => {
     }
 }
 
-export const uploadDataset = (id) => {
+export const uploadDataset = (id, name) => {
     return {
         type: actionTypes.UPLOAD_DATASET,
-        id: id
+        id: id,
+        name: name
     }
 }

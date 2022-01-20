@@ -28,7 +28,8 @@ const DatasetPage = (props) => {
     }
 
     const uploadDatasetHandler = () => {
-        props.onUploadDataset(id)
+        let name = props.dataset.name
+        props.onUploadDataset(id, name)
     }
 
     let datasetPage = (
@@ -98,7 +99,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         onGetDatasetInfo: (id) => dispatch(actions.getDatasetInfo(id)),
-        onUploadDataset: (id) => dispatch(actions.uploadDataset(id))
+        onUploadDataset: (id, name) => dispatch(actions.uploadDataset(id, name))
     }
 }
 

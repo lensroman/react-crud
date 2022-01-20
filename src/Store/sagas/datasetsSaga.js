@@ -56,6 +56,14 @@ export function* uploadDatasetSaga(action) {
         const response = yield axios.get(`/datasets/${action.id}/download/`, {
             responseType: 'blob'
         })
+        let data = yield response.data
+        let url = yield window.URL.createObjectURL(data)
+        let link = yield document.createElement('a')
+        yield link.href = url
+        link.setAttribute('download', `${action.name}.zip`)
+        document.body.appendChild(link)
+        link.click()
+        link.remove()
     }
     catch(error) {
         console.log(error)
