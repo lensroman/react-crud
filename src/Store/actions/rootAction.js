@@ -18,7 +18,8 @@ export {
     logout,
     getUsers,
     getMarkupUsers,
-    getUsersFail
+    getUsersFail,
+    addNewUser
 } from './authAction'
 export {
     fetchDatasets,
@@ -26,7 +27,10 @@ export {
     fetchDatasetsSuccess,
     fetchDatasetsFail,
     addDataset,
-    deleteDataset
+    deleteDataset,
+    getDatasetInfo,
+    setCurrentDataset,
+    uploadDataset
 } from './datasetsAction'
 export {
     fetchAdminTasks,

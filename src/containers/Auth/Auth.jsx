@@ -4,7 +4,7 @@ import * as actions from '../../Store/actions/rootAction';
 import {connect} from "react-redux";
 
 import classes from './Auth.module.scss';
-import {TextField, Button, Card, CircularProgress} from "@mui/material";
+import {TextField, Button, CircularProgress, FormControl, Typography} from "@mui/material";
 
 const Auth = props => {
     const [controls, setControls] = useState({
@@ -49,28 +49,26 @@ const Auth = props => {
         props.onAuth(controls.email.value, controls.password.value)
     }
 
-    let form = (
-        <form onSubmit={submitHandler} className={classes.form}>
-            {formElementsArray.map(formElement => {
-                return (
-                    <TextField
-                        autoComplete={'off'}
-                        key={formElement.id}
-                        value={formElement.config.value}
-                        onChange={(event) => inputChangeHandler(event, formElement.id)}
-                        label={formElement.config.elementConfig.label}
-                        margin={"dense"}
-                    />
-                )
-            })}
-            <Button onClick={submitHandler} variant={"contained"} size={"large"} sx={{mt: 3}}>Войти</Button>
-        </form>
-    )
-
     let content = (
-        <Card sx={{ maxWidth: 500 }} variant={"outlined"}>
-            {form}
-        </Card>
+        <div className={classes.form}>
+            <FormControl>
+                <Typography variant={'h6'}>Авторизация</Typography>
+                {formElementsArray.map(formElement => {
+                    return (
+                        <TextField
+                            type={formElement.config.elementConfig.type}
+                            autoComplete={'off'}
+                            key={formElement.id}
+                            value={formElement.config.value}
+                            onChange={(event) => inputChangeHandler(event, formElement.id)}
+                            label={formElement.config.elementConfig.label}
+                            margin={"dense"}
+                        />
+                    )
+                })}
+                <Button onClick={submitHandler} variant={"contained"} size={"large"} sx={{mt: 3}}>Войти</Button>
+            </FormControl>
+        </div>
     )
 
     if(props.loading) {
@@ -78,7 +76,7 @@ const Auth = props => {
     }
 
     return (
-        <div className={classes.form}>
+        <div>
             {content}
         </div>
     )

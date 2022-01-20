@@ -5,9 +5,11 @@ import {Navigate} from "react-router-dom";
 import Auth from "../containers/Auth/Auth";
 import Markup from "../containers/Markup/Markup";
 import Dashboard from "../components/Dashboard/Dashboard";
-import DataSets from "../containers/Datasets/Datasets";
+import Datasets from "../containers/Datasets/Datasets";
 import AdminTasks from "../containers/AdminTasks/AdminTasks";
 import TaskPage from '../components/TaskPage/TaskPage';
+import DatasetPage from '../components/DatasetPage/DatasetPage';
+import AdminUsers from '../containers/AdminUsers/AdminUsers';
 
 const routes = (isAuthenticated, isStaff) => [
     {
@@ -20,7 +22,11 @@ const routes = (isAuthenticated, isStaff) => [
     },
     {
         path: '/samples',
-        element: (isAuthenticated && isStaff) ? <DataSets /> : <Navigate to="/auth" />
+        element: (isAuthenticated && isStaff) ? <Datasets /> : <Navigate to="/auth" />
+    },
+    {
+        path: '/samples/*',
+        element: (isAuthenticated && isStaff) ? <DatasetPage /> : <Navigate to="/auth" />,
     },
     {
         path: '/admin-tasks',
@@ -29,6 +35,10 @@ const routes = (isAuthenticated, isStaff) => [
     {
         path: '/admin-tasks/*',
         element: (isAuthenticated && isStaff) ? <TaskPage /> : <Navigate to="/auth" />,
+    },
+    {
+        path: '/admin-users',
+        element: (isAuthenticated && isStaff) ? <AdminUsers /> : <Navigate to='/auth' />
     },
     {
         path: '/markup',

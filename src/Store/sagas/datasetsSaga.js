@@ -40,3 +40,24 @@ export function* deleteDataSetSaga(action) {
         console.log(error)
     }
 }
+
+export function* getDatasetInfoSaga(action) {
+    try {
+        const response = yield axios.get(`/datasets/${action.id}/`)
+        yield put(actions.setCurrentDataset(response.data))
+    }
+    catch(error) {
+        console.log(error)
+    }
+}
+
+export function* uploadDatasetSaga(action) {
+    try {
+        const response = yield axios.get(`/datasets/${action.id}/download/`, {
+            responseType: 'blob'
+        })
+    }
+    catch(error) {
+        console.log(error)
+    }
+}

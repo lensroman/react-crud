@@ -23,7 +23,7 @@ export const authSuccess = (userName, userId, isStaff) => {
     }
 }
 
-export const authFail = (error) => {
+export const authFail = error => {
     return {
         type: actionTypes.AUTH_FAIL,
         error: error
@@ -42,16 +42,23 @@ export const getUsers = () => {
     }
 }
 
-export const getMarkupUsers = (users) => {
+export const getMarkupUsers = users => {
     return {
         type: actionTypes.GET_MARKUP_USERS,
         users: users
     }
 }
 
-export const getUsersFail = (error) => {
+export const getUsersFail = error => {
     return {
         type: actionTypes.GET_USERS_FAIL,
         error: error
+    }
+}
+
+export const addNewUser = data => {
+    return {
+        type: actionTypes.ADD_NEW_USER,
+        data: data
     }
 }

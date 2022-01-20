@@ -40,3 +40,24 @@ export const deleteDataset = (id) => {
         id: id
     }
 }
+
+export const getDatasetInfo = (id) => {
+    return {
+        type: actionTypes.GET_DATASET_INFO,
+        id: id
+    }
+}
+
+export const setCurrentDataset = (data) => {
+    return {
+        type: actionTypes.SET_CURRENT_DATASET,
+        data: data
+    }
+}
+
+export const uploadDataset = (id) => {
+    return {
+        type: actionTypes.UPLOAD_DATASET,
+        id: id
+    }
+}

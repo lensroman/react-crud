@@ -4,9 +4,11 @@ import {connect} from 'react-redux';
 import * as actions from '../../Store/actions/rootAction';
 
 import classes from './Datasets.module.scss';
-import Dataset from '../../components/Dataset/Dataset';
+import DatasetCard from '../../components/DatasetCard/DatasetCard';
 import {Box, Button, Modal, TextField, Typography} from "@mui/material";
 import {Add} from "@mui/icons-material";
+
+import {useNavigate} from "react-router-dom";
 
 const Datasets = props => {
 
@@ -19,6 +21,8 @@ const Datasets = props => {
     useEffect(() => {
         onFetchDatasets()
     }, [onFetchDatasets])
+
+    const navigate = useNavigate()
 
     let cards = null
 
@@ -48,6 +52,11 @@ const Datasets = props => {
         props.onDeleteDataset(id)
     }
 
+    const changeRouteHandler = (id) => {
+        let path = `/samples/${id}/`
+        navigate(path)
+    }
+
     let modal = (
         <Modal
             open={modalOpen}
@@ -74,11 +83,12 @@ const Datasets = props => {
         cards = (
             props.datasets.map(dataset => {
                 return (
-                    <Dataset
+                    <DatasetCard
                         key={dataset.id}
                         id={dataset.id}
                         name={dataset.name}
                         delete={() => deleteDataSetHandler(dataset.id)}
+                        openDataset={() => changeRouteHandler(dataset.id)}
                     />
                 )
             })

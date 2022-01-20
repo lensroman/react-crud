@@ -3,7 +3,7 @@ import React from "react";
 import {theme} from "../../UI/Theme/Theme";
 import {Box, Card, CardActions, CardContent, ThemeProvider, Typography, Button} from "@mui/material";
 
-const Dataset = props => {
+const DatasetCard = props => {
 
     return (
         <ThemeProvider theme={theme}>
@@ -31,7 +31,6 @@ const Dataset = props => {
                         {props.name}
                     </Typography>
                     <Box sx={{ mb: 3 }}>
-                        <Typography variant={"h5"} gutterBottom>User</Typography>
                         <Typography>
                             Данная выборка представляет из себя ZIP архив
                             который состоит из папок TV, JSON и LABEL
@@ -47,6 +46,7 @@ const Dataset = props => {
                                 color={"secondary"}
                                 size={"small"}
                                 variant={"outlined"}
+                                onClick={props.openDataset}
                             >
                                 Подробнее
                             </Button>
@@ -66,4 +66,4 @@ const Dataset = props => {
     )
 }
 
-export default Dataset
+export default DatasetCard

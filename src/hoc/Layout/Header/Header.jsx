@@ -77,6 +77,7 @@ function Header(props) {
             links = {
                 '/samples': 'Выборки',
                 '/admin-tasks': 'Задачи',
+                '/admin-users': 'Пользователи'
             }
         }
 

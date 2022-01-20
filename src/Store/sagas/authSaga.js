@@ -32,3 +32,12 @@ export function* getUsersSaga() {
         yield put(actions.getUsersFail())
     }
 }
+
+export function* addNewUserSaga(action) {
+    try {
+        yield axios.post('/users/', action.data)
+    }
+    catch(error) {
+        console.log(error)
+    }
+}
