@@ -55,6 +55,12 @@ export const setCurrentDataset = (data) => {
     }
 }
 
+export const clearCurrentDataset = () => {
+    return {
+        type: actionTypes.CLEAR_CURRENT_DATASET
+    }
+}
+
 export const uploadDataset = (id, name) => {
     return {
         type: actionTypes.UPLOAD_DATASET,

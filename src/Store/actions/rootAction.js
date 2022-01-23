@@ -30,6 +30,7 @@ export {
     deleteDataset,
     getDatasetInfo,
     setCurrentDataset,
+    clearCurrentDataset,
     uploadDataset
 } from './datasetsAction'
 export {
@@ -40,4 +41,5 @@ export {
     deleteAdminTask,
     getTaskInfo,
     setCurrentTask,
+    clearCurrentTask
 } from './tasksAction'

@@ -35,6 +35,12 @@ const reducer = (state = initialState, action) => {
                 currentTask: action.data
             }
         }
+        case actionTypes.CLEAR_CURRENT_TASK: {
+            return {
+                ...state,
+                currentTask: null
+            }
+        }
         default: {
             return {
                 ...state

@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 
 import classes from './AdminTasks.module.scss';
-import {Button, Typography} from '@mui/material';
+import {Button, CircularProgress, Typography} from '@mui/material';
 import {Add} from '@mui/icons-material';
 
 import * as actions from '../../Store/actions/rootAction';
@@ -87,6 +87,10 @@ const AdminTasks = (props) => {
 
     let cards = null
 
+    if (props.loading) {
+        cards = <CircularProgress />
+    }
+
     if (props.tasks && props.markupUsers.length > 0) {
         cards = (
             props.tasks.map(task => {
@@ -142,6 +146,7 @@ const AdminTasks = (props) => {
 const mapStateToProps = state => {
     return {
         tasks: state.tasks.adminTasks,
+        loading: state.tasks.loading,
         markupUsers: state.auth.markupUsers,
         datasets: state.datasets.datasets
     }

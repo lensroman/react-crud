@@ -19,9 +19,10 @@ const TaskPage = (props) => {
     useEffect(() => {
         let id = +params['*'].split('/')[0]
         onGetTaskInfo(id)
-    }, [params])
+    }, [params, onGetTaskInfo])
 
     const goBackHandler = () => {
+        props.onClearCurrentTask()
         navigate(-1)
     }
 
@@ -93,6 +94,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         onGetTaskInfo: (id) => dispatch(actions.getTaskInfo(id)),
+        onClearCurrentTask: () => dispatch(actions.clearCurrentTask())
     }
 }
 

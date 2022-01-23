@@ -47,3 +47,9 @@ export const setCurrentTask = (data) => {
         data: data
     }
 }
+
+export const clearCurrentTask = () => {
+    return {
+        type: actionTypes.CLEAR_CURRENT_TASK
+    }
+}

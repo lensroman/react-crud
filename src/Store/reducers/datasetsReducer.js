@@ -35,6 +35,12 @@ const reducer = (state = initialState, action) => {
                 currentDataset: action.data
             }
         }
+        case actionTypes.CLEAR_CURRENT_DATASET: {
+            return {
+                ...state,
+                currentDataset: null
+            }
+        }
         default: {
             return {
                 ...state
