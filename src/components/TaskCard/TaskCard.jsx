@@ -9,34 +9,51 @@ const TaskCard = props => {
         <ThemeProvider theme={theme}>
             <Card
                 sx={{
-                    minWidth: 345,
-                    maxWidth: 345,
+                    minWidth: 300,
+                    maxWidth: 300,
+                    minHeight: 300,
                     m: 3,
                     bgcolor: 'rgba(241,241,241,0.95)',
                 }}
                 variant={"outlined"}>
-                <CardContent sx={{ textAlign: "center" }}>
+                <CardContent sx={{
+                    height: '100%',
+                    textAlign: "center",
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'space-around'
+                }}>
                     <Typography
-                        variant={"h4"}
-                        component={"div"}
+                        sx={{ overflowWrap: 'break-word' }}
+                        variant={"h5"}
                         gutterBottom
-                        sx={{
-                            display: "flex",
-                            height: 100,
-                            justifyContent: "center",
-                            alignItems: "center"
-                        }}
                     >
                         {props.title}
                     </Typography>
-                    <Box sx={{ mb: 3 }}>
-                        <Typography variant={"h5"} gutterBottom>{props.marker}</Typography>
+                    <Box sx={{ display: 'flex', justifyContent: 'space-around' }}>
+                        <Box sx={{ mb: 3, overflowWrap: 'break-word' }}>
+                            <Typography variant={"h6"} gutterBottom>
+                                Разметчик:
+                            </Typography>
+                            <Typography variant={"h8"} gutterBottom>
+                                {props.marker}
+                            </Typography>
+                        </Box>
+                        <Box sx={{ mb: 3, overflowWrap: 'break-word' }}>
+                            <Typography variant={"h6"} gutterBottom>
+                                Выборка:
+                            </Typography>
+                            <Typography variant={"h8"} gutterBottom>
+                                {props.dataset}
+                            </Typography>
+                        </Box>
                     </Box>
                     <CardActions>
                         <Box sx={{
                             display: 'flex',
                             justifyContent: 'space-between',
-                            width: '100%'
+                            width: '100%',
+                            padding: '10px'
                         }}>
                             <Button
                                 color={"secondary"}

@@ -37,13 +37,13 @@ const AdminUsers = (props) => {
             <FormControl>
                 <Typography variant={'h6'}>Создайте нового пользователя</Typography>
                 <TextField
-                    label={'Username'}
+                    label={'Имя пользователя'}
                     autoComplete={'off'}
                     sx={{ mt: 2 }}
                     onChange={usernameChangeHandler}
                 />
                 <TextField
-                    label={'Password'}
+                    label={'Пароль'}
                     type={'password'}
                     sx={{ mt: 2 }}
                     onChange={passwordChangeHandler}

@@ -91,13 +91,16 @@ const AdminTasks = (props) => {
         cards = (
             props.tasks.map(task => {
                 const marker = props.markupUsers.filter(user => user.id === task.marker)[0].username
+                const dataset = props.datasets.filter(dataset => dataset.id === task.dataset)[0].name
                 return (
                     <TaskCard
                         key={task.id}
                         title={task.title}
-                        marker={marker}
+                        description={task.description}
                         delete={() => taskDeleteHandler(task.id)}
                         openTask={() => changeRouteHandler(task.id)}
+                        marker={marker}
+                        dataset={dataset}
                     />
                 )
             })
@@ -139,7 +142,8 @@ const AdminTasks = (props) => {
 const mapStateToProps = state => {
     return {
         tasks: state.tasks.adminTasks,
-        markupUsers: state.auth.markupUsers
+        markupUsers: state.auth.markupUsers,
+        datasets: state.datasets.datasets
     }
 }
 

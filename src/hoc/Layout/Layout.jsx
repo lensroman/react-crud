@@ -22,9 +22,9 @@ const Layout = props => {
         <Fragment>
             <Header />
             <Container
-                maxWidth={"1440px"}
+                maxWidth={"xl"}
                 sx={{
-                    paddingBottom: 5,
+                    paddingBottom: 8,
                     display: 'flex',
                     justifyContent: 'center',
                     alignItems: 'flex-start',

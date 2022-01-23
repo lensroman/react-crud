@@ -17,7 +17,7 @@ const TaskPage = (props) => {
     const {onGetTaskInfo} = props
 
     useEffect(() => {
-        let id = +params['*'][0]
+        let id = +params['*'].split('/')[0]
         onGetTaskInfo(id)
     }, [params])
 

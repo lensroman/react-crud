@@ -12,7 +12,7 @@ const Auth = props => {
             elementType: 'input',
             elementConfig: {
                 type: 'username',
-                label: 'Username'
+                label: 'Имя пользователя'
             },
             value: '',
         },
@@ -20,7 +20,7 @@ const Auth = props => {
             elementType: 'input',
             elementConfig: {
                 type: 'password',
-                label: 'Password'
+                label: 'Пароль'
             },
             value: '',
         }
@@ -72,7 +72,7 @@ const Auth = props => {
     )
 
     if(props.loading) {
-        content = (<CircularProgress />)
+        content = (<CircularProgress sx={{ mt: 15 }} />)
     }
 
     return (

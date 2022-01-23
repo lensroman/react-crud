@@ -13,7 +13,7 @@ const DatasetPage = (props) => {
 
     const params = useParams()
 
-    const id = +params['*'][0]
+    const id = +params['*'].split('/')[0]
 
     const navigate = useNavigate()
 
@@ -32,15 +32,7 @@ const DatasetPage = (props) => {
         props.onUploadDataset(id, name)
     }
 
-    let datasetPage = (
-        <div style={{
-            marginTop: '200px',
-            display: 'flex',
-            justifyContent: 'center', }}
-        >
-            <CircularProgress />
-        </div>
-    )
+    let datasetPage = (<CircularProgress />)
 
     if (props.dataset) {
 

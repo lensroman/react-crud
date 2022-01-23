@@ -10,6 +10,7 @@ import AdminTasks from "../containers/AdminTasks/AdminTasks";
 import TaskPage from '../components/TaskPage/TaskPage';
 import DatasetPage from '../components/DatasetPage/DatasetPage';
 import AdminUsers from '../containers/AdminUsers/AdminUsers';
+import MarkupTasks from "../containers/MarkupTasks/MarkupTasks";
 
 const routes = (isAuthenticated, isStaff) => [
     {
@@ -46,7 +47,7 @@ const routes = (isAuthenticated, isStaff) => [
     },
     {
         path: '/markup-tasks',
-        element: (isAuthenticated && !isStaff) ? <Markup /> : <Navigate to="/auth" />
+        element: (isAuthenticated && !isStaff) ? <MarkupTasks /> : <Navigate to="/auth" />
     },
     {
         path: "/auth",
