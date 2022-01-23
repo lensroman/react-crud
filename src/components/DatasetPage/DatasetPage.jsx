@@ -24,6 +24,7 @@ const DatasetPage = (props) => {
     }, [onGetDatasetInfo, id])
 
     const goBackHandler = () => {
+        props.onClearCurrentDataset()
         navigate(-1)
     }
 
@@ -91,7 +92,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         onGetDatasetInfo: (id) => dispatch(actions.getDatasetInfo(id)),
-        onUploadDataset: (id, name) => dispatch(actions.uploadDataset(id, name))
+        onUploadDataset: (id, name) => dispatch(actions.uploadDataset(id, name)),
+        onClearCurrentDataset: () => dispatch(actions.clearCurrentDataset())
     }
 }
 

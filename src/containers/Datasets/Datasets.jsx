@@ -5,7 +5,7 @@ import * as actions from '../../Store/actions/rootAction';
 
 import classes from './Datasets.module.scss';
 import DatasetCard from '../../components/DatasetCard/DatasetCard';
-import {Box, Button, Modal, TextField, Typography} from "@mui/material";
+import {Box, Button, CircularProgress, Modal, TextField, Typography} from "@mui/material";
 import {Add} from "@mui/icons-material";
 
 import {useNavigate} from "react-router-dom";
@@ -79,6 +79,10 @@ const Datasets = props => {
         </Modal>
     )
 
+    if (props.loading) {
+        cards = <CircularProgress />
+    }
+
     if (props.datasets) {
         cards = (
             props.datasets.map(dataset => {
@@ -120,6 +124,7 @@ const Datasets = props => {
 const mapStateToProps = state => {
     return {
         datasets: state.datasets.datasets,
+        loading: state.datasets.loading,
         tasks: state.tasks.adminTasks,
         markupUsers: state.auth.markupUsers
     }
