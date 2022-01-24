@@ -62,3 +62,9 @@ export const addNewUser = data => {
         data: data
     }
 }
+
+export const authCheck = () => {
+    return {
+        type: actionTypes.AUTH_CHECK_STATE
+    }
+}

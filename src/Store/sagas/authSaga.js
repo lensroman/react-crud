@@ -14,7 +14,12 @@ export function* authActionSaga(action) {
         const userName = yield response.data.username
         const userId = yield response.data.id
         const isStaff = yield response.data.is_staff
-        yield axios.defaults.headers.common['Authorization'] = `Token ${response.data.token}`
+        const token = yield response.data.token
+        yield localStorage.setItem('username', userName)
+        yield localStorage.setItem('id', userId)
+        yield localStorage.setItem('isStaff', isStaff)
+        yield localStorage.setItem('token', token)
+        yield axios.defaults.headers.common['Authorization'] = `Token ${token}`
         yield put(actions.authSuccess(userName, userId, isStaff))
     }
     catch(error) {
@@ -40,4 +45,24 @@ export function* addNewUserSaga(action) {
     catch(error) {
         console.log(error)
     }
+}
+
+export function* authCheckSaga() {
+    const token = yield localStorage.getItem('token')
+    if (!token) {
+        yield put(actions.logout())
+    } else {
+        const userName = yield localStorage.getItem('username')
+        const userId = yield localStorage.getItem('id')
+        const isStaff = yield localStorage.getItem('isStaff')
+        yield axios.defaults.headers.common['Authorization'] = `Token ${token}`
+        yield put(actions.authSuccess(userName, userId, isStaff))
+    }
+}
+
+export function* authLogoutSaga() {
+    yield localStorage.removeItem('username')
+    yield localStorage.removeItem('id')
+    yield localStorage.removeItem('isStaff')
+    yield localStorage.removeItem('token')
 }

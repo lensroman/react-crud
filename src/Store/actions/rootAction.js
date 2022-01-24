@@ -19,7 +19,8 @@ export {
     getUsers,
     getMarkupUsers,
     getUsersFail,
-    addNewUser
+    addNewUser,
+    authCheck
 } from './authAction'
 export {
     fetchDatasets,

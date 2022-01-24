@@ -2,7 +2,7 @@ import { takeEvery } from 'redux-saga/effects';
 
 import * as actionTypes from '../actions/actionTypes';
 
-import {addNewUserSaga, authActionSaga, getUsersSaga} from './authSaga';
+import {addNewUserSaga, authActionSaga, authCheckSaga, authLogoutSaga, getUsersSaga} from './authSaga';
 import {
     addDataSetSaga,
     deleteDataSetSaga,
@@ -16,6 +16,8 @@ export function* watchAuthSaga() {
     yield takeEvery(actionTypes.AUTH_USER, authActionSaga)
     yield takeEvery(actionTypes.GET_USERS, getUsersSaga)
     yield takeEvery(actionTypes.ADD_NEW_USER, addNewUserSaga)
+    yield takeEvery(actionTypes.AUTH_CHECK_STATE, authCheckSaga)
+    yield takeEvery(actionTypes.LOGOUT_USER, authLogoutSaga)
 }
 
 export function* watchDataSetsSaga() {
