@@ -11,6 +11,7 @@ const DatasetCard = props => {
                 sx={{
                     minWidth: 345,
                     maxWidth: 345,
+                    minHeight: 300,
                     m: 3,
                     bgcolor: 'rgba(241,241,241,0.95)',
                 }}

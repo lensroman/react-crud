@@ -9,8 +9,8 @@ const TaskCard = props => {
         <ThemeProvider theme={theme}>
             <Card
                 sx={{
-                    minWidth: 300,
-                    maxWidth: 300,
+                    minWidth: 345,
+                    maxWidth: 345,
                     minHeight: 300,
                     m: 3,
                     bgcolor: 'rgba(241,241,241,0.95)',
@@ -24,28 +24,28 @@ const TaskCard = props => {
                     justifyContent: 'space-around'
                 }}>
                     <Typography
-                        sx={{ overflowWrap: 'break-word' }}
                         variant={"h5"}
+                        fontWeight={'bold'}
                         gutterBottom
+                        sx={{
+                            overflowWrap: 'break-word',
+
+                        }}
                     >
                         {props.title}
                     </Typography>
-                    <Box sx={{ display: 'flex', justifyContent: 'space-around' }}>
+                    <Box sx={{ display: 'flex', flexDirection: 'column' ,justifyContent: 'space-around' }}>
                         <Box sx={{ mb: 3, overflowWrap: 'break-word' }}>
                             <Typography variant={"h6"} gutterBottom>
-                                Разметчик:
+                                Разметчик: {props.marker}
                             </Typography>
-                            <Typography variant={"h8"} gutterBottom>
-                                {props.marker}
-                            </Typography>
+
                         </Box>
                         <Box sx={{ mb: 3, overflowWrap: 'break-word' }}>
                             <Typography variant={"h6"} gutterBottom>
-                                Выборка:
+                                Выборка: {props.dataset}
                             </Typography>
-                            <Typography variant={"h8"} gutterBottom>
-                                {props.dataset}
-                            </Typography>
+
                         </Box>
                     </Box>
                     <CardActions>
