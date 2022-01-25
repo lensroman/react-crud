@@ -4,7 +4,7 @@ import * as actions from '../../Store/actions/rootAction';
 import {connect} from "react-redux";
 
 import classes from './Auth.module.scss';
-import {TextField, Button, CircularProgress, FormControl, Typography} from "@mui/material";
+import {TextField, Button, CircularProgress, FormControl, Typography, Alert} from "@mui/material";
 
 const Auth = props => {
     const [controls, setControls] = useState({
@@ -51,7 +51,7 @@ const Auth = props => {
 
     let content = (
         <div className={classes.form}>
-            <FormControl>
+            <FormControl error={Boolean(props.error)}>
                 <Typography variant={'h6'}>Авторизация</Typography>
                 {formElementsArray.map(formElement => {
                     return (
@@ -75,8 +75,11 @@ const Auth = props => {
         content = (<CircularProgress sx={{ mt: 15 }} />)
     }
 
+    const alert = props.error ? <Alert severity={'error'} sx={{ padding: 2, mt: 2 }}>{props.error}</Alert> : null
+
     return (
         <div>
+            {alert}
             {content}
         </div>
     )
@@ -84,7 +87,8 @@ const Auth = props => {
 
 const mapStateToProps = state => {
     return {
-        loading: state.auth.loading
+        loading: state.auth.loading,
+        error: state.auth.error
     }
 }
 
