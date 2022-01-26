@@ -13,8 +13,9 @@ import {useNavigate} from "react-router-dom";
 const Datasets = props => {
 
     const [modalOpen, setModalOpen] = useState(false)
-    const [dataSetName, setDataSetName] = useState('')
-    const [dataSetFile, setDataSetFile] = useState(null)
+    const [datasetName, setDatasetName] = useState('')
+    const [datasetDescription, setDatasetDescription] = useState('')
+    const [datasetFile, setDatasetFile] = useState(null)
 
     const {onFetchDatasets} = props
 
@@ -33,19 +34,24 @@ const Datasets = props => {
         setModalOpen(false)
     }
 
-    const inputChangeHandler = (event) => {
+    const inputNameChangeHandler = (event) => {
         let newName = event.target.value
-        setDataSetName(newName)
+        setDatasetName(newName)
+    }
+
+    const inputDescriptionChangeHandler = (event) => {
+        let newDescription = event.target.value
+        setDatasetDescription(newDescription)
     }
 
     const fileAddHandler = (event) => {
         let newFile = event.target.files[0]
-        setDataSetFile(newFile)
+        setDatasetFile(newFile)
     }
 
     const addDataSetHandler = () => {
         modalCloseHandler()
-        props.onAddDataset(dataSetName, dataSetFile)
+        props.onAddDataset(datasetName, datasetDescription, datasetFile)
     }
 
     const deleteDataSetHandler = (id) => {
@@ -70,10 +76,21 @@ const Datasets = props => {
                     <TextField
                         label="Название выборки"
                         autoComplete={'off'}
-                        onChange={(event) => inputChangeHandler(event)}
+                        onChange={(event) => inputNameChangeHandler(event)}
                     />
                     <input type="file" onInput={fileAddHandler}/>
                 </Box>
+                <TextField
+                    fullWidth={true}
+                    multiline={true}
+                    label='Описание'
+                    autoComplete={'off'}
+                    sx={{
+                        mt: 2,
+                        mb: 2
+                    }}
+                    onChange={(event) => inputDescriptionChangeHandler(event)}
+                />
                 <Button onClick={addDataSetHandler}>Добавить</Button>
             </Box>
         </Modal>
@@ -91,6 +108,7 @@ const Datasets = props => {
                         key={dataset.id}
                         id={dataset.id}
                         name={dataset.name}
+                        description={dataset.description}
                         delete={() => deleteDataSetHandler(dataset.id)}
                         openDataset={() => changeRouteHandler(dataset.id)}
                     />
@@ -133,7 +151,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         onFetchDatasets: () => dispatch(actions.fetchDatasets()),
-        onAddDataset: (name, file) => dispatch(actions.addDataset(name, file)),
+        onAddDataset: (name, description, file) => dispatch(actions.addDataset(name, description, file)),
         onDeleteDataset: (id) => dispatch(actions.deleteDataset(id)),
     }
 }

@@ -17,6 +17,7 @@ export function* fetchDataSetsSaga() {
 export function* addDataSetSaga(action) {
     const formData = yield new FormData()
     yield formData.append('name', action.name)
+    yield formData.append('description', action.description)
     yield formData.append('dataset_to', action.file)
     try {
         yield axios.post('/datasets/', formData, {

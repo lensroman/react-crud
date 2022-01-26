@@ -17,7 +17,16 @@ const DatasetCard = props => {
                 }}
                 variant={"outlined"}
             >
-                <CardContent sx={{ textAlign: "center" }}>
+                <CardContent
+                    sx={{
+                        padding: '0 10px',
+                        height: '100%',
+                        textAlign: "center",
+                        display: 'flex',
+                        flexDirection: 'column',
+                        justifyContent: 'space-around'
+                    }}
+                >
                     <Typography
                         variant={"h4"}
                         component={"div"}
@@ -31,10 +40,9 @@ const DatasetCard = props => {
                     >
                         {props.name}
                     </Typography>
-                    <Box sx={{ mb: 3 }}>
+                    <Box sx={{mb: 3}}>
                         <Typography>
-                            Данная выборка представляет из себя ZIP архив
-                            который состоит из папок TV, JSON и LABEL
+                            {props.description}
                         </Typography>
                     </Box>
                     <CardActions>

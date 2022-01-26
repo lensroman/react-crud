@@ -63,6 +63,14 @@ const DatasetPage = (props) => {
                         </Typography>
                     </li>
                     <li className={classes.datasetPageInfoItem}>
+                        <Typography
+                            variant={'h6'}
+                            fontWeight={'normal'}
+                        >
+                            Описание: {props.dataset.description}
+                        </Typography>
+                    </li>
+                    <li className={classes.datasetPageInfoItem}>
                         <Button
                             variant={'contained'}
                             startIcon={<UploadFile />}
