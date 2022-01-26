@@ -26,10 +26,11 @@ export const fetchDatasetsFail = (error) => {
     }
 }
 
-export const addDataset = (name, file) => {
+export const addDataset = (name, description, file) => {
     return {
         type: actionTypes.ADD_DATASET,
         name: name,
+        description: description,
         file: file
     }
 }

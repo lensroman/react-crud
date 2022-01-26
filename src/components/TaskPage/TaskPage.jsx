@@ -38,9 +38,9 @@ const TaskPage = (props) => {
 
     if (props.task) {
 
-        const dataset = props.datasets.filter(dataset => dataset.id === props.task.dataset)[0].name
+        const dataset = props.datasets.find(dataset => dataset.id === props.task.dataset).name
 
-        const marker = props.markupUsers.filter(user => user.id === props.task.marker)[0].username
+        const marker = props.markupUsers.find(user => user.id === props.task.marker).username
 
         taskPage = (
             <div>

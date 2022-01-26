@@ -22,8 +22,9 @@ const AdminTasks = (props) => {
     }, [onFetchAdminTasks])
 
     const [newTask, setNewTask] = useState({
-        dataset: {},
-        marker: {},
+        dataset: null,
+        marker: null,
+        imagesCount: null,
         title: null,
         description: null
     })
@@ -71,6 +72,14 @@ const AdminTasks = (props) => {
         setNewTask(updatedNewTask)
     }
 
+    const imagesCountChangeHandler = (event) => {
+        const updatedNewTask = {
+            ...newTask,
+            imagesCount: event.target.value
+        }
+        setNewTask(updatedNewTask)
+    }
+
     const submitNewTaskHandler = () => {
         modalAddCloseHandler()
         props.onAddAdminTask(newTask)
@@ -94,8 +103,8 @@ const AdminTasks = (props) => {
     if (props.tasks && props.markupUsers.length > 0) {
         cards = (
             props.tasks.map(task => {
-                const marker = props.markupUsers.filter(user => user.id === task.marker)[0].username
-                const dataset = props.datasets.filter(dataset => dataset.id === task.dataset)[0].name
+                const marker = props.markupUsers.find(user => user.id === task.marker).username
+                const dataset = props.datasets.find(dataset => dataset.id === task.dataset).name
                 return (
                     <TaskCard
                         key={task.id}
@@ -133,9 +142,11 @@ const AdminTasks = (props) => {
                 modalClose={modalAddCloseHandler}
                 datasetSelect={datasetSelectHandler}
                 datasets={datasets}
+                selectedDataset={newTask.dataset}
                 markerSelect={markupSelectHandler}
                 titleChange={titleChangeHandler}
                 descriptionChange={descriptionChangeHandler}
+                imagesCountSelect={imagesCountChangeHandler}
                 submitNewTask={submitNewTaskHandler}
             />
             <Outlet />
