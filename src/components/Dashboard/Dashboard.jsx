@@ -12,7 +12,7 @@ const Dashboard = (props) => {
     }
 
     if (!props.isStaff) {
-        link = '/markup'
+        link = '/markup-tasks'
     }
 
     return (

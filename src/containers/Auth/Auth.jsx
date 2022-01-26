@@ -51,23 +51,25 @@ const Auth = props => {
 
     let content = (
         <div className={classes.form}>
-            <FormControl error={Boolean(props.error)}>
-                <Typography variant={'h6'}>Авторизация</Typography>
-                {formElementsArray.map(formElement => {
-                    return (
-                        <TextField
-                            type={formElement.config.elementConfig.type}
-                            autoComplete={'off'}
-                            key={formElement.id}
-                            value={formElement.config.value}
-                            onChange={(event) => inputChangeHandler(event, formElement.id)}
-                            label={formElement.config.elementConfig.label}
-                            margin={"dense"}
-                        />
-                    )
-                })}
-                <Button onClick={submitHandler} variant={"contained"} size={"large"} sx={{mt: 3}}>Войти</Button>
-            </FormControl>
+            <form id={'auth-form'}>
+                <FormControl error={Boolean(props.error)} onSubmit={submitHandler}>
+                    <Typography variant={'h6'}>Авторизация</Typography>
+                    {formElementsArray.map(formElement => {
+                        return (
+                            <TextField
+                                type={formElement.config.elementConfig.type}
+                                autoComplete={'off'}
+                                key={formElement.id}
+                                value={formElement.config.value}
+                                onChange={(event) => inputChangeHandler(event, formElement.id)}
+                                label={formElement.config.elementConfig.label}
+                                margin={"dense"}
+                            />
+                        )
+                    })}
+                    <Button type={'submit'} form={'auth-form'} onClick={submitHandler} variant={"contained"} size={"large"} sx={{mt: 3}}>Войти</Button>
+                </FormControl>
+            </form>
         </div>
     )
 
