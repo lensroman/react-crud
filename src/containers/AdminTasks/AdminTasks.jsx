@@ -8,7 +8,7 @@ import * as actions from '../../Store/actions/rootAction';
 import {connect} from 'react-redux';
 
 import ModalAddAdminTasks from "../../components/ModaAddlAdminTasks/ModalAddAdminTasks";
-import TaskCard from '../../components/TaskCard/TaskCard';
+import AdminTaskCard from '../../components/AdminTaskCard/AdminTaskCard';
 import { useNavigate, Outlet } from "react-router-dom";
 
 const AdminTasks = (props) => {
@@ -106,7 +106,7 @@ const AdminTasks = (props) => {
                 const marker = props.markupUsers.find(user => user.id === task.marker).username
                 const dataset = props.datasets.find(dataset => dataset.id === task.dataset).name
                 return (
-                    <TaskCard
+                    <AdminTaskCard
                         key={task.id}
                         title={task.title}
                         description={task.description}

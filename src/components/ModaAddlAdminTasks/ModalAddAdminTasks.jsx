@@ -25,6 +25,8 @@ const ModalAddAdminTasks = (props) => {
     if (props.selectedDataset) {
         selectedDataset = props.datasets.find(dataset => dataset.id === props.selectedDataset)
         count = selectedDataset.length - selectedDataset.last_img
+        console.log(selectedDataset)
+        console.log(count)
         for (let i = 0; i < count; i++) {
             countSelect.push(i + 1)
         }
@@ -84,7 +86,7 @@ const ModalAddAdminTasks = (props) => {
                 <Box className={classes.ModalInputs} sx={{ mb: 1 }}>
                     <TextField
                         autoComplete={'off'}
-                        sx={{ width: '68%' }}
+                        sx={{ width: '48%' }}
                         label={'Название задачи'}
                         value={props.title}
                         onChange={(event) => props.titleChange(event)}
@@ -93,7 +95,7 @@ const ModalAddAdminTasks = (props) => {
                         select
                         defaultValue={''}
                         label={'Кол-во изображений'}
-                        sx={{width: '28%'}}
+                        sx={{width: '48%'}}
                         onChange={(event) => props.imagesCountSelect(event)}
                     >
                         {countSelect.map(count => {

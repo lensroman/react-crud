@@ -3,7 +3,7 @@ import React from "react";
 import {Box, Button, Card, CardActions, CardContent, ThemeProvider, Typography} from "@mui/material";
 import {theme} from "../../UI/Theme/Theme";
 
-const TaskCard = props => {
+const MarkupTaskCard = (props) => {
 
     return (
         <ThemeProvider theme={theme}>
@@ -29,7 +29,6 @@ const TaskCard = props => {
                         gutterBottom
                         sx={{
                             overflowWrap: 'break-word',
-
                         }}
                     >
                         {props.title}
@@ -37,21 +36,19 @@ const TaskCard = props => {
                     <Box sx={{ display: 'flex', flexDirection: 'column' ,justifyContent: 'space-around' }}>
                         <Box sx={{ mb: 3, overflowWrap: 'break-word' }}>
                             <Typography variant={"h6"} gutterBottom>
-                                Разметчик: {props.marker}
+                                Выборка: {props.dataset}
                             </Typography>
-
                         </Box>
                         <Box sx={{ mb: 3, overflowWrap: 'break-word' }}>
                             <Typography variant={"h6"} gutterBottom>
-                                Выборка: {props.dataset}
+                                Кол-во изображений: {props.count}
                             </Typography>
-
                         </Box>
                     </Box>
                     <CardActions>
                         <Box sx={{
                             display: 'flex',
-                            justifyContent: 'space-between',
+                            justifyContent: 'center',
                             width: '100%',
                             padding: '10px'
                         }}>
@@ -63,14 +60,6 @@ const TaskCard = props => {
                             >
                                 Подробнее
                             </Button>
-                            <Button
-                                color={"error"}
-                                size={"small"}
-                                variant={"outlined"}
-                                onClick={props.delete}
-                            >
-                                Удалить
-                            </Button>
                         </Box>
                     </CardActions>
                 </CardContent>
@@ -79,4 +68,4 @@ const TaskCard = props => {
     )
 }
 
-export default TaskCard;
+export default MarkupTaskCard;

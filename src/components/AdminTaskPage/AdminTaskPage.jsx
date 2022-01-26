@@ -3,12 +3,12 @@ import { useNavigate, useParams } from "react-router-dom";
 
 import { Button, CircularProgress, Typography } from "@mui/material";
 import { ArrowBackIosNewOutlined } from "@mui/icons-material";
-import classes from './TaskPage.module.scss';
+import classes from './AdminTaskPage.module.scss';
 
 import * as actions from '../../Store/actions/rootAction';
 import { connect } from 'react-redux';
 
-const TaskPage = (props) => {
+const AdminTaskPage = (props) => {
 
     const navigate = useNavigate()
 
@@ -44,7 +44,7 @@ const TaskPage = (props) => {
 
         taskPage = (
             <div>
-                <div className={classes.TaskPageHeader}>
+                <div className={classes.AdminTaskPageHeader}>
                     <div>
                         <Typography variant={"h4"} fontWeight={"bold"}>Задача: {props.task.title}</Typography>
                     </div>
@@ -58,17 +58,17 @@ const TaskPage = (props) => {
                         </Button>
                     </div>
                 </div>
-                <ul className={classes.TaskPageInfo}>
-                    <li className={classes.TaskPageInfoItem}>
+                <ul className={classes.AdminTaskPageInfo}>
+                    <li className={classes.AdminTaskPageInfoItem}>
                         <Typography variant={'h6'} fontWeight={'normal'}>Дата создания: {props.task.created_at.split('T')[0]}</Typography>
                     </li>
-                    <li className={classes.TaskPageInfoItem}>
+                    <li className={classes.AdminTaskPageInfoItem}>
                         <Typography variant={'h6'} fontWeight={'normal'}>Описание: {props.task.description}</Typography>
                     </li>
-                    <li className={classes.TaskPageInfoItem}>
+                    <li className={classes.AdminTaskPageInfoItem}>
                         <Typography variant={'h6'} fontWeight={'normal'}>Выборка: {dataset}</Typography>
                     </li>
-                    <li className={classes.TaskPageInfoItem}>
+                    <li className={classes.AdminTaskPageInfoItem}>
                         <Typography variant={'h6'} fontWeight={'normal'}>Разметчик: {marker}</Typography>
                     </li>
                 </ul>
@@ -77,7 +77,7 @@ const TaskPage = (props) => {
     }
 
     return (
-        <div className={classes.TaskPage}>
+        <div className={classes.AdminTaskPage}>
             {taskPage}
         </div>
     );
@@ -94,8 +94,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         onGetTaskInfo: (id) => dispatch(actions.getTaskInfo(id)),
-        onClearCurrentTask: () => dispatch(actions.clearCurrentTask())
+        onClearCurrentTask: () => dispatch(actions.clearCurrentTask()),
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(TaskPage);
+export default connect(mapStateToProps, mapDispatchToProps)(AdminTaskPage);

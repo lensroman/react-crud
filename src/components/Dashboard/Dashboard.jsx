@@ -7,11 +7,11 @@ const Dashboard = (props) => {
 
     let link = null
 
-    if (props.isStaff) {
+    if (props.isStaff === true) {
         link = '/samples'
     }
 
-    if (!props.isStaff) {
+    if (props.isStaff === false) {
         link = '/markup-tasks'
     }
 

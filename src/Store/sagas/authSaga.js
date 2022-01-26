@@ -53,8 +53,9 @@ export function* authCheckSaga() {
         yield put(actions.logout())
     } else {
         const userName = yield localStorage.getItem('username')
-        const userId = yield localStorage.getItem('id')
-        const isStaff = yield localStorage.getItem('isStaff')
+        const userId = yield +localStorage.getItem('id')
+        let isStaffStorage = yield localStorage.getItem('isStaff')
+        const isStaff = isStaffStorage !== 'false'
         yield axios.defaults.headers.common['Authorization'] = `Token ${token}`
         yield put(actions.authSuccess(userName, userId, isStaff))
     }
