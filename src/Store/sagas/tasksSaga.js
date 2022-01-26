@@ -19,6 +19,7 @@ export function* addAdminTaskSaga(action) {
             dataset: action.task.dataset,
             marker: action.task.marker,
             title: action.task.title,
+            images_count: action.task.imagesCount,
             description: action.task.description
         })
         yield put(actions.fetchAdminTasks())

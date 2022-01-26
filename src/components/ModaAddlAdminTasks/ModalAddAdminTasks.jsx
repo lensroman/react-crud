@@ -16,6 +16,20 @@ const ModalAddAdminTasks = (props) => {
         onGetUsers()
     }, [onFetchDataSets, onGetUsers])
 
+    let selectedDataset = null
+
+    let count = 0
+
+    let countSelect = []
+
+    if (props.selectedDataset) {
+        selectedDataset = props.datasets.find(dataset => dataset.id === props.selectedDataset)
+        count = selectedDataset.length - selectedDataset.last_img
+        for (let i = 0; i < count; i++) {
+            countSelect.push(i + 1)
+        }
+    }
+
     return (
         <Modal
             open={props.modalOpen}
@@ -31,7 +45,7 @@ const ModalAddAdminTasks = (props) => {
                         label={'Выборка'}
                         select
                         defaultValue={''}
-                        sx={{ width: '48%' }}
+                        sx={{width: '48%'}}
                         value={props.dataset}
                         onChange={(event) => props.datasetSelect(event)}
                     >
@@ -51,7 +65,7 @@ const ModalAddAdminTasks = (props) => {
                         select
                         defaultValue={''}
                         label={'Разметчик'}
-                        sx={{ width: '48%' }}
+                        sx={{width: '48%'}}
                         onChange={(event) => props.markerSelect(event)}
                     >
                         {props.markupUsers.map(user => {
@@ -67,13 +81,34 @@ const ModalAddAdminTasks = (props) => {
                         })}
                     </TextField>
                 </Box>
-                <TextField
-                    autoComplete={'off'}
-                    fullWidth
-                    label={'Название задачи'}
-                    value={props.title}
-                    onChange={(event) => props.titleChange(event)}
-                />
+                <Box className={classes.ModalInputs} sx={{ mb: 1 }}>
+                    <TextField
+                        autoComplete={'off'}
+                        sx={{ width: '68%' }}
+                        label={'Название задачи'}
+                        value={props.title}
+                        onChange={(event) => props.titleChange(event)}
+                    />
+                    <TextField
+                        select
+                        defaultValue={''}
+                        label={'Кол-во изображений'}
+                        sx={{width: '28%'}}
+                        onChange={(event) => props.imagesCountSelect(event)}
+                    >
+                        {countSelect.map(count => {
+                            return (
+                                <MenuItem
+                                    key={count}
+                                    id={count}
+                                    value={count}
+                                >
+                                    {count}
+                                </MenuItem>
+                            )
+                        })}
+                    </TextField>
+                </Box>
                 <TextField
                     autoComplete={'off'}
                     fullWidth
@@ -84,6 +119,7 @@ const ModalAddAdminTasks = (props) => {
                 />
                 <Button onClick={props.submitNewTask}>Создать</Button>
             </Box>
+
         </Modal>
     )
 };
