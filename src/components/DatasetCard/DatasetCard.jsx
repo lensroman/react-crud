@@ -28,7 +28,8 @@ const DatasetCard = props => {
                     }}
                 >
                     <Typography
-                        variant={"h4"}
+                        variant={"h5"}
+                        fontWeight={'bold'}
                         component={"div"}
                         gutterBottom
                         sx={{

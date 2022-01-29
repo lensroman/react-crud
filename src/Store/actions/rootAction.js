@@ -42,5 +42,7 @@ export {
     deleteAdminTask,
     getTaskInfo,
     setCurrentTask,
-    clearCurrentTask
+    clearCurrentTask,
+    completeTask,
+    changeTasksType
 } from './tasksAction'

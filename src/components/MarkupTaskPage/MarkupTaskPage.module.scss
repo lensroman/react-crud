@@ -1,0 +1,42 @@
+.MarkupTaskPage {
+  width: 80%;
+}
+
+.MarkupTaskPageHeader {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #ccc;
+  margin-bottom: 15px;
+  padding: 10px;
+}
+
+.MarkupTaskPageInfo {
+  list-style: none;
+  margin-top: 10px;
+}
+
+.MarkupTaskPageInfoItem {
+  padding: 5px;
+  max-width: 80%;
+  word-wrap: break-word;
+
+  &:not(:first-child) {
+    margin-top: 10px;
+  }
+}
+
+.MarkupTaskPageContent {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+}
+
+.MarkupTaskPageButtons {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: flex-end;
+  margin-top: 10px;
+}

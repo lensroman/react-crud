@@ -84,7 +84,7 @@ const ModalAddAdminTasks = (props) => {
                 <Box className={classes.ModalInputs} sx={{ mb: 1 }}>
                     <TextField
                         autoComplete={'off'}
-                        sx={{ width: '68%' }}
+                        sx={{ width: '48%' }}
                         label={'Название задачи'}
                         value={props.title}
                         onChange={(event) => props.titleChange(event)}
@@ -93,7 +93,7 @@ const ModalAddAdminTasks = (props) => {
                         select
                         defaultValue={''}
                         label={'Кол-во изображений'}
-                        sx={{width: '28%'}}
+                        sx={{width: '48%'}}
                         onChange={(event) => props.imagesCountSelect(event)}
                     >
                         {countSelect.map(count => {

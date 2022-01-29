@@ -73,7 +73,7 @@ function Header(props) {
             </Button>
         )
 
-        if (props.isStaff) {
+        if (props.isStaff === true) {
             links = {
                 '/samples': 'Выборки',
                 '/admin-tasks': 'Задачи',
@@ -81,9 +81,8 @@ function Header(props) {
             }
         }
 
-        if (!props.isStaff) {
+        if (props.isStaff === false) {
             links = {
-                '/markup': 'Разметка',
                 '/markup-tasks': 'Задачи',
             }
         }

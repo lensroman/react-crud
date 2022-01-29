@@ -49,7 +49,8 @@ const Datasets = props => {
         setDatasetFile(newFile)
     }
 
-    const addDataSetHandler = () => {
+    const addDataSetHandler = (event) => {
+        event.preventDefault()
         modalCloseHandler()
         props.onAddDataset(datasetName, datasetDescription, datasetFile)
     }
@@ -70,15 +71,16 @@ const Datasets = props => {
             aria-labelledby="modal-title"
             aria-describedby="modal-description"
         >
-            <Box fullWidth={true} className={classes.DataSetsModal}>
+            <Box className={classes.DataSetsModal}>
                 <Typography variant={"h6"}>Добавьте новую выборку</Typography>
                 <Box className={classes.ModalInputs}>
                     <TextField
+                        required={true}
                         label="Название выборки"
                         autoComplete={'off'}
                         onChange={(event) => inputNameChangeHandler(event)}
                     />
-                    <input type="file" onInput={fileAddHandler}/>
+                    <input required={true} type="file" onInput={fileAddHandler}/>
                 </Box>
                 <TextField
                     fullWidth={true}
@@ -91,7 +93,7 @@ const Datasets = props => {
                     }}
                     onChange={(event) => inputDescriptionChangeHandler(event)}
                 />
-                <Button onClick={addDataSetHandler}>Добавить</Button>
+                <Button onClick={(event) => addDataSetHandler(event)}>Добавить</Button>
             </Box>
         </Modal>
     )

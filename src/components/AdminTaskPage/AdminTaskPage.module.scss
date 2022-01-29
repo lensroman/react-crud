@@ -1,8 +1,8 @@
-.TaskPage {
+.AdminTaskPage {
   width: 70%;
 }
 
-.TaskPageHeader {
+.AdminTaskPageHeader {
   width: 100%;
   display: flex;
   justify-content: space-between;
@@ -12,11 +12,11 @@
   padding: 10px;
 }
 
-.TaskPageInfo {
+.AdminTaskPageInfo {
   list-style: none;
 }
 
-.TaskPageInfoItem {
+.AdminTaskPageInfoItem {
   padding: 5px;
   max-width: 80%;
   word-wrap: break-word;

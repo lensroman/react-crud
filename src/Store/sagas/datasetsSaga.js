@@ -53,9 +53,29 @@ export function* getDatasetInfoSaga(action) {
 }
 
 export function* uploadDatasetSaga(action) {
+    let from = null
+    let to = null
+    if (action.imagesRange === null) {
+        from = 0
+        console.log('saga', action.length)
+        to = action.length
+    } else {
+        try {
+            const response = yield axios.get(`/images-ranges/${action.imagesRange}/`)
+            from = yield response.data.start
+            to = yield response.data.end
+        }
+        catch(error) {
+            console.log(error)
+        }
+    }
     try {
         const response = yield axios.get(`/datasets/${action.id}/download/`, {
-            responseType: 'blob'
+            responseType: 'blob',
+            params: {
+                "from": from,
+                "to": to
+            }
         })
         let data = yield response.data
         let url = yield window.URL.createObjectURL(data)

@@ -4,7 +4,7 @@ import * as actions from '../../Store/actions/rootAction';
 import {connect} from "react-redux";
 
 import classes from './Auth.module.scss';
-import {TextField, Button, CircularProgress, FormControl, Typography, Alert} from "@mui/material";
+import {TextField, Button, CircularProgress, FormControl, Typography, Alert, Box} from "@mui/material";
 
 const Auth = props => {
     const [controls, setControls] = useState({
@@ -74,7 +74,11 @@ const Auth = props => {
     )
 
     if(props.loading) {
-        content = (<CircularProgress sx={{ mt: 15 }} />)
+        content = (
+            <Box sx={{ display: 'flex', justifyContent: 'center', mt: 3 }}>
+                <CircularProgress />
+            </Box>
+        )
     }
 
     const alert = props.error ? <Alert severity={'error'} sx={{ padding: 2, mt: 2 }}>{props.error}</Alert> : null

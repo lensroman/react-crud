@@ -7,10 +7,11 @@ import Markup from "../containers/Markup/Markup";
 import Dashboard from "../components/Dashboard/Dashboard";
 import Datasets from "../containers/Datasets/Datasets";
 import AdminTasks from "../containers/AdminTasks/AdminTasks";
-import TaskPage from '../components/TaskPage/TaskPage';
+import AdminTaskPage from '../components/AdminTaskPage/AdminTaskPage';
 import DatasetPage from '../components/DatasetPage/DatasetPage';
 import AdminUsers from '../containers/AdminUsers/AdminUsers';
 import MarkupTasks from "../containers/MarkupTasks/MarkupTasks";
+import MarkupTaskPage from "../components/MarkupTaskPage/MarkupTaskPage";
 
 const routes = (isAuthenticated, isStaff) => [
     {
@@ -23,31 +24,35 @@ const routes = (isAuthenticated, isStaff) => [
     },
     {
         path: '/samples',
-        element: (isAuthenticated && isStaff) ? <Datasets /> : <Navigate to="/auth" />
+        element: (isAuthenticated && isStaff === true) ? <Datasets /> : <Navigate to="/auth" />
     },
     {
         path: '/samples/*',
-        element: (isAuthenticated && isStaff) ? <DatasetPage /> : <Navigate to="/auth" />,
+        element: (isAuthenticated && isStaff === true) ? <DatasetPage /> : <Navigate to="/auth" />,
     },
     {
         path: '/admin-tasks',
-        element: (isAuthenticated && isStaff) ? <AdminTasks /> : <Navigate to="/auth" />,
+        element: (isAuthenticated && isStaff === true) ? <AdminTasks /> : <Navigate to="/auth" />,
     },
     {
         path: '/admin-tasks/*',
-        element: (isAuthenticated && isStaff) ? <TaskPage /> : <Navigate to="/auth" />,
+        element: (isAuthenticated && isStaff === true) ? <AdminTaskPage /> : <Navigate to="/auth" />,
     },
     {
         path: '/admin-users',
-        element: (isAuthenticated && isStaff) ? <AdminUsers /> : <Navigate to='/auth' />
+        element: (isAuthenticated && isStaff === true) ? <AdminUsers /> : <Navigate to='/auth' />
     },
     {
         path: '/markup',
-        element: (isAuthenticated && !isStaff) ? <Markup /> : <Navigate to="/auth" />
+        element: (isAuthenticated && isStaff === false) ? <Markup /> : <Navigate to="/auth" />
     },
     {
         path: '/markup-tasks',
-        element: (isAuthenticated && !isStaff) ? <MarkupTasks /> : <Navigate to="/auth" />
+        element: (isAuthenticated && isStaff === false) ? <MarkupTasks /> : <Navigate to="/auth" />
+    },
+    {
+        path: '/markup-tasks/*',
+        element: (isAuthenticated && isStaff === false) ? <MarkupTaskPage /> : <Navigate to="/auth" />,
     },
     {
         path: "/auth",

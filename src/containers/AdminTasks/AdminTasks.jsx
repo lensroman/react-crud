@@ -1,25 +1,21 @@
 import React, {useEffect, useState} from 'react';
 
 import classes from './AdminTasks.module.scss';
-import {Button, CircularProgress, Typography} from '@mui/material';
+import {Button, CircularProgress, Typography, Box} from '@mui/material';
 import {Add} from '@mui/icons-material';
 
 import * as actions from '../../Store/actions/rootAction';
 import {connect} from 'react-redux';
 
 import ModalAddAdminTasks from "../../components/ModaAddlAdminTasks/ModalAddAdminTasks";
-import TaskCard from '../../components/TaskCard/TaskCard';
+import AdminTaskCard from '../../components/AdminTaskCard/AdminTaskCard';
 import { useNavigate, Outlet } from "react-router-dom";
 
 const AdminTasks = (props) => {
 
-    const {onFetchAdminTasks} = props
+    const {onFetchAdminTasks, tasksType} = props
 
     const {datasets} = props
-
-    useEffect( () => {
-        onFetchAdminTasks()
-    }, [onFetchAdminTasks])
 
     const [newTask, setNewTask] = useState({
         dataset: null,
@@ -33,9 +29,14 @@ const AdminTasks = (props) => {
 
     const navigate = useNavigate()
 
+    useEffect( () => {
+        onFetchAdminTasks(tasksType)
+    }, [onFetchAdminTasks, tasksType])
+
     const modalAddOpenHandler = () => {
         setModalAddOpen(true)
     }
+
     const modalAddCloseHandler = () => {
         setModalAddOpen(false)
     }
@@ -94,10 +95,18 @@ const AdminTasks = (props) => {
         navigate(path)
     }
 
+    const tasksTypeToggleHandler = () => {
+        props.onChangeTasksType()
+    }
+
     let cards = null
 
     if (props.loading) {
-        cards = <CircularProgress />
+        cards = (
+            <Box sx={{ display: 'flex', justifyContent: 'center', mt: 3 }}>
+                <CircularProgress />
+            </Box>
+        )
     }
 
     if (props.tasks && props.markupUsers.length > 0) {
@@ -106,7 +115,7 @@ const AdminTasks = (props) => {
                 const marker = props.markupUsers.find(user => user.id === task.marker).username
                 const dataset = props.datasets.find(dataset => dataset.id === task.dataset).name
                 return (
-                    <TaskCard
+                    <AdminTaskCard
                         key={task.id}
                         title={task.title}
                         description={task.description}
@@ -128,6 +137,23 @@ const AdminTasks = (props) => {
                 </div>
                 <div>
                     <Button
+                        disabled={props.tasksType}
+                        variant={'outlined'}
+                        onClick={tasksTypeToggleHandler}
+                    >
+                        Открытые
+                    </Button>
+                    <Button
+                        disabled={!props.tasksType}
+                        variant={'outlined'}
+                        onClick={tasksTypeToggleHandler}
+                    >
+                        Закрытые
+                    </Button>
+                </div>
+                <div>
+                    <Button
+                        disabled={!props.tasksType}
                         variant={"contained"}
                         startIcon={<Add/>}
                         onClick={modalAddOpenHandler}
@@ -159,16 +185,18 @@ const mapStateToProps = state => {
         tasks: state.tasks.adminTasks,
         loading: state.tasks.loading,
         markupUsers: state.auth.markupUsers,
-        datasets: state.datasets.datasets
+        datasets: state.datasets.datasets,
+        tasksType: state.tasks.tasksType
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        onFetchAdminTasks: () => dispatch(actions.fetchAdminTasks()),
+        onFetchAdminTasks: (tasksType) => dispatch(actions.fetchAdminTasks(tasksType)),
         onAddAdminTask: (task) => dispatch(actions.addAdminTask(task)),
         onDeleteAdminTask: (id) => dispatch(actions.deleteAdminTask(id)),
-        onGetUsers: () => dispatch(actions.getUsers())
+        onGetUsers: () => dispatch(actions.getUsers()),
+        onChangeTasksType: () => dispatch(actions.changeTasksType())
     }
 }
 
