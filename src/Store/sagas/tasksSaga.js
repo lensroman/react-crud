@@ -3,13 +3,23 @@ import { put } from 'redux-saga/effects';
 import * as actions from '../actions/rootAction';
 import axios from '../../axios-instance';
 
-export function* fetchAdminTasksSaga() {
-    try {
-        const response = yield axios.get('/tasks/')
-        yield put(actions.fetchAdminTasksSuccess(response.data.results))
-    }
-    catch(error) {
-        yield put(actions.fetchAdminTasksFail(error))
+export function* fetchAdminTasksSaga(action) {
+    if (action.tasksType === true) {
+        try {
+            const response = yield axios.get('/tasks/')
+            yield put(actions.fetchAdminTasksSuccess(response.data.results, action.tasksType))
+        }
+        catch(error) {
+            yield put(actions.fetchAdminTasksFail(error))
+        }
+    } else {
+        try {
+            const response = yield axios.get('/tasks/closed/')
+            yield put(actions.fetchAdminTasksSuccess(response.data, action.tasksType))
+        }
+        catch(error) {
+            yield put(actions.fetchAdminTasksFail(error))
+        }
     }
 }
 
@@ -22,7 +32,7 @@ export function* addAdminTaskSaga(action) {
             images_count: action.task.imagesCount,
             description: action.task.description
         })
-        yield put(actions.fetchAdminTasks())
+        yield put(actions.fetchAdminTasks(true))
     }
     catch(error) {
         console.log(error)
@@ -32,7 +42,7 @@ export function* addAdminTaskSaga(action) {
 export function* deleteAdminTaskSaga(action) {
     try {
         yield axios.delete(`/tasks/${action.id}`)
-        yield put(actions.fetchAdminTasks())
+        yield put(actions.fetchAdminTasks(true))
     }
     catch(error) {
         console.log(error)

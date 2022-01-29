@@ -1,15 +1,17 @@
 import * as actionTypes from './actionTypes';
 
-export const fetchAdminTasks = () => {
+export const fetchAdminTasks = (tasksType) => {
     return {
-        type: actionTypes.FETCH_ADMIN_TASKS
+        type: actionTypes.FETCH_ADMIN_TASKS,
+        tasksType: tasksType
     }
 }
 
-export const fetchAdminTasksSuccess = (tasks) => {
+export const fetchAdminTasksSuccess = (tasks, tasksType) => {
     return {
         type: actionTypes.FETCH_ADMIN_TASKS_SUCCESS,
-        tasks: tasks
+        tasks: tasks,
+        tasksType: tasksType
     }
 }
 
@@ -58,5 +60,11 @@ export const completeTask = (id) => {
     return {
         type: actionTypes.COMPLETE_TASK,
         id: id
+    }
+}
+
+export const changeTasksType = () => {
+    return {
+        type: actionTypes.CHANGE_TASKS_TYPE
     }
 }

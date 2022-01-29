@@ -62,10 +62,13 @@ export const clearCurrentDataset = () => {
     }
 }
 
-export const uploadDataset = (id, name) => {
+export const uploadDataset = (id, name, imagesRange = null, length = null) => {
+    console.log('action', length)
     return {
         type: actionTypes.UPLOAD_DATASET,
         id: id,
-        name: name
+        name: name,
+        imagesRange: imagesRange,
+        length: length
     }
 }

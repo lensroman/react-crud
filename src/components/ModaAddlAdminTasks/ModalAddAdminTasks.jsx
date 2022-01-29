@@ -25,8 +25,6 @@ const ModalAddAdminTasks = (props) => {
     if (props.selectedDataset) {
         selectedDataset = props.datasets.find(dataset => dataset.id === props.selectedDataset)
         count = selectedDataset.length - selectedDataset.last_img
-        console.log(selectedDataset)
-        console.log(count)
         for (let i = 0; i < count; i++) {
             countSelect.push(i + 1)
         }

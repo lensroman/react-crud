@@ -4,6 +4,7 @@ const initialState = {
     loading: false,
     error: null,
     adminTasks: [],
+    tasksType: true,
     currentTask: null
 }
 
@@ -19,7 +20,7 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 loading: false,
-                adminTasks: action.tasks
+                adminTasks: action.tasks,
             }
         }
         case actionTypes.FETCH_ADMIN_TASKS_FAIL: {
@@ -39,6 +40,13 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 currentTask: null
+            }
+        }
+        case actionTypes.CHANGE_TASKS_TYPE: {
+            const updatedValue = !state.tasksType
+            return {
+                ...state,
+                tasksType: updatedValue
             }
         }
         default: {

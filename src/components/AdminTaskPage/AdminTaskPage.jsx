@@ -42,11 +42,16 @@ const AdminTaskPage = (props) => {
 
         const marker = props.markupUsers.find(user => user.id === props.task.marker).username
 
+        const status = props.task.opened ? 'Открыта' : 'Выполнена'
+
         taskPage = (
             <div>
                 <div className={classes.AdminTaskPageHeader}>
                     <div>
                         <Typography variant={"h4"} fontWeight={"bold"}>Задача: {props.task.title}</Typography>
+                    </div>
+                    <div>
+                        <Typography variant={"h5"} fontWeight={"bold"}>Статус: {status}</Typography>
                     </div>
                     <div>
                         <Button

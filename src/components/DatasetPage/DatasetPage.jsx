@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 
-import {Button, CircularProgress, Typography} from "@mui/material";
+import {Box, Button, CircularProgress, Typography} from "@mui/material";
 import {ArrowBackIosNewOutlined, UploadFile} from "@mui/icons-material";
 import classes from './datasetPage.module.scss';
 
@@ -30,10 +30,16 @@ const DatasetPage = (props) => {
 
     const uploadDatasetHandler = () => {
         let name = props.dataset.name
-        props.onUploadDataset(id, name)
+        let length = props.dataset.length
+        console.log('component', length)
+        props.onUploadDataset(id, name, null, length)
     }
 
-    let datasetPage = (<CircularProgress />)
+    let datasetPage = (
+        <Box sx={{ display: 'flex', justifyContent: 'center', mt: 3 }}>
+            <CircularProgress />
+        </Box>
+    )
 
     if (props.dataset) {
 
@@ -100,7 +106,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         onGetDatasetInfo: (id) => dispatch(actions.getDatasetInfo(id)),
-        onUploadDataset: (id, name) => dispatch(actions.uploadDataset(id, name)),
+        onUploadDataset: (id, name, imagesRange, length) => dispatch(actions.uploadDataset(id, name, imagesRange, length)),
         onClearCurrentDataset: () => dispatch(actions.clearCurrentDataset())
     }
 }

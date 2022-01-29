@@ -43,5 +43,6 @@ export {
     getTaskInfo,
     setCurrentTask,
     clearCurrentTask,
-    completeTask
+    completeTask,
+    changeTasksType
 } from './tasksAction'

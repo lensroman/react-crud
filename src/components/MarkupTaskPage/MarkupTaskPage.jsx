@@ -1,9 +1,10 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 
 import {useNavigate, useParams} from "react-router-dom";
 
 import classes from './MarkupTaskPage.module.scss';
 import {
+    Box,
     Button,
     CircularProgress,
     Dialog,
@@ -20,8 +21,10 @@ import * as actions from "../../Store/actions/rootAction";
 
 const MarkupTaskPage = (props) => {
 
-    const [openDialog, setOpenDialog] = useState(false)
-    const [comment, setComment] = useState('')
+    // const [openDialog, setOpenDialog] = useState(false)
+    // const [comment, setComment] = useState('')
+
+    const [isOpened, setIsOpened] = useState(true)
 
     const navigate = useNavigate()
 
@@ -32,7 +35,9 @@ const MarkupTaskPage = (props) => {
     useEffect(() => {
         let id = +params['*'].split('/')[0]
         onGetTaskInfo(id)
-    }, [onGetTaskInfo, params])
+    }, [onGetTaskInfo, params, isOpened])
+
+    const downloadButton = useRef(null)
 
     const goBackHandler = () => {
         props.onClearCurrentTask()
@@ -42,37 +47,60 @@ const MarkupTaskPage = (props) => {
     const uploadDatasetHandler = () => {
         const name = props.datasets.find(dataset => dataset.id === props.task.dataset).name
         const id = props.task.dataset
-        props.onUploadDataset(id, name)
+        const imagesRange = props.task.images_range
+        console.log(imagesRange)
+        props.onUploadDataset(id, name, imagesRange)
     }
 
-    const openDialogHandler = () => {
-        setOpenDialog(true)
-    }
+    // const openDialogHandler = () => {
+    //     setOpenDialog(true)
+    // }
+    //
+    // const closeDialogHandler = () => {
+    //     setOpenDialog(false)
+    // }
 
-    const closeDialogHandler = () => {
-        setOpenDialog(false)
-    }
-
-    const commentChangeHandler = event => {
-        const newComment = event.target.value
-        setComment(newComment)
-    }
+    // const commentChangeHandler = event => {
+    //     const newComment = event.target.value
+    //     setComment(newComment)
+    // }
 
     const closeTaskHandler = (id) => {
+        setIsOpened(false)
         props.onCompleteTask(id)
     }
 
     const downloadDatasetHandler = () => {
-
+        downloadButton.current.click()
     }
 
-    let taskPage = <CircularProgress sx={{ mt: 4 }} />
+    let taskPage = (
+        <Box sx={{ display: 'flex', justifyContent: 'center', mt: 3 }}>
+            <CircularProgress />
+        </Box>
+    )
+
+    let closeTaskButton = null
+
+    if (props.task && isOpened === true) {
+        closeTaskButton = (
+            <Button
+                sx={{ mt: 2 }}
+                variant={'contained'}
+                color={'success'}
+                startIcon={<Done />}
+                onClick={() => closeTaskHandler(props.task.id)}
+            >
+                Закрыть задачу
+            </Button>
+        )
+    }
 
     if (props.task) {
 
         const dataset = props.datasets.find(dataset => dataset.id === props.task.dataset).name
 
-        const status = props.task.opened ? 'Открыта' : 'Выполнена'
+        const status = isOpened ? 'Открыта' : 'Выполнена'
 
         taskPage = (
             <div>
@@ -118,48 +146,41 @@ const MarkupTaskPage = (props) => {
                         >
                             Скачать выборку
                         </Button>
+                        <input type="file" ref={downloadButton} style={{ display: 'none' }} />
                         <Button
                             sx={{ mt: 2 }}
                             variant={'contained'}
                             startIcon={<Download />}
-                            onClick={downloadDatasetHandler}
+                            onClick={(event) => downloadDatasetHandler(event)}
                         >
                             Загрузить разметку
                         </Button>
-                        <Button
-                            sx={{ mt: 2 }}
-                            variant={'contained'}
-                            color={'success'}
-                            startIcon={<Done />}
-                            onClick={openDialogHandler}
-                        >
-                            Закрыть задачу
-                        </Button>
+                        {closeTaskButton}
                     </div>
                 </div>
-                <Dialog open={openDialog} onClose={closeDialogHandler}>
-                    <DialogTitle>Закрытие задачи</DialogTitle>
-                    <DialogContent>
-                        <DialogContentText>
-                            Необходимо оставить комментарий, чтобы закрыть задачу
-                        </DialogContentText>
-                        <TextField
-                            autoFocus
-                            margin="dense"
-                            label="Комментарий"
-                            fullWidth
-                            autoComplete={'off'}
-                            variant="standard"
-                            multiline={true}
-                            value={comment}
-                            onChange={(event) => commentChangeHandler(event)}
-                        />
-                    </DialogContent>
-                    <DialogActions>
-                        <Button onClick={closeDialogHandler}>Отмена</Button>
-                        <Button onClick={() => closeTaskHandler(props.task.id)}>Подтвердить</Button>
-                    </DialogActions>
-                </Dialog>
+                {/*<Dialog open={openDialog} onClose={closeDialogHandler}>*/}
+                {/*    <DialogTitle>Закрытие задачи</DialogTitle>*/}
+                {/*    <DialogContent>*/}
+                {/*        <DialogContentText>*/}
+                {/*            Необходимо оставить комментарий, чтобы закрыть задачу*/}
+                {/*        </DialogContentText>*/}
+                {/*        <TextField*/}
+                {/*            autoFocus*/}
+                {/*            margin="dense"*/}
+                {/*            label="Комментарий"*/}
+                {/*            fullWidth*/}
+                {/*            autoComplete={'off'}*/}
+                {/*            variant="standard"*/}
+                {/*            multiline={true}*/}
+                {/*            value={comment}*/}
+                {/*            onChange={(event) => commentChangeHandler(event)}*/}
+                {/*        />*/}
+                {/*    </DialogContent>*/}
+                {/*    <DialogActions>*/}
+                {/*        <Button onClick={closeDialogHandler}>Отмена</Button>*/}
+                {/*        <Button onClick={() => closeTaskHandler(props.task.id)}>Подтвердить</Button>*/}
+                {/*    </DialogActions>*/}
+                {/*</Dialog>*/}
             </div>
         )
     }
@@ -182,7 +203,7 @@ const mapDispatchToProps = dispatch => {
     return {
         onGetTaskInfo: (id) => dispatch(actions.getTaskInfo(id)),
         onClearCurrentTask: () => dispatch(actions.clearCurrentTask()),
-        onUploadDataset: (id, name) => dispatch(actions.uploadDataset(id, name)),
+        onUploadDataset: (id, name, imagesRange) => dispatch(actions.uploadDataset(id, name, imagesRange)),
         onCompleteTask: (id) => dispatch(actions.completeTask(id))
     }
 }
