@@ -61,6 +61,7 @@ export function* getTaskInfoSaga(action) {
 
 export function* competeTaskSaga(action) {
     try {
+
         yield axios.post(`/tasks/${action.id}/close/`)
         yield put(actions.fetchAdminTasks())
     }

@@ -1,12 +1,12 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import * as actions from '../../Store/actions/rootAction';
 
 import classes from './Datasets.module.scss';
 import DatasetCard from '../../components/DatasetCard/DatasetCard';
-import {Box, Button, CircularProgress, Modal, TextField, Typography} from "@mui/material";
-import {Add} from "@mui/icons-material";
+import { Box, Button, CircularProgress, Modal, TextField, Typography } from "@mui/material";
+import { Add } from "@mui/icons-material";
 
 import {useNavigate} from "react-router-dom";
 
@@ -22,6 +22,8 @@ const Datasets = props => {
     useEffect(() => {
         onFetchDatasets()
     }, [onFetchDatasets])
+
+    const downloadButton = useRef(null)
 
     const navigate = useNavigate()
 
@@ -59,6 +61,10 @@ const Datasets = props => {
         props.onDeleteDataset(id)
     }
 
+    const downloadButtonHandler = () => {
+        downloadButton.current.click()
+    }
+
     const changeRouteHandler = (id) => {
         let path = `/samples/${id}/`
         navigate(path)
@@ -75,12 +81,19 @@ const Datasets = props => {
                 <Typography variant={"h6"}>Добавьте новую выборку</Typography>
                 <Box className={classes.ModalInputs}>
                     <TextField
+                        sx={{ width: '60%' }}
                         required={true}
                         label="Название выборки"
                         autoComplete={'off'}
                         onChange={(event) => inputNameChangeHandler(event)}
                     />
-                    <input required={true} type="file" onInput={fileAddHandler}/>
+                    <input
+                        ref={downloadButton}
+                        required={true}
+                        type="file"
+                        onInput={fileAddHandler}
+                        style={{ display: 'none' }}/>
+                    <Button onClick={downloadButtonHandler} variant={'outlined'}>Загрузить выборку</Button>
                 </Box>
                 <TextField
                     fullWidth={true}

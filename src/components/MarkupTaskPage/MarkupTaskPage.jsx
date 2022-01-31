@@ -21,10 +21,12 @@ import * as actions from "../../Store/actions/rootAction";
 
 const MarkupTaskPage = (props) => {
 
-    // const [openDialog, setOpenDialog] = useState(false)
-    // const [comment, setComment] = useState('')
+    const [openDialog, setOpenDialog] = useState(false)
 
-    const [isOpened, setIsOpened] = useState(true)
+    const [taskCloseData, setTaskCloseData] = useState({
+        comment: '',
+        markupFile: null
+    })
 
     const navigate = useNavigate()
 
@@ -35,7 +37,7 @@ const MarkupTaskPage = (props) => {
     useEffect(() => {
         let id = +params['*'].split('/')[0]
         onGetTaskInfo(id)
-    }, [onGetTaskInfo, params, isOpened])
+    }, [onGetTaskInfo, params, props.task.opened])
 
     const downloadButton = useRef(null)
 
@@ -48,48 +50,57 @@ const MarkupTaskPage = (props) => {
         const name = props.datasets.find(dataset => dataset.id === props.task.dataset).name
         const id = props.task.dataset
         const imagesRange = props.task.images_range
-        console.log(imagesRange)
         props.onUploadDataset(id, name, imagesRange)
     }
 
-    // const openDialogHandler = () => {
-    //     setOpenDialog(true)
-    // }
-    //
-    // const closeDialogHandler = () => {
-    //     setOpenDialog(false)
-    // }
-
-    // const commentChangeHandler = event => {
-    //     const newComment = event.target.value
-    //     setComment(newComment)
-    // }
-
-    const closeTaskHandler = (id) => {
-        setIsOpened(false)
-        props.onCompleteTask(id)
+    const openDialogHandler = () => {
+        setOpenDialog(true)
     }
 
-    const downloadDatasetHandler = () => {
+    const closeDialogHandler = () => {
+        setOpenDialog(false)
+    }
+
+    const commentChangeHandler = event => {
+        const updatedTaskCloseData = {
+            ...taskCloseData,
+            comment: event.target.value
+        }
+        setTaskCloseData(updatedTaskCloseData)
+    }
+
+    const closeTaskHandler = () => {
+        props.onCompleteTask(props.task.id , taskCloseData)
+    }
+
+    const downloadMarkupHandler = () => {
         downloadButton.current.click()
     }
 
+    const markupFileAddHandler = (event) => {
+        let updatedTaskCloseData = {
+            ...taskCloseData,
+            markupFile: event.target.files[0]
+        }
+        setTaskCloseData(updatedTaskCloseData)
+    }
+
     let taskPage = (
-        <Box sx={{ display: 'flex', justifyContent: 'center', mt: 3 }}>
-            <CircularProgress />
+        <Box sx={{display: 'flex', justifyContent: 'center', mt: 3}}>
+            <CircularProgress/>
         </Box>
     )
 
     let closeTaskButton = null
 
-    if (props.task && isOpened === true) {
+    if (props.task && props.task.opened === true) {
         closeTaskButton = (
             <Button
-                sx={{ mt: 2 }}
+                sx={{mt: 2}}
                 variant={'contained'}
                 color={'success'}
-                startIcon={<Done />}
-                onClick={() => closeTaskHandler(props.task.id)}
+                startIcon={<Done/>}
+                onClick={() => openDialogHandler()}
             >
                 Закрыть задачу
             </Button>
@@ -100,7 +111,7 @@ const MarkupTaskPage = (props) => {
 
         const dataset = props.datasets.find(dataset => dataset.id === props.task.dataset).name
 
-        const status = isOpened ? 'Открыта' : 'Выполнена'
+        const status = props.task.opened ? 'Открыта' : 'Выполнена'
 
         taskPage = (
             <div>
@@ -125,62 +136,72 @@ const MarkupTaskPage = (props) => {
                     <div>
                         <ul className={classes.MarkupTaskPageInfo}>
                             <li className={classes.MarkupTaskPageInfoItem}>
-                                <Typography variant={'h6'} fontWeight={'normal'}>Дата создания: {props.task.created_at.split('T')[0]}</Typography>
+                                <Typography variant={'h6'} fontWeight={'normal'}>Дата
+                                    создания: {props.task.created_at.split('T')[0]}</Typography>
                             </li>
                             <li className={classes.MarkupTaskPageInfoItem}>
                                 <Typography variant={'h6'} fontWeight={'normal'}>Выборка: {dataset}</Typography>
                             </li>
                             <li className={classes.MarkupTaskPageInfoItem}>
-                                <Typography variant={'h6'} fontWeight={'normal'}>Описание: {props.task.description}</Typography>
+                                <Typography variant={'h6'}
+                                            fontWeight={'normal'}>Описание: {props.task.description}</Typography>
                             </li>
                             <li className={classes.MarkupTaskPageInfoItem}>
-                                <Typography variant={'h6'} fontWeight={'normal'}>Кол-во изображений: {props.task.images_count}</Typography>
+                                <Typography variant={'h6'} fontWeight={'normal'}>Кол-во
+                                    изображений: {props.task.images_count}</Typography>
                             </li>
                         </ul>
                     </div>
                     <div className={classes.MarkupTaskPageButtons}>
                         <Button
                             variant={'contained'}
-                            startIcon={<UploadFile />}
+                            startIcon={<UploadFile/>}
                             onClick={uploadDatasetHandler}
                         >
                             Скачать выборку
                         </Button>
-                        <input type="file" ref={downloadButton} style={{ display: 'none' }} />
-                        <Button
-                            sx={{ mt: 2 }}
-                            variant={'contained'}
-                            startIcon={<Download />}
-                            onClick={(event) => downloadDatasetHandler(event)}
-                        >
-                            Загрузить разметку
-                        </Button>
                         {closeTaskButton}
                     </div>
                 </div>
-                {/*<Dialog open={openDialog} onClose={closeDialogHandler}>*/}
-                {/*    <DialogTitle>Закрытие задачи</DialogTitle>*/}
-                {/*    <DialogContent>*/}
-                {/*        <DialogContentText>*/}
-                {/*            Необходимо оставить комментарий, чтобы закрыть задачу*/}
-                {/*        </DialogContentText>*/}
-                {/*        <TextField*/}
-                {/*            autoFocus*/}
-                {/*            margin="dense"*/}
-                {/*            label="Комментарий"*/}
-                {/*            fullWidth*/}
-                {/*            autoComplete={'off'}*/}
-                {/*            variant="standard"*/}
-                {/*            multiline={true}*/}
-                {/*            value={comment}*/}
-                {/*            onChange={(event) => commentChangeHandler(event)}*/}
-                {/*        />*/}
-                {/*    </DialogContent>*/}
-                {/*    <DialogActions>*/}
-                {/*        <Button onClick={closeDialogHandler}>Отмена</Button>*/}
-                {/*        <Button onClick={() => closeTaskHandler(props.task.id)}>Подтвердить</Button>*/}
-                {/*    </DialogActions>*/}
-                {/*</Dialog>*/}
+                <Dialog open={openDialog} onClose={closeDialogHandler}>
+                    <DialogTitle>Закрытие задачи</DialogTitle>
+                    <DialogContent>
+                        <DialogContentText>
+                            Необходимо оставить комментарий, чтобы закрыть задачу
+                        </DialogContentText>
+                        <input
+                            type="file"
+                            ref={downloadButton}
+                            onClick={(event) => markupFileAddHandler(event)}
+                            value={taskCloseData.markupFile}
+                            style={{display: 'none'}}/>
+                        <Button
+                            sx={{mt: 2}}
+                            variant={'outlined'}
+                            fullWidth
+                            startIcon={<Download/>}
+                            onClick={(event) => downloadMarkupHandler(event)}
+                        >
+                            Загрузить разметку
+                        </Button>
+                        <TextField
+                            sx={{ mt: 2 }}
+                            autoFocus
+                            margin="dense"
+                            label="Комментарий"
+                            fullWidth
+                            autoComplete={'off'}
+                            variant="standard"
+                            multiline={true}
+                            value={taskCloseData.comment}
+                            onChange={(event) => commentChangeHandler(event)}
+                        />
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={closeDialogHandler}>Отмена</Button>
+                        <Button onClick={closeTaskHandler}>Подтвердить</Button>
+                    </DialogActions>
+                </Dialog>
             </div>
         )
     }
@@ -204,7 +225,7 @@ const mapDispatchToProps = dispatch => {
         onGetTaskInfo: (id) => dispatch(actions.getTaskInfo(id)),
         onClearCurrentTask: () => dispatch(actions.clearCurrentTask()),
         onUploadDataset: (id, name, imagesRange) => dispatch(actions.uploadDataset(id, name, imagesRange)),
-        onCompleteTask: (id) => dispatch(actions.completeTask(id))
+        onCompleteTask: (id, data) => dispatch(actions.completeTask(id, data))
     }
 }
 

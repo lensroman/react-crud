@@ -16,7 +16,7 @@ const MarkupTasks = (props) => {
 
     const {onFetchAdminTasks, onFetchDatasets, tasksType} = props
 
-    useEffect(() => {
+    useEffect(async () => {
         onFetchDatasets()
         onFetchAdminTasks(tasksType)
     }, [onFetchAdminTasks, onFetchDatasets, tasksType])
