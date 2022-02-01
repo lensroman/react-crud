@@ -60,8 +60,16 @@ export function* getTaskInfoSaga(action) {
 }
 
 export function* competeTaskSaga(action) {
+    console.log('saga', action.data)
     try {
-        yield axios.post(`/tasks/${action.id}/close/`)
+        const formData = new FormData()
+        formData.append('task', action.data.task)
+        formData.append('new_dataset', action.data.file)
+        yield axios.post(`/tasks/${action.data.task.id}/close/`, formData, {
+            headers: {
+                'content-type': 'multipart/form-data'
+            }
+        })
         yield put(actions.fetchAdminTasks())
     }
     catch(error) {

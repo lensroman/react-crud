@@ -16,7 +16,7 @@ const MarkupTasks = (props) => {
 
     const {onFetchAdminTasks, onFetchDatasets, tasksType} = props
 
-    useEffect(() => {
+    useEffect( () => {
         onFetchDatasets()
         onFetchAdminTasks(tasksType)
     }, [onFetchAdminTasks, onFetchDatasets, tasksType])
@@ -32,10 +32,11 @@ const MarkupTasks = (props) => {
 
     let cards = <CircularProgress sx={{ mt: 4 }} />
 
-    if (props.tasks && props.datasets) {
+    if (props.tasks && props.datasets.length > 0) {
+        let dataset = null
         let tasks = props.tasks.filter(task => task.marker === props.userId)
         cards = tasks.map(task => {
-            const dataset = props.datasets.find(dataset => dataset.id === task.dataset).name
+            dataset = props.datasets.find(dataset => dataset.id === task.dataset).name
             return (
                 <MarkupTaskCard
                     key={task.id}

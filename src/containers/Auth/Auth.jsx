@@ -67,13 +67,19 @@ const Auth = props => {
                             />
                         )
                     })}
-                    <Button type={'submit'} form={'auth-form'} onClick={submitHandler} variant={"contained"} size={"large"} sx={{mt: 3}}>Войти</Button>
+                    <Button
+                        type={'submit'}
+                        form={'auth-form'}
+                        onClick={submitHandler}
+                        variant={"contained"}
+                        size={"large"}
+                        sx={{mt: 3}}>Войти</Button>
                 </FormControl>
             </form>
         </div>
     )
 
-    if(props.loading) {
+    if (props.loading) {
         content = (
             <Box sx={{ display: 'flex', justifyContent: 'center', mt: 3 }}>
                 <CircularProgress />
