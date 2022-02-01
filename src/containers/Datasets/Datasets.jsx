@@ -13,11 +13,12 @@ import {useNavigate} from "react-router-dom";
 const Datasets = props => {
 
     const [modalOpen, setModalOpen] = useState(false)
+
     const [datasetName, setDatasetName] = useState('')
     const [datasetDescription, setDatasetDescription] = useState('')
     const [datasetFile, setDatasetFile] = useState(null)
 
-    const {onFetchDatasets} = props
+    const { onFetchDatasets } = props
 
     useEffect(() => {
         onFetchDatasets()
@@ -81,6 +82,7 @@ const Datasets = props => {
                 <Typography variant={"h6"}>Добавьте новую выборку</Typography>
                 <Box className={classes.ModalInputs}>
                     <TextField
+                        size={'small'}
                         sx={{ width: '60%' }}
                         required={true}
                         label="Название выборки"
@@ -124,6 +126,7 @@ const Datasets = props => {
                         id={dataset.id}
                         name={dataset.name}
                         description={dataset.description}
+                        percent={dataset.percent}
                         delete={() => deleteDataSetHandler(dataset.id)}
                         openDataset={() => changeRouteHandler(dataset.id)}
                     />

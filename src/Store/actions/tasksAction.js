@@ -56,10 +56,9 @@ export const clearCurrentTask = () => {
     }
 }
 
-export const completeTask = (id, data) => {
+export const completeTask = (data) => {
     return {
         type: actionTypes.COMPLETE_TASK,
-        id: id,
         data: data
     }
 }

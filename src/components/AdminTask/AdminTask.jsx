@@ -1,14 +1,14 @@
 import React, { useEffect } from 'react';
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from 'react-router-dom';
 
-import { Button, CircularProgress, Typography } from "@mui/material";
-import { ArrowBackIosNewOutlined } from "@mui/icons-material";
-import classes from './AdminTaskPage.module.scss';
+import { Button, CircularProgress, Typography } from '@mui/material';
+import { ArrowBackIosNewOutlined } from '@mui/icons-material';
+import classes from './AdminTask.module.scss';
 
 import * as actions from '../../Store/actions/rootAction';
 import { connect } from 'react-redux';
 
-const AdminTaskPage = (props) => {
+const AdminTask = (props) => {
 
     const navigate = useNavigate()
 
@@ -103,4 +103,4 @@ const mapDispatchToProps = dispatch => {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(AdminTaskPage);
+export default connect(mapStateToProps, mapDispatchToProps)(AdminTask);

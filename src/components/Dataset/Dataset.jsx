@@ -1,15 +1,15 @@
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 
-import {Box, Button, CircularProgress, Typography} from "@mui/material";
-import {ArrowBackIosNewOutlined, UploadFile} from "@mui/icons-material";
-import classes from './datasetPage.module.scss';
+import { Box, Button, CircularProgress, Typography } from '@mui/material';
+import { ArrowBackIosNewOutlined, UploadFile } from '@mui/icons-material';
+import classes from './Dataset.module.scss';
 
-import {connect} from "react-redux";
+import { connect } from 'react-redux';
 import * as actions from '../../Store/actions/rootAction';
 
-import {useNavigate, useParams} from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
-const DatasetPage = (props) => {
+const Dataset = (props) => {
 
     const params = useParams()
 
@@ -31,7 +31,6 @@ const DatasetPage = (props) => {
     const uploadDatasetHandler = () => {
         let name = props.dataset.name
         let length = props.dataset.length
-        console.log('component', length)
         props.onUploadDataset(id, name, null, length)
     }
 
@@ -47,40 +46,42 @@ const DatasetPage = (props) => {
             <div>
                 <div className={classes.datasetPageHeader}>
                     <div>
-                        <Typography variant={"h4"} fontWeight={"bold"}>Выборка: {props.dataset.name}</Typography>
+                        <Typography variant={ "h4" } fontWeight={ "bold" }>
+                            Выборка: { props.dataset.name }
+                        </Typography>
                     </div>
                     <div>
                         <Button
-                            variant={"outlined"}
-                            startIcon={<ArrowBackIosNewOutlined/>}
-                            onClick={goBackHandler}
+                            variant={ "outlined" }
+                            startIcon={ <ArrowBackIosNewOutlined/> }
+                            onClick={ goBackHandler }
                         >
                             Назад
                         </Button>
                     </div>
                 </div>
-                <ul className={classes.datasetPageInfo}>
-                    <li className={classes.datasetPageInfoItem}>
+                <ul className={ classes.datasetPageInfo }>
+                    <li className={ classes.datasetPageInfoItem }>
                         <Typography
-                            variant={'h6'}
-                            fontWeight={'normal'}
+                            variant={ 'h6' }
+                            fontWeight={ 'normal' }
                         >
-                            Дата создания: {props.dataset.created_at.split('T')[0]}
+                            Дата создания: { props.dataset.created_at.split('T')[0] }
                         </Typography>
                     </li>
-                    <li className={classes.datasetPageInfoItem}>
+                    <li className={ classes.datasetPageInfoItem }>
                         <Typography
-                            variant={'h6'}
-                            fontWeight={'normal'}
+                            variant={ 'h6' }
+                            fontWeight={ 'normal' }
                         >
-                            Описание: {props.dataset.description}
+                            Описание: { props.dataset.description }
                         </Typography>
                     </li>
-                    <li className={classes.datasetPageInfoItem}>
+                    <li className={ classes.datasetPageInfoItem }>
                         <Button
-                            variant={'contained'}
-                            startIcon={<UploadFile />}
-                            onClick={uploadDatasetHandler}
+                            variant={ 'contained' }
+                            startIcon={ <UploadFile /> }
+                            onClick={ uploadDatasetHandler }
                         >
                             Скачать выборку
                         </Button>
@@ -91,8 +92,8 @@ const DatasetPage = (props) => {
     }
 
     return (
-        <div className={classes.datasetPage}>
-            {datasetPage}
+        <div className={ classes.datasetPage }>
+            { datasetPage }
         </div>
     );
 };
@@ -111,4 +112,4 @@ const mapDispatchToProps = dispatch => {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(DatasetPage);
+export default connect(mapStateToProps, mapDispatchToProps)(Dataset);

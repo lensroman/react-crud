@@ -1,7 +1,15 @@
-import React from "react";
+import React from 'react';
 
-import {Box, Button, Card, CardActions, CardContent, ThemeProvider, Typography} from "@mui/material";
-import {theme} from "../../UI/Theme/Theme";
+import {
+    Box,
+    Button,
+    Card,
+    CardActions,
+    CardContent,
+    ThemeProvider,
+    Typography
+} from '@mui/material';
+import { theme } from '../../UI/Theme/Theme';
 
 const AdminTaskCard = props => {
 

@@ -1,6 +1,6 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
-import {useNavigate, useParams} from "react-router-dom";
+import { useNavigate, useParams } from 'react-router-dom';
 
 import classes from './MarkupTaskPage.module.scss';
 import {
@@ -9,24 +9,25 @@ import {
     CircularProgress,
     Dialog,
     DialogActions,
-    DialogContent, DialogContentText,
+    DialogContent,
+    DialogContentText,
     DialogTitle,
     TextField,
     Typography
 } from "@mui/material";
-import {ArrowBackIosNewOutlined, Done, Download, UploadFile} from "@mui/icons-material";
+import { ArrowBackIosNewOutlined, Done, Download, UploadFile } from '@mui/icons-material';
 
-import {connect} from "react-redux";
-import * as actions from "../../Store/actions/rootAction";
+import { connect } from 'react-redux';
+import * as actions from '../../Store/actions/rootAction';
 
 const MarkupTaskPage = (props) => {
 
     const [openDialog, setOpenDialog] = useState(false)
 
-    const [taskCloseData, setTaskCloseData] = useState({
-        comment: '',
-        markupFile: null
-    })
+    const [isTaskOpened, setIsTaskOpened] = useState(null)
+
+    const [taskCloseComment, setTaskCloseComment] = useState('')
+    const [taskCloseFile, setTaskCloseFile] = useState('')
 
     const navigate = useNavigate()
 
@@ -37,7 +38,7 @@ const MarkupTaskPage = (props) => {
     useEffect(() => {
         let id = +params['*'].split('/')[0]
         onGetTaskInfo(id)
-    }, [onGetTaskInfo, params, props.task.opened])
+    }, [onGetTaskInfo, params, isTaskOpened])
 
     const downloadButton = useRef(null)
 
@@ -62,15 +63,8 @@ const MarkupTaskPage = (props) => {
     }
 
     const commentChangeHandler = event => {
-        const updatedTaskCloseData = {
-            ...taskCloseData,
-            comment: event.target.value
-        }
-        setTaskCloseData(updatedTaskCloseData)
-    }
-
-    const closeTaskHandler = () => {
-        props.onCompleteTask(props.task.id , taskCloseData)
+        const updatedTaskCloseComment = event.target.value
+        setTaskCloseComment(updatedTaskCloseComment)
     }
 
     const downloadMarkupHandler = () => {
@@ -78,11 +72,21 @@ const MarkupTaskPage = (props) => {
     }
 
     const markupFileAddHandler = (event) => {
-        let updatedTaskCloseData = {
-            ...taskCloseData,
-            markupFile: event.target.files[0]
+        console.log(event.target.files)
+        let updatedTaskCloseFile = event.target.files[0]
+        setTaskCloseFile(updatedTaskCloseFile)
+    }
+
+    const closeTaskHandler = () => {
+        setIsTaskOpened(!props.task.opened)
+        const taskCloseData = {
+            task: {
+                ...props.task,
+                comment: taskCloseComment
+            },
+            file: taskCloseFile
         }
-        setTaskCloseData(updatedTaskCloseData)
+        props.onCompleteTask(taskCloseData)
     }
 
     let taskPage = (
@@ -172,8 +176,7 @@ const MarkupTaskPage = (props) => {
                         <input
                             type="file"
                             ref={downloadButton}
-                            onClick={(event) => markupFileAddHandler(event)}
-                            value={taskCloseData.markupFile}
+                            onInput={(event) => markupFileAddHandler(event)}
                             style={{display: 'none'}}/>
                         <Button
                             sx={{mt: 2}}
@@ -193,7 +196,7 @@ const MarkupTaskPage = (props) => {
                             autoComplete={'off'}
                             variant="standard"
                             multiline={true}
-                            value={taskCloseData.comment}
+                            value={taskCloseComment}
                             onChange={(event) => commentChangeHandler(event)}
                         />
                     </DialogContent>

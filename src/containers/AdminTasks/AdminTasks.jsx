@@ -109,7 +109,7 @@ const AdminTasks = (props) => {
         )
     }
 
-    if (props.tasks && props.markupUsers.length > 0) {
+    if (props.tasks && props.markupUsers.length > 0 && props.datasets.length > 0) {
         cards = (
             props.tasks.map(task => {
                 const marker = props.markupUsers.find(user => user.id === task.marker).username
