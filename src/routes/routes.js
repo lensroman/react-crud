@@ -11,7 +11,7 @@ import AdminTaskPage from '../components/AdminTask/AdminTask';
 import DatasetPage from '../components/Dataset/Dataset';
 import AdminUsers from '../containers/AdminUsers/AdminUsers';
 import MarkupTasks from "../containers/MarkupTasks/MarkupTasks";
-import MarkupTaskPage from "../components/MarkupTaskPage/MarkupTaskPage";
+import MarkupTaskPage from "../components/MarkupTask/MarkupTask";
 
 const routes = (isAuthenticated, isStaff) => [
     {
