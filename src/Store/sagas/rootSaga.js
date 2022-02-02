@@ -10,7 +10,14 @@ import {
     getDatasetInfoSaga,
     uploadDatasetSaga
 } from './datasetsSaga';
-import {addAdminTaskSaga, competeTaskSaga, deleteAdminTaskSaga, fetchAdminTasksSaga, getTaskInfoSaga} from './tasksSaga'
+import {
+    addAdminTaskSaga,
+    commentTaskSaga,
+    competeTaskSaga,
+    deleteAdminTaskSaga,
+    fetchAdminTasksSaga,
+    getTaskInfoSaga
+} from './tasksSaga'
 
 export function* watchAuthSaga() {
     yield takeEvery(actionTypes.AUTH_USER, authActionSaga)
@@ -34,4 +41,5 @@ export function* watchAdminTasksSaga() {
     yield takeEvery(actionTypes.DELETE_ADMIN_TASK, deleteAdminTaskSaga)
     yield takeEvery(actionTypes.GET_TASK_INFO, getTaskInfoSaga)
     yield takeEvery(actionTypes.COMPLETE_TASK, competeTaskSaga)
+    yield takeEvery(actionTypes.COMMENT_TASK, commentTaskSaga)
 }

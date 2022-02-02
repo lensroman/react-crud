@@ -49,6 +49,14 @@ const reducer = (state = initialState, action) => {
                 tasksType: updatedValue
             }
         }
+        case actionTypes.COMPLETE_TASK: {}
+            return {
+                ...state,
+                currentTask: {
+                    ...state.currentTask,
+                    opened: false
+                }
+            }
         default: {
             return {
                 ...state

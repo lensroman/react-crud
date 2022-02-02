@@ -44,5 +44,8 @@ export {
     setCurrentTask,
     clearCurrentTask,
     completeTask,
-    changeTasksType
+    changeTasksType,
 } from './tasksAction'
+export {
+    commentTask
+} from './commentsAction'

@@ -33,6 +33,7 @@ export function* addAdminTaskSaga(action) {
             description: action.task.description
         })
         yield put(actions.fetchAdminTasks(true))
+        yield put(actions.fetchDatasets())
     }
     catch(error) {
         console.log(error)
@@ -60,7 +61,6 @@ export function* getTaskInfoSaga(action) {
 }
 
 export function* competeTaskSaga(action) {
-    console.log('saga', action.data)
     try {
         const formData = new FormData()
         formData.append('task', action.data.task)
@@ -71,6 +71,19 @@ export function* competeTaskSaga(action) {
             }
         })
         yield put(actions.fetchAdminTasks())
+    }
+    catch(error) {
+        console.log(error)
+    }
+}
+
+export function* commentTaskSaga(action) {
+    try {
+        yield axios.post(`/comments/`, {
+            content: action.comment,
+            task: action.taskId,
+            commentator: action.userId
+        })
     }
     catch(error) {
         console.log(error)
