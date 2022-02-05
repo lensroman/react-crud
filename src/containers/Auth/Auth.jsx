@@ -57,6 +57,7 @@ const Auth = props => {
                     {formElementsArray.map(formElement => {
                         return (
                             <TextField
+                                required={true}
                                 type={formElement.config.elementConfig.type}
                                 autoComplete={'off'}
                                 key={formElement.id}

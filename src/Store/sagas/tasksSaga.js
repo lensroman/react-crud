@@ -76,16 +76,3 @@ export function* competeTaskSaga(action) {
         console.log(error)
     }
 }
-
-export function* commentTaskSaga(action) {
-    try {
-        yield axios.post(`/comments/`, {
-            content: action.comment,
-            task: action.taskId,
-            commentator: action.userId
-        })
-    }
-    catch(error) {
-        console.log(error)
-    }
-}
