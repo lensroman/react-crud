@@ -47,5 +47,9 @@ export {
     changeTasksType,
 } from './tasksAction'
 export {
-    commentTask
+    addComment,
+    deleteComment,
+    fetchComments,
+    fetchCommentsSuccess,
+    fetchCommentsFail
 } from './commentsAction'

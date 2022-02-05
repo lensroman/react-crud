@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useRef, useState} from 'react';
 
 import * as actions from '../../Store/actions/rootAction';
 import {connect} from "react-redux";
@@ -7,6 +7,7 @@ import classes from './Auth.module.scss';
 import {TextField, Button, CircularProgress, FormControl, Typography, Alert, Box} from "@mui/material";
 
 const Auth = props => {
+
     const [controls, setControls] = useState({
         email: {
             elementType: 'input',
@@ -25,6 +26,8 @@ const Auth = props => {
             value: '',
         }
     })
+
+    const formRef = useRef(null)
 
     const formElementsArray = []
 
@@ -45,18 +48,19 @@ const Auth = props => {
     }
 
     const submitHandler = (event) => {
-        event.preventDefault();
+        event.preventDefault()
         props.onAuth(controls.email.value, controls.password.value)
     }
 
     let content = (
         <div className={classes.form}>
-            <form id={'auth-form'}>
-                <FormControl error={Boolean(props.error)} onSubmit={submitHandler}>
+            <form id={'auth-form'} ref={formRef} onSubmit={submitHandler}>
+                <FormControl error={Boolean(props.error)}>
                     <Typography variant={'h6'}>Авторизация</Typography>
                     {formElementsArray.map(formElement => {
                         return (
                             <TextField
+                                required={true}
                                 type={formElement.config.elementConfig.type}
                                 autoComplete={'off'}
                                 key={formElement.id}
@@ -70,7 +74,7 @@ const Auth = props => {
                     <Button
                         type={'submit'}
                         form={'auth-form'}
-                        onClick={submitHandler}
+                        onClick={() => formRef.current.reportValidity()}
                         variant={"contained"}
                         size={"large"}
                         sx={{mt: 3}}>Войти</Button>

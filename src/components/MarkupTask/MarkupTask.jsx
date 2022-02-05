@@ -13,8 +13,9 @@ import { ArrowBackIosNewOutlined, Done, UploadFile } from '@mui/icons-material';
 
 import { connect } from 'react-redux';
 import * as actions from '../../Store/actions/rootAction';
-import CloseTaskDialog from "./CloseTaskDialog/CloseTaskDialog";
-import TaskComments from "../TaskComments/TaskComments";
+
+import CloseTaskDialog from './CloseTaskDialog/CloseTaskDialog';
+import Comments from '../Comments/Comments';
 
 const MarkupTask = (props) => {
 
@@ -71,7 +72,7 @@ const MarkupTask = (props) => {
             file: taskCloseFile
         }
         props.onCompleteTask(taskCloseData)
-        props.onCommentTask(taskCloseComment, props.task.id, props.user)
+        props.onAddComment(taskCloseComment, props.task.id, props.user)
     }
 
     let taskPage = (
@@ -96,7 +97,7 @@ const MarkupTask = (props) => {
         )
     }
 
-    if (props.task) {
+    if (props.task && props.datasets.length > 0) {
 
         const dataset = props.datasets.find(dataset => dataset.id === props.task.dataset).name
 
@@ -137,7 +138,7 @@ const MarkupTask = (props) => {
                                                 fontWeight={'normal'}>Описание: {props.task.description}</Typography>
                                 </li>
                                 <li className={classes.MarkupTaskPageInfoItem}>
-                                    <Typography variant={'h6'} fontWeight={'normal'}>Кол-во
+                                    <Typography variant={'h6'} fontWeight={'normal'}>Количество
                                         изображений: {props.task.images_count}</Typography>
                                 </li>
                             </ul>
@@ -155,7 +156,10 @@ const MarkupTask = (props) => {
                         </div>
                     </Box>
                     <Box sx={{ width: '30%' }}>
-                        <TaskComments />
+                        <Comments
+                            taskId={props.task.id}
+                            userId={props.user}
+                        />
                     </Box>
                 </Box>
                 <CloseTaskDialog
@@ -192,7 +196,7 @@ const mapDispatchToProps = dispatch => {
         onClearCurrentTask: () => dispatch(actions.clearCurrentTask()),
         onUploadDataset: (id, name, imagesRange) => dispatch(actions.uploadDataset(id, name, imagesRange)),
         onCompleteTask: (id, data) => dispatch(actions.completeTask(id, data)),
-        onCommentTask: (comment, taskId, userId) => dispatch(actions.commentTask(comment, taskId, userId))
+        onAddComment: (comment, taskId, userId) => dispatch(actions.addComment(comment, taskId, userId))
     }
 }
 
