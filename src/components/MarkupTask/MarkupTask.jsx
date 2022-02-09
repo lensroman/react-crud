@@ -16,6 +16,7 @@ import * as actions from '../../Store/actions/rootAction';
 
 import CloseTaskDialog from './CloseTaskDialog/CloseTaskDialog';
 import Comments from '../Comments/Comments';
+import CustomAlert from '../CustomAlert/CustomAlert';
 
 const MarkupTask = (props) => {
 
@@ -28,7 +29,7 @@ const MarkupTask = (props) => {
 
     const params = useParams()
 
-    const {onGetTaskInfo} = props
+    const { onGetTaskInfo,  } = props
 
     useEffect(() => {
         let id = +params['*'].split('/')[0]
@@ -72,7 +73,9 @@ const MarkupTask = (props) => {
             file: taskCloseFile
         }
         props.onCompleteTask(taskCloseData)
-        props.onAddComment(taskCloseComment, props.task.id, props.user)
+        if (taskCloseComment !== '') {
+            props.onAddComment(taskCloseComment, props.task.id, props.user)
+        }
     }
 
     let taskPage = (
@@ -97,6 +100,12 @@ const MarkupTask = (props) => {
         )
     }
 
+    let alert = null
+
+    if (props.error) {
+        alert = <CustomAlert error={props.error.error} message={props.error.message} />
+    }
+
     if (props.task && props.datasets.length > 0) {
 
         const dataset = props.datasets.find(dataset => dataset.id === props.task.dataset).name
@@ -105,6 +114,7 @@ const MarkupTask = (props) => {
 
         taskPage = (
             <div>
+                {alert}
                 <div className={classes.MarkupTaskPageHeader}>
                     <div>
                         <Typography variant={"h4"} fontWeight={"bold"}>Задача: {props.task.title}</Typography>
@@ -186,7 +196,8 @@ const mapStateToProps = state => {
     return {
         task: state.tasks.currentTask,
         datasets: state.datasets.datasets,
-        user: state.auth.userId
+        user: state.auth.userId,
+        error: state.tasks.error
     }
 }
 

@@ -1,4 +1,4 @@
-import { put } from 'redux-saga/effects';
+import { put, delay } from 'redux-saga/effects';
 
 import * as actions from '../actions/rootAction';
 import axios from '../../axios-instance';
@@ -28,7 +28,9 @@ export function* addDataSetSaga(action) {
         yield put(actions.fetchDatasets())
     }
     catch(error) {
-        console.log(error)
+        yield put(actions.addDatasetFail(error.response.data))
+        yield delay(3500)
+        yield put(actions.cleanErrors())
     }
 }
 

@@ -35,6 +35,18 @@ const reducer = (state = initialState, action) => {
                 currentDataset: action.data
             }
         }
+        case actionTypes.ADD_DATASET_FAIL: {
+            return {
+                ...state,
+                error: action.error
+            }
+        }
+        case actionTypes.CLEAN_ERRORS: {
+            return {
+                ...state,
+                error: null
+            }
+        }
         case actionTypes.CLEAR_CURRENT_DATASET: {
             return {
                 ...state,

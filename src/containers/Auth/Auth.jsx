@@ -1,10 +1,11 @@
-import React, {useRef, useState} from 'react';
+import React, { useRef, useState } from 'react';
 
 import * as actions from '../../Store/actions/rootAction';
-import {connect} from "react-redux";
+import { connect } from "react-redux";
 
 import classes from './Auth.module.scss';
-import {TextField, Button, CircularProgress, FormControl, Typography, Alert, Box} from "@mui/material";
+import { TextField, Button, CircularProgress, FormControl, Typography, Box } from "@mui/material";
+import CustomAlert from "../../components/CustomAlert/CustomAlert";
 
 const Auth = props => {
 
@@ -91,7 +92,7 @@ const Auth = props => {
         )
     }
 
-    const alert = props.error ? <Alert severity={'error'} sx={{ padding: 2, mt: 2 }}>{props.error}</Alert> : null
+    const alert = props.error ? <CustomAlert error={props.error} /> : null
 
     return (
         <div>
