@@ -1,4 +1,4 @@
-import { put } from 'redux-saga/effects';
+import { put, delay } from 'redux-saga/effects';
 
 import * as actions from '../actions/rootAction';
 import axios from '../../axios-instance';
@@ -71,8 +71,11 @@ export function* competeTaskSaga(action) {
             }
         })
         yield put(actions.fetchAdminTasks())
+        yield put(actions.getTaskInfo(action.data.task.id))
     }
     catch(error) {
-        console.log(error)
+        yield put(actions.completeTaskFail(error.response.data))
+        yield delay( 3100)
+        yield put(actions.cleanErrors())
     }
 }

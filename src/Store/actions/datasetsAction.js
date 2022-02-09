@@ -35,6 +35,13 @@ export const addDataset = (name, description, file) => {
     }
 }
 
+export const addDatasetFail = (error) => {
+    return {
+        type: actionTypes.ADD_DATASET_FAIL,
+        error: error
+    }
+}
+
 export const deleteDataset = (id) => {
     return {
         type: actionTypes.DELETE_DATASET,

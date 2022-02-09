@@ -49,14 +49,19 @@ const reducer = (state = initialState, action) => {
                 tasksType: updatedValue
             }
         }
-        case actionTypes.COMPLETE_TASK: {}
+        case actionTypes.COMPLETE_TASK_FAIL: {
             return {
                 ...state,
-                currentTask: {
-                    ...state.currentTask,
-                    opened: false
-                }
+                loading: false,
+                error: action.error
             }
+        }
+        case actionTypes.CLEAN_ERRORS: {
+            return {
+                ...state,
+                error: null
+            }
+        }
         default: {
             return {
                 ...state

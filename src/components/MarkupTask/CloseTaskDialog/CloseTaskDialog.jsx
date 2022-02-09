@@ -24,7 +24,7 @@ const CloseTaskDialog = props => {
                 <DialogTitle>Закрытие задачи</DialogTitle>
                 <DialogContent>
                     <DialogContentText>
-                        Необходимо оставить комментарий, чтобы закрыть задачу
+                        Загрузите разметку и при необходимости оставьте комментарий.
                     </DialogContentText>
                     <input
                         type="file"

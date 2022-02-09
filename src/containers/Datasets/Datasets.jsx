@@ -9,6 +9,7 @@ import { Box, Button, CircularProgress, Modal, TextField, Typography } from "@mu
 import { Add } from "@mui/icons-material";
 
 import {useNavigate} from "react-router-dom";
+import CustomAlert from "../../components/CustomAlert/CustomAlert";
 
 const Datasets = props => {
 
@@ -135,6 +136,19 @@ const Datasets = props => {
         )
     }
 
+    let alert = null
+
+    if (props.error) {
+
+        let message = null
+
+        if (props.error.dataset_to) {
+            message = 'Файл: ' + props.error.dataset_to
+        }
+
+        alert = <CustomAlert error={'Название: ' + props.error.name} message={message} />
+    }
+
     return (
         <div className={classes.DataSets}>
             <div className={classes.DataSetsHeader}>
@@ -153,6 +167,7 @@ const Datasets = props => {
             </div>
             {cards}
             {modal}
+            {alert}
         </div>
     )
 }
@@ -162,7 +177,8 @@ const mapStateToProps = state => {
         datasets: state.datasets.datasets,
         loading: state.datasets.loading,
         tasks: state.tasks.adminTasks,
-        markupUsers: state.auth.markupUsers
+        markupUsers: state.auth.markupUsers,
+        error: state.datasets.error
     }
 }
 

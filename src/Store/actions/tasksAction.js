@@ -63,8 +63,21 @@ export const completeTask = (data) => {
     }
 }
 
+export const completeTaskFail = (error) => {
+    return {
+        type: actionTypes.COMPLETE_TASK_FAIL,
+        error: error
+    }
+}
+
 export const changeTasksType = () => {
     return {
         type: actionTypes.CHANGE_TASKS_TYPE
+    }
+}
+
+export const cleanErrors = () => {
+    return {
+        type: actionTypes.CLEAN_ERRORS
     }
 }

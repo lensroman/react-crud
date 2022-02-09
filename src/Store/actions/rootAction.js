@@ -28,6 +28,7 @@ export {
     fetchDatasetsSuccess,
     fetchDatasetsFail,
     addDataset,
+    addDatasetFail,
     deleteDataset,
     getDatasetInfo,
     setCurrentDataset,
@@ -44,7 +45,9 @@ export {
     setCurrentTask,
     clearCurrentTask,
     completeTask,
+    completeTaskFail,
     changeTasksType,
+    cleanErrors
 } from './tasksAction'
 export {
     addComment,
