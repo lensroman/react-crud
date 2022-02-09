@@ -81,7 +81,7 @@ const AdminTask = (props) => {
                             </li>
                         </ul>
                     </Box>
-                    <Box sx={{ width: '30%' }}>
+                    <Box sx={{ width: '35%' }}>
                         <Comments
                             taskId={props.task.id}
                             marker={marker}

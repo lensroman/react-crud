@@ -155,7 +155,7 @@ const MarkupTask = (props) => {
                             {closeTaskButton}
                         </div>
                     </Box>
-                    <Box sx={{ width: '30%' }}>
+                    <Box sx={{ width: '35%' }}>
                         <Comments
                             taskId={props.task.id}
                             userId={props.user}

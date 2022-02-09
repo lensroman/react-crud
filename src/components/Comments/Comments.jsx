@@ -1,26 +1,22 @@
-import React, {Fragment, useEffect, useRef, useState} from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import {
-    Box, Button,
+    Box,
     CircularProgress,
-    Divider,
     IconButton,
     InputAdornment,
-    List,
-    ListItem,
-    ListItemText,
-    TextField
+    TextField, Typography
 } from '@mui/material';
-import { Send } from "@mui/icons-material";
+import {Close, Send} from "@mui/icons-material";
 
 import * as actions from '../../Store/actions/rootAction';
-import { connect } from "react-redux";
+import {connect} from "react-redux";
 
 const Comments = props => {
 
     const [comment, setComment] = useState('')
 
-    const { onFetchComments, comments } = props
+    const {onFetchComments, comments} = props
 
     const scrollRef = useRef(null)
 
@@ -52,7 +48,7 @@ const Comments = props => {
 
     if (props.loading) {
         commentsList = (
-            <Box sx={{display: 'flex', justifyContent: 'center', mt: 3}}>
+            <Box sx={{display: 'flex', justifyContent: 'center', mt: 3, minHeight: 400, maxHeight: 400}}>
                 <CircularProgress/>
             </Box>
         )
@@ -64,68 +60,126 @@ const Comments = props => {
 
         commentsList = taskComments.map(comment => {
 
-            let deleteButton = null
-
-            let textAlign = 'right'
-
             let author = 'Администратор'
 
-            if (props.marker) {
-                author = props.marker
-            }
-
             if (props.userId === comment.commentator) {
+
                 author = 'Вы'
-                textAlign = 'left'
-                deleteButton = (
-                    // <IconButton color={'error'} edge={'start'} sx={{ ml: 3 }} size={'small'}>
-                    //     <Close onClick={() => deleteCommentHandler(comment.id)}/>
-                    // </IconButton>
-                    <Button size={'xs'} color={'error'} variant={'outlined'}>Удалить</Button>
+
+                return (
+                    <Box
+                        sx={{
+                            p: 1.5,
+                            display: 'flex',
+                            justifyContent: 'space-between',
+                            borderBottom: '1px solid #ccc'
+                        }}
+                    >
+                        <IconButton
+                            color={'error'}
+                            sx={{ alignSelf: 'center' }}
+                            onClick={() => deleteCommentHandler(comment.id)}
+                        >
+                            <Close />
+                        </IconButton>
+                        <Box sx={{ textAlign: 'right' }}>
+                            <Typography variant={'h6'}>{author}</Typography>
+                            <p style={{ margin: '5px 0 0 0', color: '#706969' }}>{comment.content}</p>
+                        </Box>
+                    </Box>
                 )
             }
 
-            return (
-                <Fragment>
-                    <ListItem sx={{ p: 1, textAlign: textAlign }}>
-                        <ListItemText
-                            sx={{overflowWrap: 'break-word'}}
-                            primary={author}
-                            secondary={comment.content}
-                        />
-                        {deleteButton}
-                    </ListItem>
-                    <Divider variant="inset" component="li" sx={{ml: 0}}/><ListItem sx={{pl: 0}}/>
-                </Fragment>
-            )
+            if (props.marker === undefined) {
+
+                return (
+                    <Box
+                        sx={{
+                            p: 1.5,
+                            display: 'flex',
+                            borderBottom: '1px solid #ccc'
+                        }}
+                    >
+                        <Box sx={{ textAlign: 'left' }}>
+                            <Typography variant={'h6'}>{author}</Typography>
+                            <p style={{ margin: '5px 0 0 0', color: '#706969' }}>{comment.content}</p>
+                        </Box>
+                    </Box>
+                )
+            } else {
+
+                author = props.marker
+
+                return (
+                    <Box
+                        sx={{
+                            p: 1.5,
+                            display: 'flex',
+                            justifyContent: 'space-between',
+                            borderBottom: '1px solid #ccc'
+                        }}
+                    >
+                        <Box sx={{ textAlign: 'left' }}>
+                            <Typography variant={'h6'}>{author}</Typography>
+                            <p style={{ margin: '5px 0 0 0', color: '#706969' }}>{comment.content}</p>
+                        </Box>
+                        <IconButton
+                            color={'error'}
+                            sx={{ alignSelf: 'center' }}
+                            onClick={() => deleteCommentHandler(comment.id)}
+                        >
+                            <Close />
+                        </IconButton>
+                    </Box>
+                )
+            }
         })
     }
 
     return (
-        <Box sx={{display: 'flex', flexDirection: 'column', justifyContent: 'space-between', border: '1px solid #616161', borderRadius: 1}}>
-            <List align sx={{
-                width: '100%',
-                maxWidth: 500,
-                bgcolor: 'background.paper',
-                maxHeight: '400px',
-                minHeight: '400px',
-                overflowY: 'auto',
-            }}>
+        <Box
+            sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                border: '1px solid #616161',
+                borderRadius: 1
+            }}
+        >
+            <Typography
+                variant={'h5'}
+                sx={{
+                    p: 2,
+                    textAlign: 'center',
+                    borderBottom: '1px solid #616161'
+                }}
+            >
+                Комментарии к задаче
+            </Typography>
+            <Box
+                sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'flex-start',
+                    minHeight: 500,
+                    maxHeight: 500,
+                    overflowY: 'auto'
+                }}
+            >
                 {commentsList}
-                <li ref={scrollRef} />
-            </List>
+                <li ref={scrollRef} style={{ visibility: 'hidden' }} />
+            </Box>
             <TextField
-                sx={{ width: '95%', m: '0 auto 5px auto' }}
                 value={comment}
                 autoComplete={'off'}
-                variant={'standard'}
+                variant={'outlined'}
                 fullWidth
                 placeholder={'Новый комментарий'}
                 onChange={(event) => commentChangeHandler(event)}
                 InputProps={{
                     endAdornment: (
                         <InputAdornment position="end">
-                            <IconButton edge="end" color="primary" onClick={() => addCommentHandler(props.taskId, props.userId)}>
+                            <IconButton edge="end" color="primary"
+                                        onClick={() => addCommentHandler(props.taskId, props.userId)}>
                                 <Send/>
                             </IconButton>
                         </InputAdornment>
