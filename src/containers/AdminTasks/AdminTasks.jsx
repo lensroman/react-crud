@@ -10,28 +10,35 @@ import {connect} from 'react-redux';
 import ModalAddAdminTasks from "../../components/ModaAddlAdminTasks/ModalAddAdminTasks";
 import AdminTaskCard from '../../components/AdminTaskCard/AdminTaskCard';
 import { useNavigate, Outlet } from "react-router-dom";
+import CustomAlert from "../../components/CustomAlert/CustomAlert";
+import PageCounter from "../../components/PageCounter/PageCounter";
 
 const AdminTasks = (props) => {
 
-    const {onFetchAdminTasks, tasksType} = props
+    const { onFetchAdminTasks, tasksType } = props
 
-    const {datasets} = props
+    const { datasets } = props
 
     const [newTask, setNewTask] = useState({
         dataset: null,
         marker: null,
-        imagesCount: null,
+        imagesCount: '',
         title: null,
         description: null
     })
 
     const [modalAddOpen, setModalAddOpen] = useState(false)
 
+    const [page, setPage] = useState({
+        limit: 9,
+        offset: 0
+    })
+
     const navigate = useNavigate()
 
     useEffect( () => {
-        onFetchAdminTasks(tasksType)
-    }, [onFetchAdminTasks, tasksType])
+        onFetchAdminTasks(tasksType, page)
+    }, [onFetchAdminTasks, tasksType, page])
 
     const modalAddOpenHandler = () => {
         setModalAddOpen(true)
@@ -74,20 +81,23 @@ const AdminTasks = (props) => {
     }
 
     const imagesCountChangeHandler = (event) => {
-        const updatedNewTask = {
-            ...newTask,
-            imagesCount: event.target.value
+        const reg = /^\d+$/
+        if (event.target.value === '' || reg.test(event.target.value)) {
+            const updatedNewTask = {
+                ...newTask,
+                imagesCount: event.target.value
+            }
+            setNewTask(updatedNewTask)
         }
-        setNewTask(updatedNewTask)
     }
 
     const submitNewTaskHandler = () => {
         modalAddCloseHandler()
-        props.onAddAdminTask(newTask)
+        props.onAddAdminTask(newTask, page)
     }
 
     const taskDeleteHandler = (id) => {
-        props.onDeleteAdminTask(id)
+        props.onDeleteAdminTask(id, page)
     }
 
     const changeRouteHandler = (id) => {
@@ -99,7 +109,16 @@ const AdminTasks = (props) => {
         props.onChangeTasksType()
     }
 
+    const pageChangeHandler = (event, value) => {
+        setPage({
+            limit: 9,
+            offset: (9 * value - 9)
+        })
+    }
+
     let cards = null
+
+    let pagination = null
 
     if (props.loading) {
         cards = (
@@ -109,11 +128,11 @@ const AdminTasks = (props) => {
         )
     }
 
-    if (props.tasks && props.markupUsers.length > 0 && props.datasets.length > 0) {
+    if (props.tasks && props.markupUsers.length > 0) {
         cards = (
             props.tasks.map(task => {
                 const marker = props.markupUsers.find(user => user.id === task.marker).username
-                const dataset = props.datasets.find(dataset => dataset.id === task.dataset).name
+                const dataset = task.dataset.name
                 return (
                     <AdminTaskCard
                         key={task.id}
@@ -127,6 +146,16 @@ const AdminTasks = (props) => {
                 )
             })
         )
+
+        pagination = (
+            <PageCounter count={Math.ceil(props.count / 10)} change={pageChangeHandler} />
+        )
+    }
+
+    let alert = null
+
+    if (props.error) {
+        alert = <CustomAlert errors={props.error} />
     }
 
     return (
@@ -151,6 +180,7 @@ const AdminTasks = (props) => {
                         Закрытые
                     </Button>
                 </div>
+                {pagination}
                 <div>
                     <Button
                         disabled={!props.tasksType}
@@ -172,9 +202,11 @@ const AdminTasks = (props) => {
                 markerSelect={markupSelectHandler}
                 titleChange={titleChangeHandler}
                 descriptionChange={descriptionChangeHandler}
-                imagesCountSelect={imagesCountChangeHandler}
+                imagesCountChange={imagesCountChangeHandler}
+                count={newTask.imagesCount}
                 submitNewTask={submitNewTaskHandler}
             />
+            {alert}
             <Outlet />
         </div>
     )
@@ -182,19 +214,21 @@ const AdminTasks = (props) => {
 
 const mapStateToProps = state => {
     return {
+        count: state.tasks.count,
         tasks: state.tasks.adminTasks,
         loading: state.tasks.loading,
         markupUsers: state.auth.markupUsers,
-        datasets: state.datasets.datasets,
-        tasksType: state.tasks.tasksType
+        tasksType: state.tasks.tasksType,
+        error: state.tasks.error
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        onFetchAdminTasks: (tasksType) => dispatch(actions.fetchAdminTasks(tasksType)),
-        onAddAdminTask: (task) => dispatch(actions.addAdminTask(task)),
-        onDeleteAdminTask: (id) => dispatch(actions.deleteAdminTask(id)),
+        onFetchAllDatasets: () => dispatch(actions.fetchAllDatasets()),
+        onFetchAdminTasks: (tasksType, page) => dispatch(actions.fetchAdminTasks(tasksType, page)),
+        onAddAdminTask: (task, page) => dispatch(actions.addAdminTask(task, page)),
+        onDeleteAdminTask: (id, page) => dispatch(actions.deleteAdminTask(id, page)),
         onGetUsers: () => dispatch(actions.getUsers()),
         onChangeTasksType: () => dispatch(actions.changeTasksType())
     }

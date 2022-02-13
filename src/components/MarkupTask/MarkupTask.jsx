@@ -42,8 +42,8 @@ const MarkupTask = (props) => {
     }
 
     const uploadDatasetHandler = () => {
-        const name = props.datasets.find(dataset => dataset.id === props.task.dataset).name
-        const id = props.task.dataset
+        const name = props.task.dataset.name
+        const id = props.task.dataset.id
         const imagesRange = props.task.images_range
         props.onUploadDataset(id, name, imagesRange)
     }
@@ -72,10 +72,7 @@ const MarkupTask = (props) => {
             task: props.task,
             file: taskCloseFile
         }
-        props.onCompleteTask(taskCloseData)
-        if (taskCloseComment !== '') {
-            props.onAddComment(taskCloseComment, props.task.id, props.user)
-        }
+        props.onCompleteTask(taskCloseData, taskCloseComment)
     }
 
     let taskPage = (
@@ -103,12 +100,14 @@ const MarkupTask = (props) => {
     let alert = null
 
     if (props.error) {
-        alert = <CustomAlert error={props.error.error} message={props.error.message} />
+        alert = <CustomAlert errors={props.error} />
     }
 
-    if (props.task && props.datasets.length > 0) {
+    if (props.task) {
 
-        const dataset = props.datasets.find(dataset => dataset.id === props.task.dataset).name
+        console.log(props.task)
+
+        const dataset = props.task.dataset.name
 
         const status = props.task.opened ? 'Открыта' : 'Выполнена'
 
@@ -195,7 +194,6 @@ const MarkupTask = (props) => {
 const mapStateToProps = state => {
     return {
         task: state.tasks.currentTask,
-        datasets: state.datasets.datasets,
         user: state.auth.userId,
         error: state.tasks.error
     }
@@ -206,8 +204,7 @@ const mapDispatchToProps = dispatch => {
         onGetTaskInfo: (id) => dispatch(actions.getTaskInfo(id)),
         onClearCurrentTask: () => dispatch(actions.clearCurrentTask()),
         onUploadDataset: (id, name, imagesRange) => dispatch(actions.uploadDataset(id, name, imagesRange)),
-        onCompleteTask: (id, data) => dispatch(actions.completeTask(id, data)),
-        onAddComment: (comment, taskId, userId) => dispatch(actions.addComment(comment, taskId, userId))
+        onCompleteTask: (data, comment) => dispatch(actions.completeTask(data, comment)),
     }
 }
 

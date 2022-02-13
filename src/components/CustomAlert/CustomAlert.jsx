@@ -13,20 +13,17 @@ const CustomAlert = (props) => {
         }, 3000)
     }, [])
 
-    let errorAlert = null
 
-    let messageAlert = null
+    let alerts = []
 
-    if (props.error) {
-        errorAlert = (
-            <Alert severity={'error'} sx={{ mb: 2 }}>{props.error}</Alert>
-        )
-    }
-
-    if (props.message) {
-        messageAlert = (
-            <Alert severity={'info'} sx={{ mb: 2 }}>{props.message}</Alert>
-        )
+    if (props.errors) {
+        for (let key in props.errors) {
+            if (key === 'message') {
+                alerts.push(<Alert severity={'info'} sx={{mb: 2}} key={key}>{key + ': ' + props.errors[key]}</Alert>)
+            } else {
+                alerts.push(<Alert severity={'error'} sx={{mb: 2}} key={key}>{key + ': ' + props.errors[key]}</Alert>)
+            }
+        }
     }
 
     return (
@@ -39,8 +36,7 @@ const CustomAlert = (props) => {
             }}
         >
             <Collapse in={open}>
-                {errorAlert}
-                {messageAlert}
+                {alerts}
             </Collapse>
         </Box>
     );

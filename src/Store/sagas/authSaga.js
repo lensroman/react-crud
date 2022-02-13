@@ -23,7 +23,7 @@ export function* authActionSaga(action) {
         yield put(actions.authSuccess(userName, userId, isStaff))
     }
     catch(error) {
-        yield put(actions.authFail(error.response.data.inactive))
+        yield put(actions.authFail(error.response.data))
     }
 }
 

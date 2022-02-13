@@ -1,6 +1,7 @@
 import * as actionTypes from '../actions/actionTypes';
 
 const initialState = {
+    count: null,
     loading: false,
     error: null,
     datasets: [],
@@ -19,7 +20,8 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 loading: false,
-                datasets: action.datasets
+                datasets: action.datasets,
+                count: action.count
             }
         }
         case actionTypes.FETCH_DATASETS_FAIL: {

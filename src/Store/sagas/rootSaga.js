@@ -6,6 +6,7 @@ import {addNewUserSaga, authActionSaga, authCheckSaga, authLogoutSaga, getUsersS
 import {
     addDataSetSaga,
     deleteDataSetSaga,
+    fetchAllDatasetsSaga,
     fetchDataSetsSaga,
     getDatasetInfoSaga,
     uploadDatasetSaga
@@ -28,6 +29,7 @@ export function* watchAuthSaga() {
 }
 
 export function* watchDataSetsSaga() {
+    yield takeEvery(actionTypes.FETCH_ALL_DATASETS, fetchAllDatasetsSaga)
     yield takeEvery(actionTypes.FETCH_DATASETS, fetchDataSetsSaga)
     yield takeEvery(actionTypes.ADD_DATASET, addDataSetSaga)
     yield takeEvery(actionTypes.DELETE_DATASET, deleteDataSetSaga)

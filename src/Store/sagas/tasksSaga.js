@@ -6,16 +6,26 @@ import axios from '../../axios-instance';
 export function* fetchAdminTasksSaga(action) {
     if (action.tasksType === true) {
         try {
-            const response = yield axios.get('/tasks/')
-            yield put(actions.fetchAdminTasksSuccess(response.data.results, action.tasksType))
+            const response = yield axios.get('/tasks/', {
+                params: {
+                    limit: action.page.limit,
+                    offset: action.page.offset
+                }
+            })
+            yield put(actions.fetchAdminTasksSuccess(response.data.count, response.data.results, action.tasksType))
         }
         catch(error) {
             yield put(actions.fetchAdminTasksFail(error))
         }
     } else {
         try {
-            const response = yield axios.get('/tasks/closed/')
-            yield put(actions.fetchAdminTasksSuccess(response.data, action.tasksType))
+            const response = yield axios.get('/tasks/closed/', {
+                params: {
+                    limit: action.page.limit,
+                    offset: action.page.offset
+                }
+            })
+            yield put(actions.fetchAdminTasksSuccess(response.data.count, response.data.results, action.tasksType))
         }
         catch(error) {
             yield put(actions.fetchAdminTasksFail(error))
@@ -32,18 +42,19 @@ export function* addAdminTaskSaga(action) {
             images_count: action.task.imagesCount,
             description: action.task.description
         })
-        yield put(actions.fetchAdminTasks(true))
-        yield put(actions.fetchDatasets())
+        yield put(actions.fetchAdminTasks(true, action.page))
     }
     catch(error) {
-        console.log(error)
+        yield put(actions.addAdminTaskFail(error.response.data))
+        yield delay(3500)
+        yield put(actions.cleanErrors())
     }
 }
 
 export function* deleteAdminTaskSaga(action) {
     try {
         yield axios.delete(`/tasks/${action.id}`)
-        yield put(actions.fetchAdminTasks(true))
+        yield put(actions.fetchAdminTasks(true, action.page))
     }
     catch(error) {
         console.log(error)
@@ -70,8 +81,12 @@ export function* competeTaskSaga(action) {
                 'content-type': 'multipart/form-data'
             }
         })
-        yield put(actions.fetchAdminTasks())
+        const userId = yield localStorage.getItem('id')
         yield put(actions.getTaskInfo(action.data.task.id))
+        yield put(actions.addComment('Задача была закрыта', action.data.task.id, userId))
+        if (action.comment !== '') {
+            yield put(actions.addComment(action.comment, action.data.task.id, userId))
+        }
     }
     catch(error) {
         yield put(actions.completeTaskFail(error.response.data))

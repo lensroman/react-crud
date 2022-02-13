@@ -68,6 +68,7 @@ const Comments = props => {
 
                 return (
                     <Box
+                        key={comment.id}
                         sx={{
                             p: 1.5,
                             display: 'flex',

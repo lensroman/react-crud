@@ -78,6 +78,14 @@ const Dataset = (props) => {
                         </Typography>
                     </li>
                     <li className={ classes.datasetPageInfoItem }>
+                        <Typography
+                            variant={ 'h6' }
+                            fontWeight={ 'normal' }
+                        >
+                            Количество изображений: { props.dataset.length }
+                        </Typography>
+                    </li>
+                    <li className={ classes.datasetPageInfoItem }>
                         <Button
                             variant={ 'contained' }
                             startIcon={ <UploadFile /> }

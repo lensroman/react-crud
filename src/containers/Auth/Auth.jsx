@@ -92,7 +92,7 @@ const Auth = props => {
         )
     }
 
-    const alert = props.error ? <CustomAlert error={props.error} /> : null
+    const alert = props.error ? <CustomAlert errors={props.error} /> : null
 
     return (
         <div>

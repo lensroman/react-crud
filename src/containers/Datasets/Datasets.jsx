@@ -10,6 +10,7 @@ import { Add } from "@mui/icons-material";
 
 import {useNavigate} from "react-router-dom";
 import CustomAlert from "../../components/CustomAlert/CustomAlert";
+import PageCounter from "../../components/PageCounter/PageCounter";
 
 const Datasets = props => {
 
@@ -19,17 +20,24 @@ const Datasets = props => {
     const [datasetDescription, setDatasetDescription] = useState('')
     const [datasetFile, setDatasetFile] = useState(null)
 
+    const [page, setPage] = useState({
+        limit: 9,
+        offset: 0
+    })
+
     const { onFetchDatasets } = props
 
     useEffect(() => {
-        onFetchDatasets()
-    }, [onFetchDatasets])
+        onFetchDatasets(page)
+    }, [onFetchDatasets, page])
 
     const downloadButton = useRef(null)
 
     const navigate = useNavigate()
 
     let cards = null
+
+    let pagination = null
 
     const modalOpenHandler = () => {
         setModalOpen(true)
@@ -54,13 +62,16 @@ const Datasets = props => {
     }
 
     const addDataSetHandler = (event) => {
+        setDatasetName('')
+        setDatasetFile(null)
+        setDatasetDescription('')
         event.preventDefault()
         modalCloseHandler()
-        props.onAddDataset(datasetName, datasetDescription, datasetFile)
+        props.onAddDataset(datasetName, datasetDescription, datasetFile, page)
     }
 
     const deleteDataSetHandler = (id) => {
-        props.onDeleteDataset(id)
+        props.onDeleteDataset(id, page)
     }
 
     const downloadButtonHandler = () => {
@@ -70,6 +81,13 @@ const Datasets = props => {
     const changeRouteHandler = (id) => {
         let path = `/samples/${id}/`
         navigate(path)
+    }
+
+    const pageChangeHandler = (event, value) => {
+        setPage({
+            limit: 9,
+            offset: (9 * value - 9)
+        })
     }
 
     let modal = (
@@ -118,7 +136,7 @@ const Datasets = props => {
         cards = <CircularProgress />
     }
 
-    if (props.datasets) {
+    if (props.datasets.length > 0) {
         cards = (
             props.datasets.map(dataset => {
                 return (
@@ -134,19 +152,16 @@ const Datasets = props => {
                 )
             })
         )
+
+        pagination = (
+            <PageCounter count={Math.ceil(props.count / 9)} change={pageChangeHandler} />
+        )
     }
 
     let alert = null
 
     if (props.error) {
-
-        let message = null
-
-        if (props.error.dataset_to) {
-            message = 'Файл: ' + props.error.dataset_to
-        }
-
-        alert = <CustomAlert error={'Название: ' + props.error.name} message={message} />
+        alert = <CustomAlert errors={props.error} />
     }
 
     return (
@@ -155,6 +170,7 @@ const Datasets = props => {
                 <div>
                     <Typography variant={"h4"} fontWeight={"bold"}>Обучающие выборки</Typography>
                 </div>
+                {pagination}
                 <div>
                     <Button
                         variant={"contained"}
@@ -174,6 +190,7 @@ const Datasets = props => {
 
 const mapStateToProps = state => {
     return {
+        count: state.datasets.count,
         datasets: state.datasets.datasets,
         loading: state.datasets.loading,
         tasks: state.tasks.adminTasks,
@@ -184,9 +201,9 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        onFetchDatasets: () => dispatch(actions.fetchDatasets()),
-        onAddDataset: (name, description, file) => dispatch(actions.addDataset(name, description, file)),
-        onDeleteDataset: (id) => dispatch(actions.deleteDataset(id)),
+        onFetchDatasets: (page) => dispatch(actions.fetchDatasets(page)),
+        onAddDataset: (name, description, file, page) => dispatch(actions.addDataset(name, description, file, page)),
+        onDeleteDataset: (id, page) => dispatch(actions.deleteDataset(id, page)),
     }
 }
 

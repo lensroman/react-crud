@@ -23,6 +23,7 @@ export {
     authCheck
 } from './authAction'
 export {
+    fetchAllDatasets,
     fetchDatasets,
     fetchDatasetsStart,
     fetchDatasetsSuccess,
@@ -40,6 +41,7 @@ export {
     fetchAdminTasksSuccess,
     fetchAdminTasksFail,
     addAdminTask,
+    addAdminTaskFail,
     deleteAdminTask,
     getTaskInfo,
     setCurrentTask,

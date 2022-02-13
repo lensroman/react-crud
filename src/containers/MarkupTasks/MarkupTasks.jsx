@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import MarkupTaskCard from "../../components/MarkupTaskCard/MarkupTaskCard";
 
@@ -9,17 +9,22 @@ import * as actions from '../../Store/actions/rootAction';
 import { connect } from "react-redux";
 
 import { useNavigate } from "react-router-dom";
+import PageCounter from "../../components/PageCounter/PageCounter";
 
 const MarkupTasks = (props) => {
 
+    const [page, setPage] = useState({
+        limit: 9,
+        offset: 0
+    })
+
     const navigate = useNavigate()
 
-    const {onFetchAdminTasks, onFetchDatasets, tasksType} = props
+    const { onFetchAdminTasks, tasksType } = props
 
-    useEffect( () => {
-        onFetchDatasets()
-        onFetchAdminTasks(tasksType)
-    }, [onFetchAdminTasks, onFetchDatasets, tasksType])
+    useEffect(() => {
+        onFetchAdminTasks(tasksType, page)
+    }, [onFetchAdminTasks, tasksType, page])
 
     const openTaskHandler = (id) => {
         let path = `/markup-tasks/${id}/`
@@ -30,13 +35,27 @@ const MarkupTasks = (props) => {
         props.onChangeTasksType()
     }
 
-    let cards = <CircularProgress sx={{ mt: 4 }} />
+    const pageChangeHandler = (event, value) => {
+        setPage({
+            limit: 9,
+            offset: (9 * value - 9)
+        })
+    }
 
-    if (props.tasks && props.datasets.length > 0) {
-        let dataset = null
+    let cards = (
+        <CircularProgress sx={{mt: 4}} />
+    )
+
+    let pagination = null
+
+    if (props.tasks) {
+
         let tasks = props.tasks.filter(task => task.marker === props.userId)
+
         cards = tasks.map(task => {
-            dataset = props.datasets.find(dataset => dataset.id === task.dataset).name
+
+            const dataset = task.dataset.name
+
             return (
                 <MarkupTaskCard
                     key={task.id}
@@ -48,6 +67,10 @@ const MarkupTasks = (props) => {
                 />
             )
         })
+
+        pagination = (
+            <PageCounter count={Math.ceil(props.count / 10)} change={pageChangeHandler} />
+        )
     }
 
     return (
@@ -72,6 +95,7 @@ const MarkupTasks = (props) => {
                         Закрытые
                     </Button>
                 </div>
+                {pagination}
             </div>
             {cards}
         </div>
@@ -80,18 +104,19 @@ const MarkupTasks = (props) => {
 
 const mapStateToProps = state => {
     return {
+        count: state.tasks.count,
         tasks: state.tasks.adminTasks,
         userId: state.auth.userId,
-        datasets: state.datasets.datasets,
         tasksType: state.tasks.tasksType
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        onFetchAdminTasks: (type) => dispatch(actions.fetchAdminTasks(type)),
-        onFetchDatasets: () => dispatch(actions.fetchDatasets()),
-        onChangeTasksType: () => dispatch(actions.changeTasksType())
+        onFetchAllDatasets: () => dispatch(actions.fetchAllDatasets()),
+        onFetchAdminTasks: (type, page) => dispatch(actions.fetchAdminTasks(type, page)),
+        onChangeTasksType: () => dispatch(actions.changeTasksType()),
+        onGetDatasetInfo: (id) => dispatch(actions.getDatasetInfo(id))
     }
 }
 

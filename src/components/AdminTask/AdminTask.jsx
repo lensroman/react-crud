@@ -39,7 +39,7 @@ const AdminTask = (props) => {
 
     if (props.task) {
 
-        const dataset = props.datasets.find(dataset => dataset.id === props.task.dataset).name
+        const dataset = props.task.dataset.name
 
         const marker = props.auth.markupUsers.find(user => user.id === props.task.marker).username
 

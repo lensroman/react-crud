@@ -3,11 +3,38 @@ import { put, delay } from 'redux-saga/effects';
 import * as actions from '../actions/rootAction';
 import axios from '../../axios-instance';
 
-export function* fetchDataSetsSaga() {
+export function* fetchAllDatasetsSaga() {
     yield put(actions.fetchDatasetsStart())
     try {
-        const response = yield axios.get('/datasets/')
-        yield put(actions.fetchDatasetsSuccess(response.data.results))
+        const response = yield axios.get('/datasets/', {
+            params: {
+                limit: 1,
+                offset: 0
+            }
+        })
+        const fullResponse = yield axios.get('/datasets/', {
+            params: {
+                limit: response.data.count,
+                offset: 0
+            }
+        })
+        yield put(actions.fetchDatasetsSuccess(response.data.count, fullResponse.data.results))
+    }
+    catch(error) {
+        yield put(actions.fetchDatasetsFail(error))
+    }
+}
+
+export function* fetchDataSetsSaga(action) {
+    yield put(actions.fetchDatasetsStart())
+    try {
+        const response = yield axios.get('/datasets/', {
+            params: {
+                limit: action.page.limit,
+                offset: action.page.offset
+            }
+        })
+        yield put(actions.fetchDatasetsSuccess(response.data.count, response.data.results))
     }
     catch(error) {
         yield put(actions.fetchDatasetsFail(error))
@@ -25,7 +52,7 @@ export function* addDataSetSaga(action) {
                 'content-type': 'multipart/form-data'
             }
         })
-        yield put(actions.fetchDatasets())
+        yield put(actions.fetchDatasets(action.page))
     }
     catch(error) {
         yield put(actions.addDatasetFail(error.response.data))
@@ -37,7 +64,7 @@ export function* addDataSetSaga(action) {
 export function* deleteDataSetSaga(action) {
     try {
         yield axios.delete(`/datasets/${action.id}/`)
-        yield put(actions.fetchDatasets())
+        yield put(actions.fetchDatasets(action.page))
     }
     catch(error) {
         console.log(error)
@@ -59,7 +86,6 @@ export function* uploadDatasetSaga(action) {
     let to = null
     if (action.imagesRange === null) {
         from = 0
-        console.log('saga', action.length)
         to = action.length
     } else {
         try {

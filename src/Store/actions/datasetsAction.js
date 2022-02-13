@@ -1,8 +1,9 @@
 import * as actionTypes from './actionTypes'
 
-export const fetchDatasets = () => {
+export const fetchDatasets = (page) => {
     return {
-        type: actionTypes.FETCH_DATASETS
+        type: actionTypes.FETCH_DATASETS,
+        page: page
     }
 }
 
@@ -12,10 +13,11 @@ export const fetchDatasetsStart = () => {
     }
 }
 
-export const fetchDatasetsSuccess = (datasets) => {
+export const fetchDatasetsSuccess = (count, datasets) => {
     return {
         type: actionTypes.FETCH_DATASETS_SUCCESS,
-        datasets: datasets
+        datasets: datasets,
+        count: count
     }
 }
 
@@ -26,12 +28,13 @@ export const fetchDatasetsFail = (error) => {
     }
 }
 
-export const addDataset = (name, description, file) => {
+export const addDataset = (name, description, file, page) => {
     return {
         type: actionTypes.ADD_DATASET,
         name: name,
         description: description,
-        file: file
+        file: file,
+        page: page
     }
 }
 
@@ -42,17 +45,19 @@ export const addDatasetFail = (error) => {
     }
 }
 
-export const deleteDataset = (id) => {
+export const deleteDataset = (id, page) => {
     return {
         type: actionTypes.DELETE_DATASET,
-        id: id
+        id: id,
+        page: page
     }
 }
 
-export const getDatasetInfo = (id) => {
+export const getDatasetInfo = (id, page) => {
     return {
         type: actionTypes.GET_DATASET_INFO,
-        id: id
+        id: id,
+        page: page
     }
 }
 
@@ -70,12 +75,17 @@ export const clearCurrentDataset = () => {
 }
 
 export const uploadDataset = (id, name, imagesRange = null, length = null) => {
-    console.log('action', length)
     return {
         type: actionTypes.UPLOAD_DATASET,
         id: id,
         name: name,
         imagesRange: imagesRange,
         length: length
+    }
+}
+
+export const fetchAllDatasets = () => {
+    return {
+        type: actionTypes.FETCH_ALL_DATASETS
     }
 }

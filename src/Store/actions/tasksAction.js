@@ -1,15 +1,17 @@
 import * as actionTypes from './actionTypes';
 
-export const fetchAdminTasks = (tasksType) => {
+export const fetchAdminTasks = (tasksType, page) => {
     return {
         type: actionTypes.FETCH_ADMIN_TASKS,
-        tasksType: tasksType
+        tasksType: tasksType,
+        page: page
     }
 }
 
-export const fetchAdminTasksSuccess = (tasks, tasksType) => {
+export const fetchAdminTasksSuccess = (count, tasks, tasksType) => {
     return {
         type: actionTypes.FETCH_ADMIN_TASKS_SUCCESS,
+        count: count,
         tasks: tasks,
         tasksType: tasksType
     }
@@ -22,17 +24,26 @@ export const fetchAdminTasksFail = (error) => {
     }
 }
 
-export const addAdminTask = (task) => {
+export const addAdminTask = (task, page) => {
     return {
         type: actionTypes.ADD_ADMIN_TASK,
-        task: task
+        task: task,
+        page: page
     }
 }
 
-export const deleteAdminTask = (id) => {
+export const addAdminTaskFail = error => {
+    return {
+        type: actionTypes.ADD_ADMIN_TASK_FAIL,
+        error: error
+    }
+}
+
+export const deleteAdminTask = (id, page) => {
     return {
         type: actionTypes.DELETE_ADMIN_TASK,
-        id: id
+        id: id,
+        page: page
     }
 }
 
@@ -56,10 +67,11 @@ export const clearCurrentTask = () => {
     }
 }
 
-export const completeTask = (data) => {
+export const completeTask = (data, comment) => {
     return {
         type: actionTypes.COMPLETE_TASK,
-        data: data
+        data: data,
+        comment: comment
     }
 }
 

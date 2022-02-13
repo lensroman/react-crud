@@ -1,6 +1,7 @@
 import * as actionTypes from '../actions/actionTypes';
 
 const initialState = {
+    count: null,
     loading: false,
     error: null,
     adminTasks: [],
@@ -20,6 +21,7 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 loading: false,
+                count: action.count,
                 adminTasks: action.tasks,
             }
         }
@@ -50,6 +52,13 @@ const reducer = (state = initialState, action) => {
             }
         }
         case actionTypes.COMPLETE_TASK_FAIL: {
+            return {
+                ...state,
+                loading: false,
+                error: action.error
+            }
+        }
+        case actionTypes.ADD_ADMIN_TASK_FAIL: {
             return {
                 ...state,
                 loading: false,
