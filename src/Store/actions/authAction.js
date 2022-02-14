@@ -1,70 +1,50 @@
 import * as actionTypes from './actionTypes';
 
-export const authAction = (userName, password) => {
-    return {
-        type: actionTypes.AUTH_USER,
-        userName: userName,
-        password: password
-    }
-}
+export const authAction = (userName, password) => ({
+  type: actionTypes.AUTH_USER,
+  userName,
+  password,
+})
 
-export const authStart = () => {
-    return {
-        type: actionTypes.AUTH_START
-    }
-}
+export const authStart = () => ({
+  type: actionTypes.AUTH_START,
+})
 
-export const authSuccess = (userName, userId, isStaff) => {
-    return {
-        type: actionTypes.AUTH_SUCCESS,
-        userName: userName,
-        userId: userId,
-        isStaff: isStaff
-    }
-}
+export const authSuccess = (userName, userId, isStaff) => ({
+  type: actionTypes.AUTH_SUCCESS,
+  userName,
+  userId,
+  isStaff,
+})
 
-export const authFail = error => {
-    return {
-        type: actionTypes.AUTH_FAIL,
-        error: error
-    }
-}
+export const authFail = (error) => ({
+  type: actionTypes.AUTH_FAIL,
+  error,
+})
 
-export const logout = () => {
-    return {
-        type: actionTypes.LOGOUT_USER
-    }
-}
+export const logout = () => ({
+  type: actionTypes.LOGOUT_USER,
+})
 
-export const getUsers = () => {
-    return {
-        type: actionTypes.GET_USERS
-    }
-}
+export const getUsers = () => ({
+  type: actionTypes.GET_USERS,
+})
 
-export const getMarkupUsers = users => {
-    return {
-        type: actionTypes.GET_MARKUP_USERS,
-        users: users
-    }
-}
+export const getMarkupUsers = (users) => ({
+  type: actionTypes.GET_MARKUP_USERS,
+  users,
+})
 
-export const getUsersFail = error => {
-    return {
-        type: actionTypes.GET_USERS_FAIL,
-        error: error
-    }
-}
+export const getUsersFail = (error) => ({
+  type: actionTypes.GET_USERS_FAIL,
+  error,
+})
 
-export const addNewUser = data => {
-    return {
-        type: actionTypes.ADD_NEW_USER,
-        data: data
-    }
-}
+export const addNewUser = (data) => ({
+  type: actionTypes.ADD_NEW_USER,
+  data,
+})
 
-export const authCheck = () => {
-    return {
-        type: actionTypes.AUTH_CHECK_STATE
-    }
-}
+export const authCheck = () => ({
+  type: actionTypes.AUTH_CHECK_STATE,
+})
