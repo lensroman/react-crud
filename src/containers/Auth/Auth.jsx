@@ -38,12 +38,12 @@ function Auth(props) {
 
   const inputChangeHandler = (event, controlName) => {
     const updatedControls = {
+      ...controls,
       [controlName]: {
+        ...controls[controlName],
         value: event.target.value,
         touched: true,
-        ...controls[controlName],
       },
-      ...controls,
     }
     setControls(updatedControls)
   }
