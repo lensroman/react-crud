@@ -1,21 +1,14 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import {
   Box, Button, MenuItem, Modal, TextField, Typography,
 } from '@mui/material';
+
 import { connect } from 'react-redux';
+
 import classes from '../../containers/Admin/Tasks/AdminTasks/AdminTasks.module.scss';
 
-import * as actions from '../../Store/actions/rootAction';
-
 function ModalAddAdminTasks(props) {
-  const { onGetUsers, onFetchAllDatasets } = props
-
-  useEffect(() => {
-    onFetchAllDatasets()
-    onGetUsers()
-  }, [onGetUsers, onFetchAllDatasets])
-
   let count = 0
 
   if (props.selectedDataset) {
@@ -27,8 +20,6 @@ function ModalAddAdminTasks(props) {
     <Modal
       open={props.modalOpen}
       onClose={props.modalClose}
-      aria-labelledby="modal-title"
-      aria-describedby="modal-description"
     >
       <Box fullWidth className={classes.AdminTasksModal}>
         <Typography variant="h6">Создайте новую задачу</Typography>
@@ -61,7 +52,7 @@ function ModalAddAdminTasks(props) {
             sx={{ width: '48%' }}
             onChange={(event) => props.markerSelect(event)}
           >
-            {props.markupUsers.map((user) => (
+            {props.users.map((user) => (
               <MenuItem
                 key={user.id}
                 id={user.id}
@@ -110,12 +101,7 @@ function ModalAddAdminTasks(props) {
 
 const mapStateToProps = (state) => ({
   datasets: state.datasets.datasets,
-  markupUsers: state.auth.markupUsers,
+  users: state.users.users,
 })
 
-const mapDispatchToProps = (dispatch) => ({
-  onFetchAllDatasets: () => dispatch(actions.fetchAllDatasets()),
-  onGetUsers: () => dispatch(actions.getUsers()),
-})
-
-export default connect(mapStateToProps, mapDispatchToProps)(ModalAddAdminTasks);
+export default connect(mapStateToProps)(ModalAddAdminTasks);

@@ -10,16 +10,16 @@ export function* addCommentSaga(action) {
       task: action.taskId,
       commentator: action.userId,
     })
-    yield put(actions.fetchComments())
+    yield put(actions.fetchComments(action.taskId))
   } catch (error) {
     console.log(error)
   }
 }
 
-export function* fetchCommentsSaga() {
+export function* fetchCommentsSaga(action) {
   try {
-    const response = yield axios.get('/comments/')
-    yield put(actions.fetchCommentsSuccess(response.data.results))
+    const response = yield axios.get(`/tasks/${action.taskId}/comments`)
+    yield put(actions.fetchCommentsSuccess(response.data))
   } catch (error) {
     yield put(actions.fetchCommentsFail(error))
   }
@@ -28,7 +28,7 @@ export function* fetchCommentsSaga() {
 export function* deleteCommentSaga(action) {
   try {
     yield axios.delete(`/comments/${action.id}/`)
-    yield put(actions.fetchComments())
+    yield put(actions.fetchComments(action.taskId))
   } catch (error) {
     console.log(error)
   }

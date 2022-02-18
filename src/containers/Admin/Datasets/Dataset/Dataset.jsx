@@ -3,12 +3,13 @@ import React, { useEffect } from 'react';
 import {
   Box, Button, CircularProgress, Typography,
 } from '@mui/material';
-import { ArrowBackIosNewOutlined, UploadFile } from '@mui/icons-material';
+import { UploadFile } from '@mui/icons-material';
 import { connect } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import classes from './Dataset.module.scss';
 
 import * as actions from '../../../../Store/actions/rootAction';
+import PageHeader from '../../../../components/PageHeader/PageHeader'
 
 function Dataset(props) {
   const params = useParams()
@@ -43,32 +44,18 @@ function Dataset(props) {
   if (props.dataset) {
     datasetPage = (
       <div>
-        <div className={classes.datasetPageHeader}>
-          <div>
-            <Typography variant="h4" fontWeight="bold">
-              Выборка:
-              {' '}
-              { props.dataset.name }
-            </Typography>
-          </div>
-          <div>
-            <Button
-              variant="outlined"
-              startIcon={<ArrowBackIosNewOutlined />}
-              onClick={goBackHandler}
-            >
-              Назад
-            </Button>
-          </div>
-        </div>
+        <PageHeader
+          dataset
+          goBack={goBackHandler}
+          name={props.dataset.name}
+        />
         <ul className={classes.datasetPageInfo}>
           <li className={classes.datasetPageInfoItem}>
             <Typography
               variant="h6"
               fontWeight="normal"
             >
-              Дата создания:
-              {' '}
+              Дата создания:&nbsp;
               { props.dataset.created_at.split('T')[0] }
             </Typography>
           </li>
@@ -77,8 +64,7 @@ function Dataset(props) {
               variant="h6"
               fontWeight="normal"
             >
-              Описание:
-              {' '}
+              Описание:&nbsp;
               { props.dataset.description }
             </Typography>
           </li>
@@ -87,8 +73,7 @@ function Dataset(props) {
               variant="h6"
               fontWeight="normal"
             >
-              Количество изображений:
-              {' '}
+              Количество изображений:&nbsp;
               { props.dataset.length }
             </Typography>
           </li>

@@ -18,10 +18,10 @@ import { Logout } from '@mui/icons-material';
 import { connect } from 'react-redux';
 import * as actions from '../../../Store/actions/rootAction';
 
-import classes from './Header.module.scss';
+import classes from './AppHeader.module.scss';
 import theme from '../../../UI/Theme/Theme';
 
-function Header(props) {
+function AppHeader(props) {
   const [anchorEl, setAnchorEl] = useState(null)
 
   const open = Boolean(anchorEl)
@@ -140,4 +140,4 @@ const mapDispatchToProps = (dispatch) => ({
   onLogout: () => dispatch(actions.logout()),
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(Header);
+export default connect(mapStateToProps, mapDispatchToProps)(AppHeader);

@@ -19,6 +19,7 @@ module.exports = {
     'react',
   ],
   rules: {
+    'no-tabs': 0,
     'no-console': 0,
     semi: 0,
     'max-len': 0,

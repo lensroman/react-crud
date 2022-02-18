@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react';
 
-import { Button, CircularProgress, Typography } from '@mui/material';
-import { connect } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import MarkupTaskCard from '../../../../components/MarkupTaskCard/MarkupTaskCard';
 
+import { Box, CircularProgress } from '@mui/material'
+import { connect } from 'react-redux';
 import classes from './MarkupTasks.module.scss'
 
 import * as actions from '../../../../Store/actions/rootAction';
 
-import PageCounter from '../../../../components/PageCounter/PageCounter';
+import MarkupTaskCard from '../../../../components/MarkupTaskCard/MarkupTaskCard';
+import PageHeader from '../../../../components/PageHeader/PageHeader'
 
 function MarkupTasks(props) {
   const [page, setPage] = useState({
@@ -45,8 +45,6 @@ function MarkupTasks(props) {
     <CircularProgress sx={{ mt: 4 }} />
   )
 
-  let pagination = null
-
   if (props.tasks) {
     const tasks = props.tasks.filter((task) => task.marker === props.userId)
 
@@ -64,37 +62,20 @@ function MarkupTasks(props) {
         />
       )
     })
-
-    pagination = (
-      <PageCounter count={Math.ceil(props.count / 10)} change={pageChangeHandler} />
-    )
   }
 
   return (
     <div className={classes.MarkupTasks}>
-      <div className={classes.MarkupTasksHeader}>
-        <div>
-          <Typography variant="h4" fontWeight="bold">Ваши задачи</Typography>
-        </div>
-        <div>
-          <Button
-            disabled={props.tasksType}
-            variant="outlined"
-            onClick={tasksTypeToggleHandler}
-          >
-            Открытые
-          </Button>
-          <Button
-            disabled={!props.tasksType}
-            variant="outlined"
-            onClick={tasksTypeToggleHandler}
-          >
-            Закрытые
-          </Button>
-        </div>
-        {pagination}
-      </div>
-      {cards}
+      <PageHeader
+        markupTasks
+        count={props.count}
+        tasksTypeToggle={tasksTypeToggleHandler}
+        tasksType={props.tasksType}
+        pageChange={pageChangeHandler}
+      />
+      <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+        {cards}
+      </Box>
     </div>
   );
 }

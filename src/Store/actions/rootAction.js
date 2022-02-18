@@ -16,10 +16,6 @@ export {
   authSuccess,
   authFail,
   logout,
-  getUsers,
-  getMarkupUsers,
-  getUsersFail,
-  addNewUser,
   authCheck,
 } from './authAction'
 export {
@@ -58,3 +54,11 @@ export {
   fetchCommentsSuccess,
   fetchCommentsFail,
 } from './commentsAction'
+export {
+  getUsers,
+  getUsersSuccess,
+  getUsersFail,
+  addNewUser,
+  addNewUserSuccess,
+  addNewUserFail,
+} from './usersAction'

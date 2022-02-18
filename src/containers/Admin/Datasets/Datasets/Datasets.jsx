@@ -1,18 +1,19 @@
 import React, { useEffect, useRef, useState } from 'react';
 
-import { connect } from 'react-redux';
 import {
   Box, Button, CircularProgress, Modal, TextField, Typography,
 } from '@mui/material';
-import { Add } from '@mui/icons-material';
+
 import { useNavigate } from 'react-router-dom';
+
+import { connect } from 'react-redux';
 import * as actions from '../../../../Store/actions/rootAction';
 
 import classes from './Datasets.module.scss';
-import DatasetCard from '../../../../components/DatasetCard/DatasetCard';
 
+import DatasetCard from '../../../../components/DatasetCard/DatasetCard';
 import CustomAlert from '../../../../components/CustomAlert/CustomAlert';
-import PageCounter from '../../../../components/PageCounter/PageCounter';
+import PageHeader from '../../../../components/PageHeader/PageHeader'
 
 function Datasets(props) {
   const [modalOpen, setModalOpen] = useState(false)
@@ -37,8 +38,6 @@ function Datasets(props) {
   const navigate = useNavigate()
 
   let cards = null
-
-  let pagination = null
 
   const modalOpenHandler = () => {
     setModalOpen(true)
@@ -152,10 +151,6 @@ function Datasets(props) {
         />
       ))
     )
-
-    pagination = (
-      <PageCounter count={Math.ceil(props.count / 9)} change={pageChangeHandler} />
-    )
   }
 
   let alert = null
@@ -166,22 +161,15 @@ function Datasets(props) {
 
   return (
     <div className={classes.DataSets}>
-      <div className={classes.DataSetsHeader}>
-        <div>
-          <Typography variant="h4" fontWeight="bold">Обучающие выборки</Typography>
-        </div>
-        {pagination}
-        <div>
-          <Button
-            variant="contained"
-            startIcon={<Add />}
-            onClick={modalOpenHandler}
-          >
-            Добавить выборку
-          </Button>
-        </div>
-      </div>
-      {cards}
+      <PageHeader
+        datasets
+        count={props.count}
+        pageChange={pageChangeHandler}
+        modalOpen={modalOpenHandler}
+      />
+      <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+        {cards}
+      </Box>
       {modal}
       {alert}
     </div>
@@ -192,8 +180,6 @@ const mapStateToProps = (state) => ({
   count: state.datasets.count,
   datasets: state.datasets.datasets,
   loading: state.datasets.loading,
-  tasks: state.tasks.adminTasks,
-  markupUsers: state.auth.markupUsers,
   error: state.datasets.error,
 })
 

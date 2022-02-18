@@ -26,23 +26,6 @@ export function* authActionSaga(action) {
   }
 }
 
-export function* getUsersSaga() {
-  try {
-    const response = yield axios.get('/users/')
-    yield put(actions.getMarkupUsers(response.data.results))
-  } catch (error) {
-    yield put(actions.getUsersFail())
-  }
-}
-
-export function* addNewUserSaga(action) {
-  try {
-    yield axios.post('/users/', action.data)
-  } catch (error) {
-    console.log(error)
-  }
-}
-
 export function* authCheckSaga() {
   const token = yield localStorage.getItem('token')
   if (!token) {

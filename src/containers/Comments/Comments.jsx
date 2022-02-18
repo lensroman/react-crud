@@ -15,13 +15,13 @@ import * as actions from '../../Store/actions/rootAction';
 function Comments(props) {
   const [comment, setComment] = useState('')
 
-  const { onFetchComments, comments } = props
+  const { onFetchComments, comments, taskId } = props
 
   const scrollRef = useRef(null)
 
   useEffect(() => {
-    onFetchComments()
-  }, [onFetchComments])
+    onFetchComments(taskId)
+  }, [onFetchComments, taskId])
 
   useEffect(() => {
     if (scrollRef.current) {
@@ -29,9 +29,9 @@ function Comments(props) {
     }
   }, [comments])
 
-  const addCommentHandler = (taskId, userId) => {
+  const addCommentHandler = () => {
     setComment('')
-    props.onAddComment(comment, taskId, userId)
+    props.onAddComment(comment, taskId, props.userId)
   }
 
   const commentChangeHandler = (event) => {
@@ -40,7 +40,7 @@ function Comments(props) {
   }
 
   const deleteCommentHandler = (id) => {
-    props.onDeleteComment(id)
+    props.onDeleteComment(id, taskId)
   }
 
   let commentsList = null
@@ -57,9 +57,7 @@ function Comments(props) {
   }
 
   if (props.comments.length > 0) {
-    const taskComments = props.comments.filter((com) => com.task === props.taskId)
-
-    commentsList = taskComments.map((com) => {
+    commentsList = props.comments.map((com) => {
       let author = 'Администратор'
 
       if (props.userId === com.commentator) {
@@ -179,7 +177,7 @@ function Comments(props) {
               <IconButton
                 edge="end"
                 color="primary"
-                onClick={() => addCommentHandler(props.taskId, props.userId)}
+                onClick={() => addCommentHandler()}
               >
                 <Send />
               </IconButton>
@@ -197,9 +195,9 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  onFetchComments: () => dispatch(actions.fetchComments()),
+  onFetchComments: (id) => dispatch(actions.fetchComments(id)),
   onAddComment: (comment, taskId, userId) => dispatch(actions.addComment(comment, taskId, userId)),
-  onDeleteComment: (id) => dispatch(actions.deleteComment(id)),
+  onDeleteComment: (id, taskId) => dispatch(actions.deleteComment(id, taskId)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Comments);

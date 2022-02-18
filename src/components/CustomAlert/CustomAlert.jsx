@@ -27,6 +27,7 @@ function CustomAlert(props) {
   return (
     <Box
       sx={{
+        zIndex: 9000,
         position: 'absolute',
         top: 80,
         right: 50,

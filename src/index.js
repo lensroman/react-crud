@@ -13,14 +13,15 @@ import { Provider } from 'react-redux';
 import createSagaMiddleware from 'redux-saga';
 import App from './App';
 import {
-  watchAdminTasksSaga, watchAuthSaga, watchCommentsSaga, watchDataSetsSaga,
-} from './Store/sagas/rootSaga';
+  watchAdminTasksSaga, watchAuthSaga, watchCommentsSaga, watchDataSetsSaga, watchUsersSaga,
+} from './Store/sagas/rootSaga'
 
 import markupReducer from './Store/reducers/markupReducer';
 import authReducer from './Store/reducers/authReducer';
 import datasetsReducer from './Store/reducers/datasetsReducer';
 import tasksReducer from './Store/reducers/tasksReducer';
 import commentsReducer from './Store/reducers/commentsReducer';
+import usersReducer from './Store/reducers/usersReducer'
 
 import reportWebVitals from './reportWebVitals';
 
@@ -35,6 +36,7 @@ const rootReducer = combineReducers({
   datasets: datasetsReducer,
   tasks: tasksReducer,
   comments: commentsReducer,
+  users: usersReducer,
 })
 
 const store = createStore(rootReducer, composeEnhancers(applyMiddleware(sagaMiddleWare)))
@@ -43,6 +45,7 @@ sagaMiddleWare.run(watchAuthSaga)
 sagaMiddleWare.run(watchDataSetsSaga)
 sagaMiddleWare.run(watchAdminTasksSaga)
 sagaMiddleWare.run(watchCommentsSaga)
+sagaMiddleWare.run(watchUsersSaga)
 
 const app = (
   <BrowserRouter>

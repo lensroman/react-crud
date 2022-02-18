@@ -2,14 +2,14 @@ import React, { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import {
-  Box, Button, CircularProgress, Typography,
+  Box, CircularProgress, Typography,
 } from '@mui/material';
-import { ArrowBackIosNewOutlined } from '@mui/icons-material';
 import { connect } from 'react-redux';
 import classes from './AdminTask.module.scss';
 
 import * as actions from '../../../../Store/actions/rootAction';
 import Comments from '../../../Comments/Comments';
+import PageHeader from '../../../../components/PageHeader/PageHeader'
 
 function AdminTask(props) {
   const navigate = useNavigate()
@@ -42,35 +42,18 @@ function AdminTask(props) {
   if (props.task) {
     const dataset = props.task.dataset.name
 
-    const marker = props.auth.markupUsers.find((user) => user.id === props.task.marker).username
+    const marker = props.users.find((user) => user.id === props.task.marker).username
 
     const status = props.task.opened ? 'Открыта' : 'Выполнена'
 
     taskPage = (
       <div>
-        <div className={classes.AdminTaskPageHeader}>
-          <div>
-            <Typography variant="h4" fontWeight="bold">
-              Задача:
-              {props.task.title}
-            </Typography>
-          </div>
-          <div>
-            <Typography variant="h5" fontWeight="bold">
-              Статус:
-              {status}
-            </Typography>
-          </div>
-          <div>
-            <Button
-              variant="outlined"
-              startIcon={<ArrowBackIosNewOutlined />}
-              onClick={goBackHandler}
-            >
-              Назад
-            </Button>
-          </div>
-        </div>
+        <PageHeader
+          adminTask
+          title={props.task.title}
+          status={status}
+          goBack={goBackHandler}
+        />
         <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
           <Box sx={{ width: '60%' }}>
             <ul className={classes.AdminTaskPageInfo}>
@@ -100,7 +83,7 @@ function AdminTask(props) {
             <Comments
               taskId={props.task.id}
               marker={marker}
-              userId={props.auth.userId}
+              userId={props.userId}
             />
           </Box>
         </Box>
@@ -117,7 +100,8 @@ function AdminTask(props) {
 
 const mapStateToProps = (state) => ({
   task: state.tasks.currentTask,
-  auth: state.auth,
+  users: state.users.users,
+  userId: state.auth.userId,
   datasets: state.datasets.datasets,
 })
 

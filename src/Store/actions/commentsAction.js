@@ -22,7 +22,8 @@ export const addComment = (comment, taskId, userId) => ({
   userId,
 })
 
-export const deleteComment = (id) => ({
+export const deleteComment = (id, taskId) => ({
   type: actionTypes.DELETE_COMMENT,
   id,
+  taskId,
 })

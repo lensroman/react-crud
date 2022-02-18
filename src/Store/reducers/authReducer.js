@@ -7,7 +7,6 @@ const initialState = {
   userId: null,
   userName: null,
   isStaff: null,
-  markupUsers: [],
 }
 
 const reducer = (state = initialState, action) => {
@@ -45,13 +44,6 @@ const reducer = (state = initialState, action) => {
         userId: null,
         userName: null,
         isStaff: null,
-      }
-    }
-    case actionTypes.GET_MARKUP_USERS: {
-      const markupUsers = action.users.filter((user) => user.is_staff === false)
-      return {
-        ...state,
-        markupUsers,
       }
     }
     default: {

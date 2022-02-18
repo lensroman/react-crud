@@ -4,7 +4,7 @@ import { Outlet } from 'react-router-dom'
 import { Container } from '@mui/material';
 import { connect } from 'react-redux';
 import classes from './Layout.module.scss';
-import Header from './Header/Header';
+import Header from './AppHeader/AppHeader';
 
 function Layout(props) {
   let footer = null

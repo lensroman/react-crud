@@ -8,7 +8,7 @@ import {
   CircularProgress,
   Typography,
 } from '@mui/material';
-import { ArrowBackIosNewOutlined, Done, UploadFile } from '@mui/icons-material';
+import { Done, UploadFile } from '@mui/icons-material';
 
 import { connect } from 'react-redux';
 import classes from './MarkupTask.module.scss';
@@ -17,6 +17,7 @@ import * as actions from '../../../../Store/actions/rootAction';
 import CloseTaskDialog from '../../../../components/CloseTaskDialog/CloseTaskDialog';
 import Comments from '../../../Comments/Comments';
 import CustomAlert from '../../../../components/CustomAlert/CustomAlert';
+import PageHeader from '../../../../components/PageHeader/PageHeader'
 
 function MarkupTask(props) {
   const [openDialog, setOpenDialog] = useState(false)
@@ -82,7 +83,7 @@ function MarkupTask(props) {
 
   let closeTaskButton = null
 
-  if (props.task && props.task.opened === true) {
+  if (props.task && props.task.status === 'opened') {
     closeTaskButton = (
       <Button
         sx={{ ml: 2 }}
@@ -110,23 +111,12 @@ function MarkupTask(props) {
     taskPage = (
       <div>
         {alert}
-        <div className={classes.MarkupTaskPageHeader}>
-          <div>
-            <Typography variant="h4" fontWeight="bold">Задача: {props.task.title}</Typography>
-          </div>
-          <div>
-            <Typography variant="h5" fontWeight="bold">Статус: {status}</Typography>
-          </div>
-          <div>
-            <Button
-              variant="outlined"
-              startIcon={<ArrowBackIosNewOutlined />}
-              onClick={goBackHandler}
-            >
-              Назад
-            </Button>
-          </div>
-        </div>
+        <PageHeader
+          markupTask
+          title={props.task.title}
+          status={status}
+          goBack={goBackHandler}
+        />
         <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
           <Box className={classes.MarkupTaskPageContent} sx={{ width: '60%' }}>
             <div>
@@ -201,9 +191,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   onGetTaskInfo: (id) => dispatch(actions.getTaskInfo(id)),
   onClearCurrentTask: () => dispatch(actions.clearCurrentTask()),
-  onUploadDataset: (id, name, imagesRange) => {
-    dispatch(actions.uploadDataset(id, name, imagesRange))
-  },
+  onUploadDataset: (id, name, imagesRange) => dispatch(actions.uploadDataset(id, name, imagesRange)),
   onCompleteTask: (data, comment) => dispatch(actions.completeTask(data, comment)),
 })
 

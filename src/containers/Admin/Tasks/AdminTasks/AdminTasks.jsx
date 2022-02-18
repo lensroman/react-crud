@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import {
-  Button, CircularProgress, Typography, Box,
-} from '@mui/material';
-import { Add } from '@mui/icons-material';
+import { CircularProgress, Box } from '@mui/material';
 import { connect } from 'react-redux';
 import { useNavigate, Outlet } from 'react-router-dom';
 import classes from './AdminTasks.module.scss';
@@ -13,10 +10,12 @@ import * as actions from '../../../../Store/actions/rootAction';
 import ModalAddAdminTasks from '../../../../components/ModaAddlAdminTasks/ModalAddAdminTasks';
 import AdminTaskCard from '../../../../components/AdminTaskCard/AdminTaskCard';
 import CustomAlert from '../../../../components/CustomAlert/CustomAlert';
-import PageCounter from '../../../../components/PageCounter/PageCounter';
+import PageHeader from '../../../../components/PageHeader/PageHeader'
 
 function AdminTasks(props) {
-  const { onFetchAdminTasks, tasksType } = props
+  const {
+    onFetchAdminTasks, onFetchAllDatasets, tasksType, onGetUsers,
+  } = props
 
   const { datasets } = props
 
@@ -39,7 +38,9 @@ function AdminTasks(props) {
 
   useEffect(() => {
     onFetchAdminTasks(tasksType, page)
-  }, [onFetchAdminTasks, tasksType, page])
+    onGetUsers()
+    onFetchAllDatasets()
+  }, [onFetchAdminTasks, onFetchAllDatasets, onGetUsers, tasksType, page])
 
   const modalAddOpenHandler = () => {
     setModalAddOpen(true)
@@ -119,8 +120,6 @@ function AdminTasks(props) {
 
   let cards = null
 
-  let pagination = null
-
   if (props.loading) {
     cards = (
       <Box sx={{ display: 'flex', justifyContent: 'center', mt: 3 }}>
@@ -129,10 +128,10 @@ function AdminTasks(props) {
     )
   }
 
-  if (props.tasks && props.markupUsers.length > 0) {
+  if (props.tasks && props.users.length > 0) {
     cards = (
       props.tasks.map((task) => {
-        const marker = props.markupUsers.find((user) => user.id === task.marker).username
+        const marker = props.users.find((user) => user.id === task.marker).username
         const dataset = task.dataset.name
         return (
           <AdminTaskCard
@@ -147,10 +146,6 @@ function AdminTasks(props) {
         )
       })
     )
-
-    pagination = (
-      <PageCounter count={Math.ceil(props.count / 10)} change={pageChangeHandler} />
-    )
   }
 
   let alert = null
@@ -161,39 +156,17 @@ function AdminTasks(props) {
 
   return (
     <div className={classes.AdminTasks}>
-      <div className={classes.AdminTasksHeader}>
-        <div>
-          <Typography variant="h4" fontWeight="bold">Задачи</Typography>
-        </div>
-        <div>
-          <Button
-            disabled={props.tasksType}
-            variant="outlined"
-            onClick={tasksTypeToggleHandler}
-          >
-            Открытые
-          </Button>
-          <Button
-            disabled={!props.tasksType}
-            variant="outlined"
-            onClick={tasksTypeToggleHandler}
-          >
-            Закрытые
-          </Button>
-        </div>
-        {pagination}
-        <div>
-          <Button
-            disabled={!props.tasksType}
-            variant="contained"
-            startIcon={<Add />}
-            onClick={modalAddOpenHandler}
-          >
-            Создать задачу
-          </Button>
-        </div>
-      </div>
-      {cards}
+      <PageHeader
+        adminTasks
+        tasksType={props.tasksType}
+        tasksTypeToggle={tasksTypeToggleHandler}
+        count={props.count}
+        pageChange={pageChangeHandler}
+        modalOpen={modalAddOpenHandler}
+      />
+      <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+        {cards}
+      </Box>
       <ModalAddAdminTasks
         modalOpen={modalAddOpen}
         modalClose={modalAddCloseHandler}
@@ -217,7 +190,7 @@ const mapStateToProps = (state) => ({
   count: state.tasks.count,
   tasks: state.tasks.adminTasks,
   loading: state.tasks.loading,
-  markupUsers: state.auth.markupUsers,
+  users: state.users.users,
   tasksType: state.tasks.tasksType,
   error: state.tasks.error,
 })
