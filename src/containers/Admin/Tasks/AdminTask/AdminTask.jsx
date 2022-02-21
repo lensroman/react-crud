@@ -46,16 +46,20 @@ function AdminTask(props) {
     props.onOpenTask(props.task.id)
   }
 
-  let taskPage = (
-    <Box sx={{
-      mt: '200px',
-      display: 'flex',
-      justifyContent: 'center',
-    }}
-    >
-      <CircularProgress />
-    </Box>
-  )
+  let taskPage = null
+
+  if (props.loading) {
+    taskPage = (
+      <Box sx={{
+        mt: '200px',
+        display: 'flex',
+        justifyContent: 'center',
+      }}
+      >
+        <CircularProgress />
+      </Box>
+    )
+  }
 
   if (props.task) {
     const dataset = props.task.dataset.name
@@ -186,10 +190,12 @@ function AdminTask(props) {
 }
 
 const mapStateToProps = (state) => ({
+  loading: state.tasks.loading,
   task: state.tasks.currentTask,
   users: state.users.users,
   userId: state.auth.userId,
   datasets: state.datasets.datasets,
+  error: state.tasks.error,
 })
 
 const mapDispatchToProps = (dispatch) => ({

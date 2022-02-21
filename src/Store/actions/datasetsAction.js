@@ -45,6 +45,11 @@ export const getDatasetInfo = (id, page) => ({
   page,
 })
 
+export const getDatasetInfoFail = (error) => ({
+  type: actionTypes.GET_DATASET_INFO_FAIL,
+  error,
+})
+
 export const setCurrentDataset = (data) => ({
   type: actionTypes.SET_CURRENT_DATASET,
   data,

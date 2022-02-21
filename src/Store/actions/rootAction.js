@@ -28,6 +28,7 @@ export {
   addDatasetFail,
   deleteDataset,
   getDatasetInfo,
+  getDatasetInfoFail,
   setCurrentDataset,
   clearCurrentDataset,
   uploadDataset,

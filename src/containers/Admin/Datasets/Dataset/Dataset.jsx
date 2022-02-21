@@ -35,11 +35,15 @@ function Dataset(props) {
     props.onUploadDataset(id, name, null, length);
   }
 
-  let datasetPage = (
-    <Box sx={{ display: 'flex', justifyContent: 'center', mt: 3 }}>
-      <CircularProgress />
-    </Box>
-  )
+  let datasetPage = null
+
+  if (props.loading) {
+    datasetPage = (
+      <Box sx={{ display: 'flex', justifyContent: 'center', mt: 3 }}>
+        <CircularProgress />
+      </Box>
+    )
+  }
 
   if (props.dataset) {
     datasetPage = (
@@ -100,6 +104,7 @@ function Dataset(props) {
 
 const mapStateToProps = (state) => ({
   dataset: state.datasets.currentDataset,
+  loading: state.datasets.loading,
 });
 
 const mapDispatchToProps = (dispatch) => ({

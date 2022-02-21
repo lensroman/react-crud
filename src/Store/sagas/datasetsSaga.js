@@ -72,7 +72,7 @@ export function* getDatasetInfoSaga(action) {
     const response = yield axios.get(`/datasets/${action.id}/`)
     yield put(actions.setCurrentDataset(response.data))
   } catch (error) {
-    console.log(error)
+    yield put(actions.getDatasetInfoFail(error))
   }
 }
 

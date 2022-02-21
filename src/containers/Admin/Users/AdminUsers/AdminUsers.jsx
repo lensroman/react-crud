@@ -89,11 +89,15 @@ function AdminUsers(props) {
     }))
   }
 
-  let table = (
-    <Box sx={{ display: 'flex', justifyContent: 'center', mt: 3 }}>
-      <CircularProgress />
-    </Box>
-  )
+  let table = null
+
+  if (props.loading) {
+    table = (
+      <Box sx={{ display: 'flex', justifyContent: 'center', mt: 3 }}>
+        <CircularProgress />
+      </Box>
+    )
+  }
 
   if (props.users && props.count) {
     table = (

@@ -75,11 +75,15 @@ function MarkupTask(props) {
     props.onCompleteTask(taskCloseData, taskCloseComment)
   }
 
-  let taskPage = (
-    <Box sx={{ display: 'flex', justifyContent: 'center', mt: 3 }}>
-      <CircularProgress />
-    </Box>
-  )
+  let taskPage = null
+
+  if (props.loading) {
+    taskPage = (
+      <Box sx={{ display: 'flex', justifyContent: 'center', mt: 3 }}>
+        <CircularProgress />
+      </Box>
+    )
+  }
 
   let completeTaskButton = null
 
@@ -201,6 +205,7 @@ function MarkupTask(props) {
 }
 
 const mapStateToProps = (state) => ({
+  loading: state.tasks.loading,
   task: state.tasks.currentTask,
   user: state.auth.userId,
   error: state.tasks.error,

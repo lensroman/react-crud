@@ -41,9 +41,13 @@ function MarkupTasks(props) {
     })
   }
 
-  let cards = (
-    <CircularProgress sx={{ mt: 4 }} />
-  )
+  let cards = null
+
+  if (props.loading) {
+    cards = (
+      <CircularProgress sx={{ mt: 4 }} />
+    )
+  }
 
   if (props.tasks) {
     const tasks = props.tasks.filter((task) => task.marker === props.userId)
@@ -81,6 +85,7 @@ function MarkupTasks(props) {
 }
 
 const mapStateToProps = (state) => ({
+  loading: state.tasks.loading,
   count: state.tasks.count,
   tasks: state.tasks.adminTasks,
   userId: state.auth.userId,

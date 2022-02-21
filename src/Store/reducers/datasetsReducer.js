@@ -31,9 +31,23 @@ const reducer = (state = initialState, action) => {
         error: action.error,
       }
     }
+    case actionTypes.GET_DATASET_INFO: {
+      return {
+        ...state,
+        loading: true,
+      }
+    }
+    case actionTypes.GET_DATASET_INFO_FAIL: {
+      return {
+        ...state,
+        loading: false,
+        error: action.error,
+      }
+    }
     case actionTypes.SET_CURRENT_DATASET: {
       return {
         ...state,
+        loading: false,
         currentDataset: action.data,
       }
     }
