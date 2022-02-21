@@ -29,10 +29,11 @@ export const addAdminTaskFail = (error) => ({
   error,
 })
 
-export const deleteAdminTask = (id, page) => ({
+export const deleteAdminTask = (id, page, status) => ({
   type: actionTypes.DELETE_ADMIN_TASK,
   id,
   page,
+  status,
 })
 
 export const getTaskInfo = (id) => ({
@@ -60,10 +61,41 @@ export const completeTaskFail = (error) => ({
   error,
 })
 
-export const changeTasksType = () => ({
+export const changeTasksType = (status) => ({
   type: actionTypes.CHANGE_TASKS_TYPE,
+  status,
 })
 
 export const cleanErrors = () => ({
   type: actionTypes.CLEAN_ERRORS,
+})
+
+export const closeTask = (id) => ({
+  type: actionTypes.CLOSE_TASK,
+  id,
+})
+
+export const closeTaskSuccess = (message) => ({
+  type: actionTypes.CLOSE_TASK_SUCCESS,
+  message,
+})
+
+export const closeTaskFail = (error) => ({
+  type: actionTypes.CLOSE_TASK_FAIL,
+  error,
+})
+
+export const openTask = (id) => ({
+  type: actionTypes.OPEN_TASK,
+  id,
+})
+
+export const openTaskSuccess = (message) => ({
+  type: actionTypes.OPEN_TASK_SUCCESS,
+  message,
+})
+
+export const openTaskFail = (error) => ({
+  type: actionTypes.OPEN_TASK_FAIL,
+  error,
 })

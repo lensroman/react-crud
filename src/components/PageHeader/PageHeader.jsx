@@ -1,6 +1,8 @@
 import React from 'react';
 
-import { Button, Typography } from '@mui/material';
+import {
+  Button, Tab, Tabs, Typography,
+} from '@mui/material'
 import { Add, ArrowBackIosNewOutlined } from '@mui/icons-material'
 import classes from './PageHeader.module.scss';
 
@@ -58,25 +60,16 @@ function PageHeader(props) {
           <Typography variant="h4" fontWeight="bold">Задачи</Typography>
         </div>
         <div>
-          <Button
-            disabled={props.tasksType}
-            variant="outlined"
-            onClick={props.tasksTypeToggle}
-          >
-            Открытые
-          </Button>
-          <Button
-            disabled={!props.tasksType}
-            variant="outlined"
-            onClick={props.tasksTypeToggle}
-          >
-            Закрытые
-          </Button>
+          <Tabs value={props.tasksType} onChange={props.tasksTypeChange} aria-label="basic tabs example">
+            <Tab label="Открытые" value="opened" />
+            <Tab label="На подтверждении" value="waited" />
+            <Tab label="Закрытые" value="closed" />
+          </Tabs>
         </div>
         <PageCounter count={Math.ceil(props.count / 9)} change={props.pageChange} />
         <div>
           <Button
-            disabled={!props.tasksType}
+            disabled={props.tasksType !== 'opened'}
             variant="contained"
             startIcon={<Add />}
             onClick={props.modalOpen}
@@ -145,20 +138,11 @@ function PageHeader(props) {
           <Typography variant="h4" fontWeight="bold">Ваши задачи</Typography>
         </div>
         <div>
-          <Button
-            disabled={props.tasksType}
-            variant="outlined"
-            onClick={props.tasksTypeToggle}
-          >
-            Открытые
-          </Button>
-          <Button
-            disabled={!props.tasksType}
-            variant="outlined"
-            onClick={props.tasksTypeToggle}
-          >
-            Закрытые
-          </Button>
+          <Tabs value={props.tasksType} onChange={props.tasksTypeChange} aria-label="basic tabs example">
+            <Tab label="Открытые" value="opened" />
+            <Tab label="На подтверждении" value="waited" />
+            <Tab label="Закрытые" value="closed" />
+          </Tabs>
         </div>
         <PageCounter count={Math.ceil(props.count / 9)} change={props.pageChange} />
       </div>

@@ -14,14 +14,16 @@ import {
   uploadDatasetSaga,
 } from './datasetsSaga';
 import {
-  addAdminTaskSaga,
+  addAdminTaskSaga, closeTaskSaga,
   competeTaskSaga,
   deleteAdminTaskSaga,
   fetchAdminTasksSaga,
-  getTaskInfoSaga,
+  getTaskInfoSaga, openTaskSaga,
 } from './tasksSaga'
 import { addCommentSaga, deleteCommentSaga, fetchCommentsSaga } from './commentsSaga';
-import { addNewUserSaga, getUsersSaga } from './usersSaga';
+import {
+  addNewUserSaga, deleteUserSaga, fetchAllUsersSaga, fetchUsersSaga,
+} from './usersSaga'
 
 export function* watchAuthSaga() {
   yield takeEvery(actionTypes.AUTH_USER, authActionSaga)
@@ -44,6 +46,8 @@ export function* watchAdminTasksSaga() {
   yield takeEvery(actionTypes.DELETE_ADMIN_TASK, deleteAdminTaskSaga)
   yield takeEvery(actionTypes.GET_TASK_INFO, getTaskInfoSaga)
   yield takeEvery(actionTypes.COMPLETE_TASK, competeTaskSaga)
+  yield takeEvery(actionTypes.CLOSE_TASK, closeTaskSaga)
+  yield takeEvery(actionTypes.OPEN_TASK, openTaskSaga)
 }
 
 export function* watchCommentsSaga() {
@@ -53,6 +57,8 @@ export function* watchCommentsSaga() {
 }
 
 export function* watchUsersSaga() {
-  yield takeEvery(actionTypes.GET_USERS, getUsersSaga)
+  yield takeEvery(actionTypes.FETCH_USERS, fetchUsersSaga)
+  yield takeEvery(actionTypes.FETCH_ALL_USERS, fetchAllUsersSaga)
   yield takeEvery(actionTypes.ADD_NEW_USER, addNewUserSaga)
+  yield takeEvery(actionTypes.DELETE_USER, deleteUserSaga)
 }

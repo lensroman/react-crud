@@ -5,7 +5,7 @@ const initialState = {
   loading: false,
   error: null,
   adminTasks: [],
-  tasksType: true,
+  tasksType: 'opened',
   currentTask: null,
 }
 
@@ -45,7 +45,7 @@ const reducer = (state = initialState, action) => {
       }
     }
     case actionTypes.CHANGE_TASKS_TYPE: {
-      const updatedValue = !state.tasksType
+      const updatedValue = action.status
       return {
         ...state,
         tasksType: updatedValue,
@@ -62,6 +62,30 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
+        error: action.error,
+      }
+    }
+    case actionTypes.CLOSE_TASK_SUCCESS: {
+      return {
+        ...state,
+        error: action.message,
+      }
+    }
+    case actionTypes.CLOSE_TASK_FAIL: {
+      return {
+        ...state,
+        error: action.error,
+      }
+    }
+    case actionTypes.OPEN_TASK_SUCCESS: {
+      return {
+        ...state,
+        error: action.message,
+      }
+    }
+    case actionTypes.OPEN_TASK_FAIL: {
+      return {
+        ...state,
         error: action.error,
       }
     }

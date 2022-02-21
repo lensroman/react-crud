@@ -30,8 +30,8 @@ function MarkupTasks(props) {
     navigate(path)
   }
 
-  const tasksTypeToggleHandler = () => {
-    props.onChangeTasksType()
+  const tasksTypeChangeHandler = (event, newValue) => {
+    props.onChangeTasksType(newValue)
   }
 
   const pageChangeHandler = (event, value) => {
@@ -69,7 +69,7 @@ function MarkupTasks(props) {
       <PageHeader
         markupTasks
         count={props.count}
-        tasksTypeToggle={tasksTypeToggleHandler}
+        tasksTypeChange={tasksTypeChangeHandler}
         tasksType={props.tasksType}
         pageChange={pageChangeHandler}
       />
@@ -90,7 +90,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   onFetchAllDatasets: () => dispatch(actions.fetchAllDatasets()),
   onFetchAdminTasks: (type, page) => dispatch(actions.fetchAdminTasks(type, page)),
-  onChangeTasksType: () => dispatch(actions.changeTasksType()),
+  onChangeTasksType: (status) => dispatch(actions.changeTasksType(status)),
   onGetDatasetInfo: (id) => dispatch(actions.getDatasetInfo(id)),
 })
 

@@ -1,8 +1,9 @@
 import * as actionTypes from './actionTypes';
 
-export const addNewUser = (data) => ({
+export const addNewUser = (data, page) => ({
   type: actionTypes.ADD_NEW_USER,
   data,
+  page,
 })
 
 export const addNewUserSuccess = () => ({
@@ -14,16 +15,28 @@ export const addNewUserFail = (error) => ({
   error,
 })
 
-export const getUsers = () => ({
-  type: actionTypes.GET_USERS,
+export const fetchUsers = (page) => ({
+  type: actionTypes.FETCH_USERS,
+  page,
 })
 
-export const getUsersSuccess = (users) => ({
-  type: actionTypes.GET_USERS_SUCCESS,
+export const fetchAllUsers = () => ({
+  type: actionTypes.FETCH_ALL_USERS,
+})
+
+export const fetchUsersSuccess = (count, users) => ({
+  type: actionTypes.FETCH_USERS_SUCCESS,
+  count,
   users,
 })
 
-export const getUsersFail = (error) => ({
-  type: actionTypes.GET_USERS_FAIL,
+export const fetchUsersFail = (error) => ({
+  type: actionTypes.FETCH_USERS_FAIL,
   error,
+})
+
+export const deleteUser = (id, page) => ({
+  type: actionTypes.DELETE_USER,
+  id,
+  page,
 })

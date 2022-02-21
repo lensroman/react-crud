@@ -15,3 +15,10 @@
     margin-top: 10px;
   }
 }
+
+.AdminTaskPageButtons {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}

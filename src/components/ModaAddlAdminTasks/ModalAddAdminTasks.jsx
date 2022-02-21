@@ -52,7 +52,7 @@ function ModalAddAdminTasks(props) {
             sx={{ width: '48%' }}
             onChange={(event) => props.markerSelect(event)}
           >
-            {props.users.map((user) => (
+            {props.users ? props.users.map((user) => (
               <MenuItem
                 key={user.id}
                 id={user.id}
@@ -60,7 +60,7 @@ function ModalAddAdminTasks(props) {
               >
                 {user.username}
               </MenuItem>
-            ))}
+            )) : null}
           </TextField>
         </Box>
         <Box className={classes.ModalInputs} sx={{ mb: 1 }}>

@@ -43,6 +43,12 @@ export {
   setCurrentTask,
   clearCurrentTask,
   completeTask,
+  closeTask,
+  closeTaskSuccess,
+  closeTaskFail,
+  openTask,
+  openTaskSuccess,
+  openTaskFail,
   completeTaskFail,
   changeTasksType,
   cleanErrors,
@@ -55,10 +61,12 @@ export {
   fetchCommentsFail,
 } from './commentsAction'
 export {
-  getUsers,
-  getUsersSuccess,
-  getUsersFail,
+  fetchUsers,
+  fetchAllUsers,
+  fetchUsersSuccess,
+  fetchUsersFail,
   addNewUser,
   addNewUserSuccess,
   addNewUserFail,
+  deleteUser,
 } from './usersAction'

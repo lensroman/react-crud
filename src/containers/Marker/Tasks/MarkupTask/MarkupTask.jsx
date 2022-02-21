@@ -81,10 +81,10 @@ function MarkupTask(props) {
     </Box>
   )
 
-  let closeTaskButton = null
+  let completeTaskButton = null
 
   if (props.task && props.task.status === 'opened') {
-    closeTaskButton = (
+    completeTaskButton = (
       <Button
         sx={{ ml: 2 }}
         variant="contained"
@@ -92,7 +92,7 @@ function MarkupTask(props) {
         startIcon={<Done />}
         onClick={openDialogHandler}
       >
-        Закрыть задачу
+        Отправить на подтверждение
       </Button>
     )
   }
@@ -106,7 +106,25 @@ function MarkupTask(props) {
   if (props.task) {
     const dataset = props.task.dataset.name
 
-    const status = props.task.opened ? 'Открыта' : 'Выполнена'
+    let status = null
+
+    switch (props.task.status) {
+      case 'opened': {
+        status = 'Открыта'
+        break
+      }
+      case 'waited': {
+        status = 'На подтверждении'
+        break
+      }
+      case 'closed': {
+        status = 'Выполнена'
+        break
+      }
+      default: {
+        return
+      }
+    }
 
     taskPage = (
       <div>
@@ -152,7 +170,7 @@ function MarkupTask(props) {
               >
                 Скачать выборку
               </Button>
-              {closeTaskButton}
+              {completeTaskButton}
             </div>
           </Box>
           <Box sx={{ width: '35%' }}>

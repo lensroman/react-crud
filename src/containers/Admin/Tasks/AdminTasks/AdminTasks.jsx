@@ -14,10 +14,10 @@ import PageHeader from '../../../../components/PageHeader/PageHeader'
 
 function AdminTasks(props) {
   const {
-    onFetchAdminTasks, onFetchAllDatasets, tasksType, onGetUsers,
+    onFetchAdminTasks, onFetchAllDatasets, tasksType, onFetchAllUsers,
   } = props
 
-  const { datasets } = props
+  const { datasets, users } = props
 
   const [newTask, setNewTask] = useState({
     dataset: null,
@@ -38,9 +38,12 @@ function AdminTasks(props) {
 
   useEffect(() => {
     onFetchAdminTasks(tasksType, page)
-    onGetUsers()
+  }, [onFetchAdminTasks, tasksType, page])
+
+  useEffect(() => {
+    onFetchAllUsers()
     onFetchAllDatasets()
-  }, [onFetchAdminTasks, onFetchAllDatasets, onGetUsers, tasksType, page])
+  }, [onFetchAllDatasets, onFetchAllUsers])
 
   const modalAddOpenHandler = () => {
     setModalAddOpen(true)
@@ -99,7 +102,7 @@ function AdminTasks(props) {
   }
 
   const taskDeleteHandler = (id) => {
-    props.onDeleteAdminTask(id, page)
+    props.onDeleteAdminTask(id, page, props.tasksType)
   }
 
   const changeRouteHandler = (id) => {
@@ -107,8 +110,8 @@ function AdminTasks(props) {
     navigate(path)
   }
 
-  const tasksTypeToggleHandler = () => {
-    props.onChangeTasksType()
+  const tasksTypeChangeHandler = (event, newValue) => {
+    props.onChangeTasksType(newValue)
   }
 
   const pageChangeHandler = (event, value) => {
@@ -128,10 +131,10 @@ function AdminTasks(props) {
     )
   }
 
-  if (props.tasks && props.users.length > 0) {
+  if (props.tasks.length > 0 && props.users.length > 0) {
     cards = (
       props.tasks.map((task) => {
-        const marker = props.users.find((user) => user.id === task.marker).username
+        const marker = props.users.find((user) => user.id === task.marker)?.username || 'Пользователь удален'
         const dataset = task.dataset.name
         return (
           <AdminTaskCard
@@ -159,7 +162,7 @@ function AdminTasks(props) {
       <PageHeader
         adminTasks
         tasksType={props.tasksType}
-        tasksTypeToggle={tasksTypeToggleHandler}
+        tasksTypeChange={tasksTypeChangeHandler}
         count={props.count}
         pageChange={pageChangeHandler}
         modalOpen={modalAddOpenHandler}
@@ -171,6 +174,7 @@ function AdminTasks(props) {
         modalOpen={modalAddOpen}
         modalClose={modalAddCloseHandler}
         datasetSelect={datasetSelectHandler}
+        users={users}
         datasets={datasets}
         selectedDataset={newTask.dataset}
         markerSelect={markupSelectHandler}
@@ -199,9 +203,9 @@ const mapDispatchToProps = (dispatch) => ({
   onFetchAllDatasets: () => dispatch(actions.fetchAllDatasets()),
   onFetchAdminTasks: (tasksType, page) => dispatch(actions.fetchAdminTasks(tasksType, page)),
   onAddAdminTask: (task, page) => dispatch(actions.addAdminTask(task, page)),
-  onDeleteAdminTask: (id, page) => dispatch(actions.deleteAdminTask(id, page)),
-  onGetUsers: () => dispatch(actions.getUsers()),
-  onChangeTasksType: () => dispatch(actions.changeTasksType()),
+  onDeleteAdminTask: (id, page, status) => dispatch(actions.deleteAdminTask(id, page, status)),
+  onFetchAllUsers: () => dispatch(actions.fetchAllUsers()),
+  onChangeTasksType: (status) => dispatch(actions.changeTasksType(status)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(AdminTasks);

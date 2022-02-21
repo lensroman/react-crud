@@ -1,6 +1,7 @@
 import * as actionTypes from '../actions/actionTypes';
 
 const initialState = {
+  count: null,
   loading: false,
   error: null,
   users: [],
@@ -8,17 +9,18 @@ const initialState = {
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case actionTypes.GET_USERS: {
+    case actionTypes.FETCH_USERS: {
       return {
         ...state,
         loading: true,
       }
     }
-    case actionTypes.GET_USERS_SUCCESS: {
+    case actionTypes.FETCH_USERS_SUCCESS: {
       const users = action.users.filter((user) => user.is_staff === false)
       return {
         ...state,
         loading: false,
+        count: action.count,
         users,
       }
     }
@@ -36,7 +38,7 @@ const reducer = (state = initialState, action) => {
         error: null,
       }
     }
-    case actionTypes.GET_USERS_FAIL: {
+    case actionTypes.FETCH_USERS_FAIL: {
       return {
         ...state,
         loading: false,
