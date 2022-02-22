@@ -167,7 +167,7 @@ function Datasets(props) {
         pageChange={pageChangeHandler}
         modalOpen={modalOpenHandler}
       />
-      <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+      <Box sx={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap' }}>
         {cards}
       </Box>
       {modal}

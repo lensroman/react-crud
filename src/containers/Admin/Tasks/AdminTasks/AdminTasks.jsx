@@ -167,7 +167,7 @@ function AdminTasks(props) {
         pageChange={pageChangeHandler}
         modalOpen={modalAddOpenHandler}
       />
-      <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+      <Box sx={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap' }}>
         {cards}
       </Box>
       <ModalAddAdminTasks

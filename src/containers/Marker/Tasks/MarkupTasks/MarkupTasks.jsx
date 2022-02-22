@@ -77,7 +77,7 @@ function MarkupTasks(props) {
         tasksType={props.tasksType}
         pageChange={pageChangeHandler}
       />
-      <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+      <Box sx={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap' }}>
         {cards}
       </Box>
     </div>
