@@ -45,11 +45,14 @@ export function* addDataSetSaga(action) {
   yield formData.append('description', action.description)
   yield formData.append('dataset_to', action.file)
   try {
-    yield axios.post('/datasets/', formData, {
+    const response = yield axios.post('/datasets/', formData, {
       headers: {
         'content-type': 'multipart/form-data',
       },
     })
+    yield put(actions.addDatasetFail(response.data))
+    yield delay(3500)
+    yield put(actions.cleanErrors())
     yield put(actions.fetchDatasets(action.page))
   } catch (error) {
     yield put(actions.addDatasetFail(error.response.data))

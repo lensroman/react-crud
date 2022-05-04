@@ -46,9 +46,9 @@ export function* addNewUserSaga(action) {
   try {
     yield axios.post('/users/', action.data)
     yield put(actions.addNewUserSuccess())
+    yield put(actions.fetchUsers(action.page))
     yield delay(3500)
     yield put(actions.cleanErrors())
-    yield put(actions.fetchUsers(action.page))
   } catch (error) {
     yield put(actions.addNewUserFail())
     yield delay(3500)
