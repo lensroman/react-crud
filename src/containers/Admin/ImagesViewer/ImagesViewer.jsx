@@ -66,7 +66,6 @@ function ImagesViewer(props) {
 
   if (props.dataset && props.dataset.filesNames) {
     imagePath = props.dataset.static_base_path
-    // eslint-disable-next-line prefer-destructuring
     imageName = props.dataset.filesNames[imgNumber]
     ImageExtension = props.dataset.extensions[imgType]
   }
@@ -125,7 +124,7 @@ function ImagesViewer(props) {
     const offsetX = img.x() - absPos.x
     const offsetY = img.y() - absPos.y
     const newAbsPos = { ...absPos }
-    if (image.scale <= 1) {
+    if (image.scale <= 1.01) {
       if (img.x() < 0) {
         newAbsPos.x = -offsetX;
       }
@@ -138,9 +137,8 @@ function ImagesViewer(props) {
       if (img.y() + img.height() > stageDom.height()) {
         newAbsPos.y = stageDom.height() - img.height() - offsetY;
       }
-      console.log(newAbsPos)
       img.setAbsolutePosition(newAbsPos)
-    } else {
+    } else if (image.scale > 1.01) {
       if (img.x() > 0) {
         newAbsPos.x = -offsetX;
       }
@@ -153,8 +151,6 @@ function ImagesViewer(props) {
       if (img.height() * image.scale + img.y() < stageDom.height()) {
         newAbsPos.y = -(img.height() * image.scale - stageDom.height())
       }
-      console.log('img y', img.y())
-      console.log('scale', image.scale)
       img.setAbsolutePosition(newAbsPos)
     }
   }

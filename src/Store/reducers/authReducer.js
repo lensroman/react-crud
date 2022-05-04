@@ -35,6 +35,12 @@ const reducer = (state = initialState, action) => {
         error: action.error,
       }
     }
+    case actionTypes.CLEAN_ERRORS: {
+      return {
+        ...state,
+        error: false,
+      }
+    }
     case actionTypes.LOGOUT_USER: {
       return {
         ...state,

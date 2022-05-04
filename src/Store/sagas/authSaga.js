@@ -1,4 +1,4 @@
-import { put } from 'redux-saga/effects';
+import { put, delay } from 'redux-saga/effects';
 
 import * as actions from '../actions/rootAction';
 import axios from '../../axios-instance';
@@ -23,6 +23,8 @@ export function* authActionSaga(action) {
     yield put(actions.authSuccess(userName, userId, isStaff))
   } catch (error) {
     yield put(actions.authFail(error.response.data))
+    yield delay(3500)
+    yield put(actions.cleanErrors())
   }
 }
 
