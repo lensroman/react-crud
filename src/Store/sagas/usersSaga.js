@@ -52,6 +52,7 @@ export function* addNewUserSaga(action) {
   } catch (error) {
     yield put(actions.addNewUserFail())
     yield delay(3500)
+    console.log('hello')
     yield put(actions.cleanErrors())
   }
 }
