@@ -69,6 +69,22 @@ const reducer = (state = initialState, action) => {
         currentDataset: null,
       }
     }
+    case actionTypes.FETCH_IMAGES_NAMES_SUCCESS: {
+      return {
+        ...state,
+        currentDataset: {
+          ...state.currentDataset,
+          filesNames: action.filesNames,
+          extensions: action.extensions,
+        },
+      }
+    }
+    case actionTypes.FETCH_IMAGES_NAMES_FAILED: {
+      return {
+        ...state,
+        error: action.error,
+      }
+    }
     default: {
       return {
         ...state,

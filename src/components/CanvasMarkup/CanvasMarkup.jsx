@@ -6,7 +6,7 @@ import {
 
 import MarkupHeader from '../MarkupHeader/MarkupHeader';
 
-function Canvas(props) {
+function CanvasMarkup(props) {
   let stageWidth = 0
   let stageHeight = 0
 
@@ -75,4 +75,4 @@ function Canvas(props) {
   )
 }
 
-export default Canvas;
+export default CanvasMarkup;

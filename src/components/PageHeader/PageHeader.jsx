@@ -1,9 +1,12 @@
 import React from 'react';
 
 import {
-  Button, Tab, Tabs, Typography,
+  Box,
+  Button, MenuItem, Tab, Tabs, TextField, Typography,
 } from '@mui/material'
-import { Add, ArrowBackIosNewOutlined } from '@mui/icons-material'
+import {
+  Add, ArrowBackIosNewOutlined, NavigateBefore, NavigateNext,
+} from '@mui/icons-material'
 import classes from './PageHeader.module.scss';
 
 import PageCounter from '../PageCounter/PageCounter'
@@ -37,7 +40,7 @@ function PageHeader(props) {
         <div>
           <Typography variant="h4" fontWeight="bold">
             Выборка:&nbsp;
-            { props.name }
+            {props.name}
           </Typography>
         </div>
         <div>
@@ -164,6 +167,99 @@ function PageHeader(props) {
             Добавить пользователя
           </Button>
         </div>
+      </div>
+    )
+  }
+
+  if (props.imagesViewer) {
+    const numberNames = []
+
+    if (props.datasetNames) {
+      let number = 0
+      props.datasetNames.forEach((name) => {
+        numberNames.push({
+          name,
+          value: number,
+        })
+        number += 1
+      })
+    }
+
+    content = (
+      <div className={classes.PageHeader}>
+        <Box>
+          <Typography variant="h4" fontWeight="bold">Изображения {props.datasetName}</Typography>
+        </Box>
+        <Box sx={{ width: '10%' }}>
+          <TextField
+            fullWidth
+            select
+            label="Тип изображения"
+            value={props.imgType}
+            onChange={props.selectImageType}
+          >
+            {props.datasetExtensions && props.imgTypes.map((type) => (
+              <MenuItem
+                key={type.key}
+                value={type.label}
+                disabled={!props.datasetExtensions[type.label]}
+              >
+                {type.label}
+              </MenuItem>
+            ))}
+          </TextField>
+        </Box>
+        <Box>
+          <Button
+            startIcon={<NavigateBefore />}
+            disabled={!props.imgType || props.number === 0}
+            onClick={props.prevImage}
+          >
+            Предыдущее
+          </Button>
+          <Button
+            endIcon={<NavigateNext />}
+            disabled={!props.imgType || props.number === props.length}
+            onClick={props.nextImage}
+          >
+            Следующее
+          </Button>
+        </Box>
+        <Box sx={{ width: '10%' }}>
+          <TextField
+            disabled={!props.imgType}
+            fullWidth
+            select
+            label="Перейти к изображению"
+            value={props.number}
+            onChange={props.selectImageNumber}
+            SelectProps={{
+              MenuProps: {
+                sx: {
+                  maxHeight: 500,
+                },
+              },
+            }}
+          >
+            {props.datasetNames && numberNames.map((el) => (
+              <MenuItem
+                key={el.name}
+                value={el.value}
+              >
+                {el.value + 1}
+              </MenuItem>
+            ))}
+          </TextField>
+        </Box>
+        <Box>
+          <Button
+            variant="outlined"
+            startIcon={<ArrowBackIosNewOutlined />}
+            onClick={props.goBack}
+          >
+            Назад
+          </Button>
+        </Box>
       </div>
     )
   }

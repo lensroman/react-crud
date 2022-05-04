@@ -32,6 +32,9 @@ export {
   setCurrentDataset,
   clearCurrentDataset,
   uploadDataset,
+  fetchImagesNames,
+  fetchImagesNamesSuccess,
+  fetchImagesNamesFailed,
 } from './datasetsAction'
 export {
   fetchAdminTasks,

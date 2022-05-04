@@ -19,6 +19,7 @@ module.exports = {
     'react',
   ],
   rules: {
+    'linebreak-style': ['error', 'windows'],
     'no-tabs': 0,
     'no-console': 0,
     semi: 0,
@@ -31,6 +32,7 @@ module.exports = {
     'react/jsx-props-no-spreading': 0,
     'default-param-last': 0,
     'import/no-named-as-default': 0,
+    'import/order': 0,
   },
 
 };

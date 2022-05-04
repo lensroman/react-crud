@@ -1,15 +1,16 @@
-import React, { useEffect } from 'react';
+import React, { useEffect } from 'react'
+
+import { useNavigate, useParams } from 'react-router-dom'
+import { connect } from 'react-redux'
+import * as actions from '../../../../Store/actions/rootAction'
+
+import PageHeader from '../../../../components/PageHeader/PageHeader'
 
 import {
   Box, Button, CircularProgress, Typography,
-} from '@mui/material';
-import { UploadFile } from '@mui/icons-material';
-import { connect } from 'react-redux';
-import { useNavigate, useParams } from 'react-router-dom';
-import classes from './Dataset.module.scss';
-
-import * as actions from '../../../../Store/actions/rootAction';
-import PageHeader from '../../../../components/PageHeader/PageHeader'
+} from '@mui/material'
+import { UploadFile } from '@mui/icons-material'
+import classes from './Dataset.module.scss'
 
 function Dataset(props) {
   const params = useParams()
@@ -26,13 +27,17 @@ function Dataset(props) {
 
   const goBackHandler = () => {
     props.onClearCurrentDataset();
-    navigate(-1);
+    navigate('../samples');
   }
 
   const uploadDatasetHandler = () => {
     const { name } = props.dataset;
     const { length } = props.dataset;
     props.onUploadDataset(id, name, null, length);
+  }
+
+  const imagesViewHandler = () => {
+    navigate('../images', { replace: true })
   }
 
   let datasetPage = null
@@ -88,6 +93,13 @@ function Dataset(props) {
               onClick={uploadDatasetHandler}
             >
               Скачать выборку
+            </Button>
+            <Button
+              sx={{ ml: 2 }}
+              variant="contained"
+              onClick={imagesViewHandler}
+            >
+              Просмотреть изображения
             </Button>
           </li>
         </ul>

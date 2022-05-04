@@ -12,6 +12,7 @@ import {
   fetchDataSetsSaga,
   getDatasetInfoSaga,
   uploadDatasetSaga,
+  fetchImagesNamesSaga,
 } from './datasetsSaga';
 import {
   addAdminTaskSaga, closeTaskSaga,
@@ -38,6 +39,7 @@ export function* watchDataSetsSaga() {
   yield takeEvery(actionTypes.DELETE_DATASET, deleteDataSetSaga)
   yield takeEvery(actionTypes.GET_DATASET_INFO, getDatasetInfoSaga)
   yield takeEvery(actionTypes.UPLOAD_DATASET, uploadDatasetSaga)
+  yield takeEvery(actionTypes.FETCH_IMAGES_NAMES, fetchImagesNamesSaga)
 }
 
 export function* watchAdminTasksSaga() {

@@ -1,16 +1,17 @@
-import React from 'react';
+import React from 'react'
 
-import { Navigate } from 'react-router-dom';
+import { Navigate } from 'react-router-dom'
 
-import Auth from '../containers/Auth/Auth';
-import Markup from '../containers/Marker/Markup/Markup';
-import Datasets from '../containers/Admin/Datasets/Datasets/Datasets';
-import AdminTasks from '../containers/Admin/Tasks/AdminTasks/AdminTasks';
-import AdminTaskPage from '../containers/Admin/Tasks/AdminTask/AdminTask';
-import DatasetPage from '../containers/Admin/Datasets/Dataset/Dataset';
-import AdminUsers from '../containers/Admin/Users/AdminUsers/AdminUsers';
-import MarkupTasks from '../containers/Marker/Tasks/MarkupTasks/MarkupTasks';
-import MarkupTaskPage from '../containers/Marker/Tasks/MarkupTask/MarkupTask';
+import Auth from '../containers/Auth/Auth'
+import Markup from '../containers/Marker/Markup/Markup'
+import Datasets from '../containers/Admin/Datasets/Datasets/Datasets'
+import AdminTasks from '../containers/Admin/Tasks/AdminTasks/AdminTasks'
+import AdminTaskPage from '../containers/Admin/Tasks/AdminTask/AdminTask'
+import DatasetPage from '../containers/Admin/Datasets/Dataset/Dataset'
+import AdminUsers from '../containers/Admin/Users/AdminUsers/AdminUsers'
+import MarkupTasks from '../containers/Marker/Tasks/MarkupTasks/MarkupTasks'
+import MarkupTaskPage from '../containers/Marker/Tasks/MarkupTask/MarkupTask'
+import ImagesViewer from '../containers/Admin/ImagesViewer/ImagesViewer'
 
 const routes = (isAuthenticated, isStaff) => [
   {
@@ -28,6 +29,10 @@ const routes = (isAuthenticated, isStaff) => [
   {
     path: '/samples/*',
     element: (isAuthenticated && isStaff === true) ? <DatasetPage /> : <Navigate to="/auth" />,
+  },
+  {
+    path: '/images/*',
+    element: (isAuthenticated && isStaff === true) ? <ImagesViewer /> : <Navigate to="/auth" />,
   },
   {
     path: '/admin-tasks',

@@ -5,7 +5,7 @@ import useImage from 'use-image';
 import * as actions from '../../../Store/actions/rootAction';
 
 import json from '../../../assets/json.json';
-import Canvas from '../../../components/Canvas/Canvas';
+import CanvasMarkup from '../../../components/CanvasMarkup/CanvasMarkup';
 
 function Markup(props) {
   const { onRegionAdd } = props
@@ -96,7 +96,7 @@ function Markup(props) {
 
   return (
     <div>
-      <Canvas
+      <CanvasMarkup
         save={saveImageHandler}
         rectMode={rectModeHandler}
         polygonMode={polygonModeHandler}

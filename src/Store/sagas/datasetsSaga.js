@@ -111,3 +111,17 @@ export function* uploadDatasetSaga(action) {
     console.log(error)
   }
 }
+
+export function* fetchImagesNamesSaga(action) {
+  try {
+    const response = yield axios.get(`/datasets/${action.id}/structure/`, {
+      params: {
+        from: action.imagesRange.from,
+        to: action.imagesRange.to,
+      },
+    })
+    yield put(actions.fetchImagesNamesSuccess(response.data.filenames, response.data.extensions))
+  } catch (error) {
+    yield put(actions.fetchImagesNamesFailed(error))
+  }
+}

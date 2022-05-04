@@ -70,3 +70,20 @@ export const uploadDataset = (id, name, imagesRange = null, length = null) => ({
 export const fetchAllDatasets = () => ({
   type: actionTypes.FETCH_ALL_DATASETS,
 })
+
+export const fetchImagesNames = (id, imagesRange) => ({
+  type: actionTypes.FETCH_IMAGES_NAMES,
+  id,
+  imagesRange,
+})
+
+export const fetchImagesNamesSuccess = (filesNames, extensions) => ({
+  type: actionTypes.FETCH_IMAGES_NAMES_SUCCESS,
+  filesNames,
+  extensions,
+})
+
+export const fetchImagesNamesFailed = (error) => ({
+  type: actionTypes.FETCH_IMAGES_NAMES_FAILED,
+  error,
+})
